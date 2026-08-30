@@ -245,8 +245,8 @@ export default function USPSection({ onNavigate }) {
               margin: '0 auto',
             }}
           >
-            In every build,<br />
-            you can count on.
+            What we build<br />
+            for growth.
           </h2>
         </div>
 
