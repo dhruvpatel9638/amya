@@ -1,0 +1,334 @@
+/* ===== FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== CSS VARIABLES ===== */
+@layer base {
+  :root {
+    --color-bg: #f1f1f1;
+    --color-surface: #fafafa;
+    --color-dark: #2b2b2b;
+    --color-accent: #fc4778;
+    --color-muted: #a2a2a2;
+    --color-border: #dedede;
+    --mouse-x: 50vw;
+    --mouse-y: 50vh;
+  }
+
+  html {
+    background-color: var(--color-bg);
+    cursor: none;
+  }
+
+  /* Lenis smooth scrolling rules */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: none;
+  }
+
+  /* Hide native cursor on all interactive elements */
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label,
+  [role="button"],
+  [tabindex] {
+    cursor: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-family: 'DM Serif Display', serif;
+    color: var(--color-dark);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+/* ===== BRAND TEXT SELECTION (Universal) ===== */
+::selection,
+*::selection {
+  background-color: #fc4778 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+::-moz-selection,
+*::-moz-selection {
+  background-color: #fc4778 !important;
+  color: #ffffff !important;
+}
+
+/* ===== DOT GRID BACKGROUND TEXTURE ===== */
+.dot-grid {
+  background-image: radial-gradient(circle, #c8c8c8 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ===== SCROLLBAR (minimal, matching light theme) ===== */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d7d7d7;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a2a2a2;
+}
+
+/* ===== TYPOGRAPHY UTILITIES ===== */
+.t-display {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(4rem, 8.5vw, 8.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  color: var(--color-dark);
+}
+
+.t-display-md {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+}
+
+.t-heading {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+}
+
+.t-body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.3;
+}
+
+.t-mono {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.t-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ===== BUTTONS ===== */
+.btn-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background: var(--color-dark);
+  color: #fafafa;
+  border: none;
+  border-radius: 9999px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-dark:hover {
+  background: #444;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: var(--color-dark);
+  border: 1px solid rgba(43, 43, 43, 0.169);
+  border-radius: 9999px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(43, 43, 43, 0.06);
+}
+
+/* ===== CARDS ===== */
+.white-card {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.dark-card {
+  background: var(--color-dark);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  color: #fafafa;
+}
+
+/* ===== PINK DECORATION SQUARES ===== */
+@keyframes pinkFloat {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}
+
+.pink-squares {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== USP SECTION ===== */
+.usp-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== MARQUEE ===== */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ===== TEXT LINK UNDERLINE EFFECT ===== */
+.t-link {
+  position: relative;
+  display: inline-block;
+}
+
+.t-link::before {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentcolor;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform 0.3s ease;
+  content: '';
+}
+
+.t-link:hover::before {
+  transform: scaleX(1);
+  transform-origin: 0 50%;
+}
+
+/* ===== ACCORDION ===== */
+.accordion-item {
+  border-top: 1px solid var(--color-border);
+  padding: 1.5rem 0;
+}
+
+.accordion-item:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ===== PERSPECTIVE CONTAINER ===== */
+.perspective-container {
+  perspective: 1200px;
+}
+
+/* ===== REVEAL ANIMATIONS ===== */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-up {
+  opacity: 0;
+  animation: revealUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
