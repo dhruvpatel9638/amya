@@ -129,13 +129,13 @@ export default function PinkFlowCanvas({ className = '', opacity = 0.85, isDark 
 
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
         if (p.hueShift === '#fd8aa9') {
-          grad.addColorStop(0, `rgba(253, 138, 169, ${p.alpha * 0.85})`);
-          grad.addColorStop(0.5, `rgba(252, 71, 120, ${p.alpha * 0.45})`);
-          grad.addColorStop(1, 'rgba(252, 71, 120, 0)');
+          grad.addColorStop(0, `rgba(225, 0, 80, ${p.alpha * 0.95})`);
+          grad.addColorStop(0.5, `rgba(210, 0, 70, ${p.alpha * 0.55})`);
+          grad.addColorStop(1, 'rgba(210, 0, 70, 0)');
         } else {
-          grad.addColorStop(0, `rgba(252, 71, 120, ${p.alpha * 0.95})`);
-          grad.addColorStop(0.4, `rgba(253, 106, 144, ${p.alpha * 0.5})`);
-          grad.addColorStop(1, 'rgba(252, 71, 120, 0)');
+          grad.addColorStop(0, `rgba(220, 0, 75, ${p.alpha * 1.0})`);
+          grad.addColorStop(0.4, `rgba(200, 0, 65, ${p.alpha * 0.6})`);
+          grad.addColorStop(1, 'rgba(200, 0, 65, 0)');
         }
 
         ctx.fillStyle = grad;

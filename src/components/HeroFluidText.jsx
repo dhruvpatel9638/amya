@@ -167,17 +167,17 @@ export default function HeroFluidText({ onNavigate }) {
         mouse.vy = dy;
         mouse.speed = speed;
 
-        if (speed > 1) {
-          const count = Math.min(Math.floor(speed / 2.5) + 1, 6);
+        if (speed > 0.5) {
+          const count = Math.min(Math.floor(speed / 2.0) + 1, 7);
           for (let i = 0; i < count; i++) {
             fluidNodes.push({
-              x: mouse.prevX + dx * (i / count) + (Math.random() - 0.5) * 16,
-              y: mouse.prevY + dy * (i / count) + (Math.random() - 0.5) * 16,
+              x: mouse.prevX + dx * (i / count) + (Math.random() - 0.5) * 14,
+              y: mouse.prevY + dy * (i / count) + (Math.random() - 0.5) * 14,
               vx: dx * 0.45 + (Math.random() - 0.5) * 3,
               vy: dy * 0.45 + (Math.random() - 0.5) * 3,
-              radius: Math.random() * 55 + 45 + speed * 0.9,
+              radius: Math.random() * 65 + 55 + speed * 1.1,
               alpha: 1.0,
-              decay: 0.018 + Math.random() * 0.012,
+              decay: 0.013 + Math.random() * 0.009,
             });
           }
         }
@@ -202,7 +202,8 @@ export default function HeroFluidText({ onNavigate }) {
       ctx.save();
       ctx.scale(dpr, dpr);
 
-      // 1. Draw Halftone Pink Dot Matrix in active mouse fluid areas
+      // 1. Draw Halftone Pink Dot Matrix in active mouse fluid areas (deeper, richer dark pink)
+      const dotSpacing = 20;
       for (let i = fluidNodes.length - 1; i >= 0; i--) {
         const node = fluidNodes[i];
         node.x += node.vx * 0.35;
@@ -216,7 +217,6 @@ export default function HeroFluidText({ onNavigate }) {
           continue;
         }
 
-        const dotSpacing = 16;
         const startX = Math.floor((node.x - node.radius) / dotSpacing) * dotSpacing;
         const endX = Math.ceil((node.x + node.radius) / dotSpacing) * dotSpacing;
         const startY = Math.floor((node.y - node.radius) / dotSpacing) * dotSpacing;
@@ -226,10 +226,11 @@ export default function HeroFluidText({ onNavigate }) {
           for (let gy = startY; gy <= endY; gy += dotSpacing) {
             const dist = Math.hypot(gx - node.x, gy - node.y);
             if (dist < node.radius) {
-              const intensity = (1 - dist / node.radius) * node.alpha;
-              if (intensity > 0.05) {
-                const dotSize = Math.max(1.2, intensity * 3.5);
-                ctx.fillStyle = `rgba(252, 71, 120, ${Math.min(intensity * 0.9, 0.85)})`;
+              const intensity = Math.pow(1 - dist / node.radius, 1.2) * node.alpha;
+              if (intensity > 0.03) {
+                const dotSize = Math.max(1.8, intensity * 4.8);
+                // Deeper, punchier dark pink / rich magenta
+                ctx.fillStyle = `rgba(220, 0, 75, ${Math.min(intensity * 1.45, 1.0)})`;
                 ctx.beginPath();
                 ctx.arc(gx, gy, dotSize, 0, Math.PI * 2);
                 ctx.fill();
@@ -246,60 +247,58 @@ export default function HeroFluidText({ onNavigate }) {
 
       for (let i = 0; i < fluidNodes.length; i++) {
         const node = fluidNodes[i];
-        const dist = Math.hypot(width / 2 - node.x, height * 0.42 - node.y);
-        if (dist < node.radius * 2.2) {
-          const inf = (1 - dist / (node.radius * 2.2)) * node.alpha;
-          dispX += node.vx * inf * 0.6;
-          dispY += node.vy * inf * 0.6;
+        const dist = Math.hypot(width / 2 - node.x, height * 0.40 - node.y);
+        if (dist < node.radius * 2.5) {
+          const inf = (1 - dist / (node.radius * 2.5)) * node.alpha;
+          dispX += node.vx * inf * 0.75;
+          dispY += node.vy * inf * 0.75;
           influence = Math.max(influence, inf);
         }
       }
 
-      const maxDisp = 18;
+      const maxDisp = 24;
       dispX = Math.max(-maxDisp, Math.min(maxDisp, dispX));
       dispY = Math.max(-maxDisp, Math.min(maxDisp, dispY));
 
-      // 2. Draw Cyan Layer (Shifted left/top by displacement)
-      if (influence > 0.05 || Math.abs(dispX) > 0.5) {
+      // 2. Draw Electric Cyan Layer (Shifted left/top)
+      if (influence > 0.04 || Math.abs(dispX) > 0.4) {
         ctx.save();
-        ctx.globalCompositeOperation = 'screen';
         ctx.drawImage(
           textCanvas,
           0,
           0,
           width * dpr,
           height * dpr,
-          -dispX * 1.1,
-          -dispY * 1.1,
+          -dispX * 1.35,
+          -dispY * 1.35,
           width,
           height
         );
-        ctx.fillStyle = `rgba(0, 240, 255, ${Math.min(influence * 0.85, 0.75)})`;
+        ctx.fillStyle = `rgba(0, 240, 255, ${Math.min(influence * 0.9, 0.85)})`;
         ctx.globalCompositeOperation = 'source-in';
         ctx.fillRect(0, 0, width, height);
         ctx.restore();
 
-        // 3. Draw Neon Pink Layer (Shifted right/bottom by displacement)
+        // 3. Draw Hot Neon Pink/Magenta Layer (Shifted right/bottom)
         ctx.save();
-        ctx.globalCompositeOperation = 'screen';
         ctx.drawImage(
           textCanvas,
           0,
           0,
           width * dpr,
           height * dpr,
-          dispX * 1.2,
-          dispY * 1.2,
+          dispX * 1.45,
+          dispY * 1.45,
           width,
           height
         );
-        ctx.fillStyle = `rgba(252, 71, 120, ${Math.min(influence * 0.95, 0.85)})`;
+        ctx.fillStyle = `rgba(252, 71, 120, ${Math.min(influence * 0.95, 0.9)})`;
         ctx.globalCompositeOperation = 'source-in';
         ctx.fillRect(0, 0, width, height);
         ctx.restore();
       }
 
-      // 4. Draw Main Crisp Dark Text
+      // 4. Draw Main Dark Headline Text with transparent blending
       ctx.save();
       ctx.globalCompositeOperation = 'source-over';
       ctx.drawImage(
