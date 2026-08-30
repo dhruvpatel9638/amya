@@ -414,9 +414,10 @@ export default function Portfolio({ onNavigate }) {
               transition={{ delay: idx * 0.1, ease: [0.23, 1, 0.32, 1], duration: 0.6 }}
               className="group"
             >
-              {/* Thumbnail card */}
-              <div
-                className="relative overflow-hidden mb-4"
+              {/* Thumbnail card (clickable to current tab) */}
+              <a
+                href={work.url || '#'}
+                className="relative block overflow-hidden mb-4 cursor-pointer"
                 style={{ borderRadius: '1.25rem', aspectRatio: '16/10', background: '#dedede' }}
               >
                 <img
@@ -430,16 +431,12 @@ export default function Portfolio({ onNavigate }) {
                   style={{ background: 'rgba(43,43,43,0.4)' }}
                 >
                   {work.url ? (
-                    <a
-                      href={work.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#2b2b2b] hover:bg-[#fc4778] hover:text-white transition-colors"
+                    <span
+                      className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#2b2b2b] group-hover:bg-[#fc4778] group-hover:text-white transition-colors"
                       style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.7rem', textTransform: 'uppercase', textDecoration: 'none' }}
-                      onClick={e => e.stopPropagation()}
                     >
                       VIEW LIVE <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
+                    </span>
                   ) : (
                     <span
                       className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#2b2b2b]"
@@ -449,7 +446,7 @@ export default function Portfolio({ onNavigate }) {
                     </span>
                   )}
                 </div>
-              </div>
+              </a>
 
               {/* Card info below thumbnail */}
               <div className="flex items-start justify-between gap-3">
@@ -497,10 +494,7 @@ export default function Portfolio({ onNavigate }) {
                 {work.url && (
                   <a
                     href={work.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="flex-shrink-0 w-9 h-9 rounded-full border border-[#dedede] flex items-center justify-center text-[#a2a2a2] hover:text-[#fc4778] hover:border-[#fc4778] transition-colors"
-                    onClick={e => e.stopPropagation()}
                   >
                     <ArrowUpRight className="w-4 h-4" />
                   </a>

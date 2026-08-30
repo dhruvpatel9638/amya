@@ -49,27 +49,30 @@ export default function HeroFluidText({ onNavigate }) {
       const isMobile = width < 768;
 
       if (isMobile) {
-        // --- MOBILE HERO TEXT LAYOUT (Clean, balanced, zero overflow) ---
+        // --- MOBILE HERO TEXT LAYOUT (Exact optical vertical center between navbar and bottom buttons) ---
+        const mFontSize = Math.min(Math.max(width * 0.088, 30), 40);
+        
+        // Exact vertical center of visible space
+        const centerY = height * 0.48;
+        const line2Y = centerY - mFontSize * 0.35;
+        const line1Y = line2Y - mFontSize * 1.08;
+        const line3Y = line2Y + mFontSize * 1.08;
+        const tagY = line1Y - mFontSize * 1.15;
+
         // 1. Tag
-        textCtx.font = '500 10px "Space Mono", monospace';
+        textCtx.font = '500 9.5px "Space Mono", monospace';
         textCtx.fillStyle = '#787878';
         textCtx.textAlign = 'center';
         textCtx.textBaseline = 'middle';
         textCtx.letterSpacing = '0.06em';
-        const tagY = height * 0.20;
         textCtx.fillText('WEB APPS  •  MERN  •  AI AUTOMATION', width / 2, tagY);
 
         // 2. Headline: 3 clean balanced lines
-        const mFontSize = Math.min(Math.max(width * 0.088, 30), 38);
         textCtx.font = `600 ${mFontSize}px "Space Grotesk", "DM Serif Display", sans-serif`;
         textCtx.fillStyle = '#2b2b2b';
         textCtx.textAlign = 'center';
         textCtx.textBaseline = 'middle';
         textCtx.letterSpacing = '-0.04em';
-
-        const line1Y = height * 0.32;
-        const line2Y = line1Y + mFontSize * 1.05;
-        const line3Y = line2Y + mFontSize * 1.05;
 
         textCtx.fillText('Creative Web Apps', width / 2, line1Y);
 
@@ -82,7 +85,7 @@ export default function HeroFluidText({ onNavigate }) {
         textCtx.font = `300 ${subFontSize}px "DM Sans", sans-serif`;
         textCtx.fillStyle = '#656565';
         textCtx.letterSpacing = '0';
-        const subY = line3Y + mFontSize * 0.85;
+        const subY = line3Y + mFontSize * 0.95;
         textCtx.fillText('We build creative UI & web applications that run', width / 2, subY);
         textCtx.fillText('your operations 24/7 without extra staff.', width / 2, subY + subFontSize * 1.45);
       } else {
@@ -245,9 +248,10 @@ export default function HeroFluidText({ onNavigate }) {
       let dispY = 0;
       let influence = 0;
 
+      const textCenterY = width < 768 ? height * 0.48 : height * 0.42;
       for (let i = 0; i < fluidNodes.length; i++) {
         const node = fluidNodes[i];
-        const dist = Math.hypot(width / 2 - node.x, height * 0.40 - node.y);
+        const dist = Math.hypot(width / 2 - node.x, textCenterY - node.y);
         if (dist < node.radius * 2.5) {
           const inf = (1 - dist / (node.radius * 2.5)) * node.alpha;
           dispX += node.vx * inf * 0.75;
@@ -347,8 +351,8 @@ export default function HeroFluidText({ onNavigate }) {
         className="absolute inset-0 w-full h-full pointer-events-none z-10"
       />
 
-      {/* Decorative pink stepped squares — visible on desktop only (hidden on mobile for clean luxury look) */}
-      <div className="hidden md:block absolute top-24 left-0 z-20 pointer-events-none select-none">
+      {/* Decorative pink stepped squares — visible on both mobile and desktop */}
+      <div className="absolute top-14 md:top-24 left-0 z-20 pointer-events-none select-none scale-[0.65] md:scale-100 origin-top-left">
         <div className="relative" style={{ width: 130, height: 130 }}>
           {['#fc4778', '#fd6a90', '#fd8aa9', '#feacc1', '#fecdd6'].map((color, i) => (
             <div
@@ -367,7 +371,7 @@ export default function HeroFluidText({ onNavigate }) {
         </div>
       </div>
 
-      <div className="hidden md:block absolute bottom-0 right-0 z-20 pointer-events-none select-none">
+      <div className="absolute bottom-28 md:bottom-0 right-0 z-20 pointer-events-none select-none scale-[0.65] md:scale-100 origin-bottom-right">
         <div className="relative" style={{ width: 130, height: 130 }}>
           {['#fc4778', '#fd6a90', '#fd8aa9', '#feacc1', '#fecdd6'].map((color, i) => (
             <div
