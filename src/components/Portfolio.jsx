@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowUpRight, CheckCircle } from 'lucide-react';
+import { X, ArrowUpRight, CheckCircle, ArrowRight } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PinkFlowCanvas from './PinkFlowCanvas';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // ======= REAL CLIENT WORKS (with thumbnails) =======
 const realWorks = [
@@ -383,6 +387,47 @@ function Modal({ project, onClose, onContact }) {
 // ======= MAIN PORTFOLIO COMPONENT =======
 export default function Portfolio({ onNavigate }) {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const triggerRef = useRef(null);
+  const trackRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const track = trackRef.current;
+      const trigger = triggerRef.current;
+      if (!track || !trigger) return;
+
+      const getScrollDistance = () => {
+        const trackWidth = track.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        const offset = window.innerWidth < 768 ? 32 : 120;
+        return -(trackWidth - viewportWidth + offset);
+      };
+
+      const scrollTween = gsap.to(track, {
+        x: getScrollDistance,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: trigger,
+          start: 'top top',
+          end: () => `+=${Math.max(track.scrollWidth - window.innerWidth + 800, 2000)}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            setScrollProgress(self.progress);
+          },
+        },
+      });
+
+      return () => {
+        scrollTween.kill();
+      };
+    }, triggerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleContact = () => {
     setSelectedProject(null);
@@ -390,130 +435,173 @@ export default function Portfolio({ onNavigate }) {
   };
 
   return (
-    <section id="portfolio" className="bg-[#f1f1f1] dot-grid" style={{ padding: '5rem 0' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 clamp(1rem, 4vw, 3rem)' }}>
-
-        {/* Section label */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <span
-            style={{
-              fontFamily: 'Space Mono, monospace',
-              fontSize: '0.75rem',
-              color: '#a2a2a2',
-              textTransform: 'uppercase',
-              letterSpacing: 0,
-            }}
-          >
-            Selected Works
-          </span>
-        </motion.div>
-
-        {/* ===== REAL CLIENT WORKS GRID (with real thumbnails — 4-card 2x2 grid) ===== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {realWorks.map((work, idx) => (
-            <motion.div
-              key={work.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, ease: [0.23, 1, 0.32, 1], duration: 0.6 }}
-              className="group"
-            >
-              {/* Thumbnail card (clickable to current tab) */}
-              <a
-                href={work.url || '#'}
-                className="relative block overflow-hidden mb-4 cursor-pointer"
-                style={{ borderRadius: '1.25rem', aspectRatio: '16/10', background: '#dedede' }}
+    <section id="portfolio" className="bg-[#f1f1f1] dot-grid relative">
+      {/* Pinned Horizontal Scroll Viewport */}
+      <div
+        ref={triggerRef}
+        className="w-full min-h-screen flex flex-col justify-center overflow-hidden py-10 md:py-16 relative"
+      >
+        {/* Section Header & Progress Indicator */}
+        <div className="w-full max-w-[1360px] mx-auto px-6 md:px-12 mb-6 md:mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2.5 mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#fc4778] animate-pulse" />
+              <span
+                style={{
+                  fontFamily: 'Space Mono, monospace',
+                  fontSize: '0.75rem',
+                  color: '#a2a2a2',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
               >
-                <img
-                  src={work.thumb}
-                  alt={work.title}
-                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                />
-                {/* Overlay on hover */}
-                <div
-                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: 'rgba(43,43,43,0.4)' }}
-                >
-                  {work.url ? (
-                    <span
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#2b2b2b] group-hover:bg-[#fc4778] group-hover:text-white transition-colors"
-                      style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.7rem', textTransform: 'uppercase', textDecoration: 'none' }}
-                    >
-                      VIEW LIVE <ArrowUpRight className="w-3.5 h-3.5" />
-                    </span>
-                  ) : (
-                    <span
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#2b2b2b]"
-                      style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.7rem', textTransform: 'uppercase' }}
-                    >
-                      VIEW PROJECT
-                    </span>
-                  )}
-                </div>
-              </a>
+                Selected Works · 04 Live Platforms
+              </span>
+            </div>
+            <h2
+              style={{
+                fontFamily: 'DM Serif Display, serif',
+                fontSize: 'clamp(2.1rem, 3.8vw, 3.4rem)',
+                color: '#2b2b2b',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
+              }}
+            >
+              Engineered for Growth.
+            </h2>
+          </div>
 
-              {/* Card info below thumbnail */}
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span
-                      style={{
-                        fontFamily: 'Space Mono, monospace',
-                        fontSize: '0.65rem',
-                        textTransform: 'uppercase',
-                        color: '#fc4778',
-                      }}
-                    >
-                      {work.tag}
-                    </span>
-                    <span style={{ color: '#dedede' }}>·</span>
-                    <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.65rem', color: '#a2a2a2' }}>{work.region}</span>
-                    <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.65rem', color: '#a2a2a2' }}>{work.weeks}</span>
-                  </div>
-                  <h3
-                    style={{
-                      fontFamily: 'DM Serif Display, serif',
-                      fontSize: '1.25rem',
-                      letterSpacing: '-0.03em',
-                      color: '#2b2b2b',
-                      lineHeight: 1.1,
-                      marginBottom: '0.375rem',
-                    }}
-                  >
-                    {work.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: 'DM Sans, sans-serif',
-                      fontSize: '0.875rem',
-                      fontWeight: 300,
-                      color: '#656565',
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {work.desc}
-                  </p>
-                </div>
+          {/* Interactive Scroll Counter & Visual Progress Track */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 text-xs text-[#a2a2a2] font-mono">
+              <span className="text-[#fc4778] font-bold text-sm">
+                {String(Math.min(Math.floor(scrollProgress * 4) + 1, 4)).padStart(2, '0')}
+              </span>
+              <span>/</span>
+              <span>04</span>
+            </div>
 
-                {work.url && (
-                  <a
-                    href={work.url}
-                    className="flex-shrink-0 w-9 h-9 rounded-full border border-[#dedede] flex items-center justify-center text-[#a2a2a2] hover:text-[#fc4778] hover:border-[#fc4778] transition-colors"
-                  >
-                    <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          ))}
+            <div className="w-24 sm:w-36 h-1.5 bg-[#dedede] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#fc4778] rounded-full transition-all duration-75"
+                style={{ width: `${Math.max(scrollProgress * 100, 12)}%` }}
+              />
+            </div>
+
+            <div className="hidden sm:flex items-center gap-1 font-mono text-[10px] text-[#8e8e8e] uppercase tracking-wider">
+              <span>Scroll to navigate</span>
+              <ArrowRight className="w-3 h-3 text-[#fc4778]" />
+            </div>
+          </div>
         </div>
 
+        {/* Horizontal Card Track (Slides smoothly horizontally on scroll down/up) */}
+        <div className="w-full overflow-visible">
+          <div
+            ref={trackRef}
+            className="flex items-stretch gap-6 md:gap-10 pl-6 md:pl-12 pr-12 md:pr-24 will-change-transform"
+            style={{ width: 'max-content' }}
+          >
+            {realWorks.map((work) => (
+              <div
+                key={work.id}
+                className="w-[84vw] sm:w-[480px] md:w-[580px] lg:w-[640px] flex-shrink-0 group"
+              >
+                {/* Thumbnail card (clickable in current tab) */}
+                <a
+                  href={work.url || '#'}
+                  className="relative block overflow-hidden mb-4 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
+                  style={{ borderRadius: '1.5rem', aspectRatio: '16/10', background: '#dedede' }}
+                >
+                  <img
+                    src={work.thumb}
+                    alt={work.title}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Overlay on hover */}
+                  <div
+                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: 'rgba(43,43,43,0.45)' }}
+                  >
+                    {work.url ? (
+                      <span
+                        className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#2b2b2b] group-hover:bg-[#fc4778] group-hover:text-white transition-all shadow-md"
+                        style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.75rem', textTransform: 'uppercase', textDecoration: 'none' }}
+                      >
+                        VIEW LIVE <ArrowUpRight className="w-4 h-4" />
+                      </span>
+                    ) : (
+                      <span
+                        className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#2b2b2b]"
+                        style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.75rem', textTransform: 'uppercase' }}
+                      >
+                        VIEW PROJECT
+                      </span>
+                    )}
+                  </div>
+                </a>
+
+                {/* Card info below thumbnail */}
+                <div className="flex items-start justify-between gap-4 px-1">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span
+                        style={{
+                          fontFamily: 'Space Mono, monospace',
+                          fontSize: '0.6875rem',
+                          textTransform: 'uppercase',
+                          color: '#fc4778',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {work.tag}
+                      </span>
+                      <span style={{ color: '#dedede' }}>·</span>
+                      <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.6875rem', color: '#a2a2a2' }}>{work.region}</span>
+                      <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.6875rem', color: '#a2a2a2' }}>{work.weeks}</span>
+                    </div>
+                    <h3
+                      style={{
+                        fontFamily: 'DM Serif Display, serif',
+                        fontSize: '1.35rem',
+                        letterSpacing: '-0.03em',
+                        color: '#2b2b2b',
+                        lineHeight: 1.15,
+                        marginBottom: '0.375rem',
+                      }}
+                    >
+                      {work.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: 'DM Sans, sans-serif',
+                        fontSize: '0.875rem',
+                        fontWeight: 300,
+                        color: '#656565',
+                        lineHeight: 1.45,
+                      }}
+                    >
+                      {work.desc}
+                    </p>
+                  </div>
+
+                  {work.url && (
+                    <a
+                      href={work.url}
+                      className="flex-shrink-0 w-10 h-10 rounded-full border border-[#dedede] bg-white flex items-center justify-center text-[#a2a2a2] hover:text-white hover:bg-[#fc4778] hover:border-[#fc4778] transition-all shadow-sm"
+                    >
+                      <ArrowUpRight className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bento Grid & Case Studies Section */}
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '3rem clamp(1rem, 4vw, 3rem) 5rem' }}>
         {/* ===== DIVIDER ===== */}
         <div className="mb-16" style={{ borderTop: '1px solid #dedede' }} />
 
