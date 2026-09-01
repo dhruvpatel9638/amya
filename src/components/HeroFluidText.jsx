@@ -205,7 +205,7 @@ export default function HeroFluidText({ onNavigate }) {
       ctx.save();
       ctx.scale(dpr, dpr);
 
-      // 1. Draw Halftone Pink Dot Matrix in active mouse fluid areas (deeper, richer dark pink)
+      // 1. Draw Halftone Pink Dot Matrix in active mouse fluid areas (subtle, clean, elegant)
       const dotSpacing = 20;
       for (let i = fluidNodes.length - 1; i >= 0; i--) {
         const node = fluidNodes[i];
@@ -229,11 +229,10 @@ export default function HeroFluidText({ onNavigate }) {
           for (let gy = startY; gy <= endY; gy += dotSpacing) {
             const dist = Math.hypot(gx - node.x, gy - node.y);
             if (dist < node.radius) {
-              const intensity = Math.pow(1 - dist / node.radius, 1.2) * node.alpha;
-              if (intensity > 0.03) {
-                const dotSize = Math.max(1.8, intensity * 4.8);
-                // Deeper, punchier dark pink / rich magenta
-                ctx.fillStyle = `rgba(220, 0, 75, ${Math.min(intensity * 1.45, 1.0)})`;
+              const intensity = Math.pow(1 - dist / node.radius, 1.4) * node.alpha;
+              if (intensity > 0.04) {
+                const dotSize = Math.max(1.5, intensity * 3.6);
+                ctx.fillStyle = `rgba(252, 71, 120, ${Math.min(intensity * 1.1, 0.85)})`;
                 ctx.beginPath();
                 ctx.arc(gx, gy, dotSize, 0, Math.PI * 2);
                 ctx.fill();
@@ -243,66 +242,7 @@ export default function HeroFluidText({ onNavigate }) {
         }
       }
 
-      // Calculate localized RGB chromatic aberration offset
-      let dispX = 0;
-      let dispY = 0;
-      let influence = 0;
-
-      const textCenterY = width < 768 ? height * 0.48 : height * 0.42;
-      for (let i = 0; i < fluidNodes.length; i++) {
-        const node = fluidNodes[i];
-        const dist = Math.hypot(width / 2 - node.x, textCenterY - node.y);
-        if (dist < node.radius * 2.5) {
-          const inf = (1 - dist / (node.radius * 2.5)) * node.alpha;
-          dispX += node.vx * inf * 0.75;
-          dispY += node.vy * inf * 0.75;
-          influence = Math.max(influence, inf);
-        }
-      }
-
-      const maxDisp = 24;
-      dispX = Math.max(-maxDisp, Math.min(maxDisp, dispX));
-      dispY = Math.max(-maxDisp, Math.min(maxDisp, dispY));
-
-      // 2. Draw Electric Cyan Layer (Shifted left/top)
-      if (influence > 0.04 || Math.abs(dispX) > 0.4) {
-        ctx.save();
-        ctx.drawImage(
-          textCanvas,
-          0,
-          0,
-          width * dpr,
-          height * dpr,
-          -dispX * 1.35,
-          -dispY * 1.35,
-          width,
-          height
-        );
-        ctx.fillStyle = `rgba(0, 240, 255, ${Math.min(influence * 0.9, 0.85)})`;
-        ctx.globalCompositeOperation = 'source-in';
-        ctx.fillRect(0, 0, width, height);
-        ctx.restore();
-
-        // 3. Draw Hot Neon Pink/Magenta Layer (Shifted right/bottom)
-        ctx.save();
-        ctx.drawImage(
-          textCanvas,
-          0,
-          0,
-          width * dpr,
-          height * dpr,
-          dispX * 1.45,
-          dispY * 1.45,
-          width,
-          height
-        );
-        ctx.fillStyle = `rgba(252, 71, 120, ${Math.min(influence * 0.95, 0.9)})`;
-        ctx.globalCompositeOperation = 'source-in';
-        ctx.fillRect(0, 0, width, height);
-        ctx.restore();
-      }
-
-      // 4. Draw Main Dark Headline Text with transparent blending
+      // 2. Draw Main Dark Headline Text cleanly without blurry duplicate ghost layers
       ctx.save();
       ctx.globalCompositeOperation = 'source-over';
       ctx.drawImage(
