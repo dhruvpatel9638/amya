@@ -35,6 +35,16 @@ const realWorks = [
     region: 'UAE',
     weeks: '5 wks',
   },
+  {
+    id: 'w4',
+    title: 'THRIVO Influencer & Viral Agency',
+    desc: 'High-impact social media & influencer agency web platform with cinematic video hero, bold typography, and conversion funnels.',
+    tag: 'VIRAL AGENCY WEB',
+    thumb: '/viral-agency-thumbnail.png',
+    url: 'https://agency-nu-ebon.vercel.app/',
+    region: 'DE',
+    weeks: '3 wks',
+  },
 ];
 
 // ======= REAL PROJECT DATA (Agentic AI & Repeated Tasks Automation) =======
@@ -403,8 +413,8 @@ export default function Portfolio({ onNavigate }) {
           </span>
         </motion.div>
 
-        {/* ===== REAL CLIENT WORKS GRID (with real thumbnails) ===== */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        {/* ===== REAL CLIENT WORKS GRID (with real thumbnails — 4-card 2x2 grid) ===== */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {realWorks.map((work, idx) => (
             <motion.div
               key={work.id}
