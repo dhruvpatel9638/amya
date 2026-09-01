@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 /**
- * PinkBlob — CSS-only radial gradient blur blob that tracks mouse cursor.
- * Pure CSS transition, no canvas, no library.
- * Matches incredibles.dev ambient pink cursor glow.
+ * PinkBlob — Ultra-smooth, 60/120 FPS GPU-accelerated pink fluid flow
+ * that dynamically trails the mouse cursor with velocity physics & inertia.
  */
 export default function PinkBlob() {
   const blobRef = useRef(null);
@@ -12,13 +11,76 @@ export default function PinkBlob() {
     const blob = blobRef.current;
     if (!blob) return;
 
-    const handleMouseMove = (e) => {
-      blob.style.left = e.clientX + 'px';
-      blob.style.top = e.clientY + 'px';
+    // Check if device is touch-only
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouch) {
+      blob.style.display = 'none';
+      return;
+    }
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+    let prevX = mouseX;
+    let prevY = mouseY;
+    let isVisible = false;
+    let animId;
+
+    const onMouseMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!isVisible) {
+        isVisible = true;
+        blob.style.opacity = '1';
+      }
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    const onMouseEnter = () => {
+      isVisible = true;
+      blob.style.opacity = '1';
+    };
+
+    const onMouseLeave = () => {
+      isVisible = false;
+      blob.style.opacity = '0';
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseenter', onMouseEnter);
+    document.addEventListener('mouseleave', onMouseLeave);
+
+    // 60/120 FPS Physics Interpolation Loop
+    const update = () => {
+      // Butter-smooth spring lerp factor
+      currentX += (mouseX - currentX) * 0.16;
+      currentY += (mouseY - currentY) * 0.16;
+
+      const vx = currentX - prevX;
+      const vy = currentY - prevY;
+      const speed = Math.min(Math.hypot(vx, vy), 35);
+
+      prevX = currentX;
+      prevY = currentY;
+
+      // Dynamic velocity scale & stretch
+      const scaleX = 1 + Math.min(speed * 0.012, 0.35);
+      const scaleY = 1 - Math.min(speed * 0.006, 0.2);
+      const angle = Math.atan2(vy, vx);
+
+      blob.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%) rotate(${angle}rad) scale(${scaleX}, ${scaleY})`;
+
+      animId = requestAnimationFrame(update);
+    };
+
+    animId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseenter', onMouseEnter);
+      document.removeEventListener('mouseleave', onMouseLeave);
+    };
   }, []);
 
   return (
@@ -26,18 +88,18 @@ export default function PinkBlob() {
       ref={blobRef}
       aria-hidden="true"
       style={{
-        width: '340px',
-        height: '340px',
-        background: 'radial-gradient(circle, rgba(220, 0, 75, 0.45), transparent 70%)',
-        filter: 'blur(62px)',
         position: 'fixed',
-        top: '50%',
-        left: '50%',
+        top: 0,
+        left: 0,
+        width: '320px',
+        height: '320px',
+        background: 'radial-gradient(circle, rgba(255, 25, 100, 0.75) 0%, rgba(255, 60, 130, 0.45) 35%, rgba(255, 95, 155, 0.15) 60%, transparent 75%)',
+        filter: 'blur(55px)',
         pointerEvents: 'none',
-        transform: 'translate(-50%, -50%)',
-        transition: 'left 0.12s ease, top 0.12s ease',
-        zIndex: 9999,
-        mixBlendMode: 'multiply',
+        zIndex: 9998,
+        opacity: 0,
+        transition: 'opacity 0.35s ease',
+        willChange: 'transform',
       }}
     />
   );
