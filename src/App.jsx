@@ -10,7 +10,6 @@ import PricingCalculator from './components/PricingCalculator';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
-import PinkBlob from './components/PinkBlob';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -86,7 +85,6 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#f1f1f1] text-[#2b2b2b] font-sans overflow-x-hidden">
-      <PinkBlob />
       <CustomCursor />
       <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
 
