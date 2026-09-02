@@ -62,6 +62,15 @@ export default function Footer({ onNavigate }) {
       >
         <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
 
+          {/* Brand Logo (Placed in Footer only) */}
+          <div className="mb-6 sm:mb-8">
+            <img
+              src="/AMYA logo.png"
+              alt="Amya Growth Logo"
+              className="h-10 sm:h-12 md:h-14 w-auto object-contain select-none"
+            />
+          </div>
+
           {/* Tag */}
           <span
             style={{
@@ -157,7 +166,13 @@ export default function Footer({ onNavigate }) {
               </a>
             </div>
 
-
+            <div className="hidden sm:block">
+              <img
+                src="/AMYA logo.png"
+                alt="Amya Growth"
+                className="h-8 md:h-9 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity"
+              />
+            </div>
           </div>
 
         </div>
