@@ -16,7 +16,6 @@ const realWorks = [
     tag: 'REAL ESTATE AUTOMATION',
     thumb: '/real-estate-thumbnail.png',
     url: 'https://real-estate-silk-five.vercel.app/',
-    region: 'UAE',
     weeks: '5 wks',
   },
   {
@@ -26,7 +25,6 @@ const realWorks = [
     tag: 'VIRAL AGENCY WEB',
     thumb: '/viral-agency-thumbnail.png',
     url: 'https://agency-liart-six.vercel.app/',
-    region: 'DE',
     weeks: '3 wks',
   },
   {
@@ -36,7 +34,6 @@ const realWorks = [
     tag: 'LOGISTICS AUTOMATION',
     thumb: '/media_1787573325188.png',
     url: 'https://ahtransport.vercel.app',
-    region: 'IN',
     weeks: '3 wks',
   },
 ];
@@ -175,7 +172,6 @@ function QuoteCard() {
 
 // ======= HORIZONTAL PROJECT PILL =======
 function ProjectPill({ project, onClick }) {
-  const regionMap = { 1: 'US', 2: 'EU', 3: 'GLOBAL', 4: 'US', 5: 'UK', 6: 'ASIA' };
   const weekMap = { 1: '6 wks', 2: '10 wks', 3: '12 wks', 4: '8 wks', 5: '14 wks', 6: '6 wks' };
 
   return (
@@ -198,16 +194,6 @@ function ProjectPill({ project, onClick }) {
       </span>
 
       <div className="flex items-center gap-3 flex-shrink-0">
-        <span
-          style={{
-            fontFamily: 'Space Mono, monospace',
-            fontSize: '0.7rem',
-            color: '#a2a2a2',
-            textTransform: 'uppercase',
-          }}
-        >
-          {regionMap[project.id]}
-        </span>
         <span
           style={{
             fontFamily: 'Space Mono, monospace',
@@ -549,7 +535,6 @@ export default function Portfolio({ onNavigate }) {
                         {work.tag}
                       </span>
                       <span style={{ color: '#dedede' }}>·</span>
-                      <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.6875rem', color: '#a2a2a2' }}>{work.region}</span>
                       <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.6875rem', color: '#a2a2a2' }}>{work.weeks}</span>
                     </div>
                     <h3
