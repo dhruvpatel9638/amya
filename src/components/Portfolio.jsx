@@ -31,16 +31,6 @@ const realWorks = [
   },
   {
     id: 'w3',
-    title: 'Modhera Luxury Resort Web App',
-    desc: 'Luxury resort web platform with autonomous booking engine, instant room inventory sync, and intelligent guest concierge.',
-    tag: 'HOSPITALITY WEB APP',
-    thumb: '/resort-thumbnail.png',
-    url: 'https://sunrise-modhera.vercel.app/',
-    region: 'IN',
-    weeks: '4 wks',
-  },
-  {
-    id: 'w4',
     title: 'AH Transport Logistics Platform',
     desc: 'Autonomous fleet motion UI & dispatch management system with real-time GPS telemetry and automated delivery routing.',
     tag: 'LOGISTICS AUTOMATION',
@@ -457,7 +447,7 @@ export default function Portfolio({ onNavigate }) {
                   letterSpacing: '0.04em',
                 }}
               >
-                Selected Works · 04 Live Platforms
+                Selected Works · {String(realWorks.length).padStart(2, '0')} Live Platforms
               </span>
             </div>
             <h2
@@ -477,10 +467,10 @@ export default function Portfolio({ onNavigate }) {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-xs text-[#a2a2a2] font-mono">
               <span className="text-[#fc4778] font-bold text-sm">
-                {String(Math.min(Math.floor(scrollProgress * 4) + 1, 4)).padStart(2, '0')}
+                {String(Math.min(Math.floor(scrollProgress * realWorks.length) + 1, realWorks.length)).padStart(2, '0')}
               </span>
               <span>/</span>
-              <span>04</span>
+              <span>{String(realWorks.length).padStart(2, '0')}</span>
             </div>
 
             <div className="w-24 sm:w-36 h-1.5 bg-[#dedede] rounded-full overflow-hidden">
