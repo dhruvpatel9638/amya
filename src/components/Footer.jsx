@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Instagram, Globe, Mail, ArrowUpRight, Linkedin } from 'lucide-react';
 import PinkFlowCanvas from './PinkFlowCanvas';
+import amyaLogo from '../assets/logo.png';
 
 // Pink 3D chevron / layered geometric staircase matching frames 00:40 - 00:48
 function PinkChevronStaircase() {
@@ -65,9 +66,9 @@ export default function Footer({ onNavigate }) {
           {/* Brand Logo (Placed in Footer only) */}
           <div className="mb-6 sm:mb-8">
             <img
-              src="/AMYA logo.png"
+              src={amyaLogo}
               alt="Amya Growth Logo"
-              className="h-10 sm:h-12 md:h-14 w-auto object-contain select-none"
+              className="h-11 sm:h-13 md:h-16 w-auto object-contain select-none"
             />
           </div>
 
@@ -168,9 +169,9 @@ export default function Footer({ onNavigate }) {
 
             <div className="hidden sm:block">
               <img
-                src="/AMYA logo.png"
+                src={amyaLogo}
                 alt="Amya Growth"
-                className="h-8 md:h-9 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity"
+                className="h-8 md:h-9 w-auto object-contain opacity-85 hover:opacity-100 transition-opacity"
               />
             </div>
           </div>
