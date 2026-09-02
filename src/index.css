@@ -201,7 +201,8 @@
 }
 
 .btn-dark:hover {
-  background: #444;
+  background: var(--color-accent);
+  color: #ffffff;
   transform: translateY(-1px);
 }
 
@@ -212,7 +213,7 @@
   padding: 0.875rem 2rem;
   background: transparent;
   color: var(--color-dark);
-  border: 1px solid rgba(43, 43, 43, 0.169);
+  border: 1px solid rgba(43, 43, 43, 0.2);
   border-radius: 9999px;
   font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
@@ -225,7 +226,9 @@
 }
 
 .btn-outline:hover {
-  background: rgba(43, 43, 43, 0.06);
+  background: var(--color-dark);
+  color: #ffffff;
+  border-color: var(--color-dark);
 }
 
 /* ===== CARDS ===== */

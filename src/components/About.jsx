@@ -94,10 +94,18 @@ export default function About({ onNavigate }) {
               Amya Growth is an IT Agency delivering high-impact Web Development and autonomous AI Automation. We build creative, enterprise-grade web applications that run your operations around the clock — helping startups, legacy businesses, and medium enterprises grow 100x without needing extra staff.
             </p>
             <div className="flex flex-wrap items-center gap-4">
-              <button onClick={() => onNavigate('contact')} className="btn-dark">
+              <button
+                onClick={() => onNavigate('contact')}
+                className="font-mono text-xs uppercase tracking-wider px-8 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md flex items-center justify-center cursor-pointer"
+                style={{ fontFamily: 'Space Mono, monospace' }}
+              >
                 BOOK FREE CONSULTATION
               </button>
-              <button onClick={() => onNavigate('portfolio')} className="btn-outline">
+              <button
+                onClick={() => onNavigate('portfolio')}
+                className="font-mono text-xs uppercase tracking-wider px-8 py-4 rounded-full border border-black/20 bg-white/80 text-[#2b2b2b] hover:bg-[#2b2b2b] hover:text-white transition-all duration-200 shadow-sm flex items-center justify-center cursor-pointer"
+                style={{ fontFamily: 'Space Mono, monospace' }}
+              >
                 EXPLORE WORKS
               </button>
             </div>
