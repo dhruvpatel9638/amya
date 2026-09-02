@@ -5,6 +5,24 @@ export default function CustomCursor() {
   const cursorRef = useRef(null);
   const ringRef = useRef(null);
 
+  // Check if mobile or touch screen — completely disable cursor on mobile view
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile =
+        window.innerWidth < 1024 ||
+        window.matchMedia('(pointer: coarse)').matches ||
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0;
+      setIsMobile(mobile);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Raw mouse position (snaps immediately)
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -18,6 +36,8 @@ export default function CustomCursor() {
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const onMove = (e) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -84,6 +104,8 @@ export default function CustomCursor() {
 
   // Ring size: expands on hover
   const ringSize = isHovering ? 56 : isClicking ? 32 : 40;
+
+  if (isMobile) return null;
 
   return (
     <>

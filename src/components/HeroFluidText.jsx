@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 
 /**
- * HeroFluidText — 100% faithful recreation of incredibles.dev Hero effect:
- * 1. Halftone pink dot dispersion cloud (#fc4778) trailing mouse movements
- * 2. Vibrant RGB Chromatic Aberration (Electric Cyan & Neon Pink split) on headline text
- * 3. Fluid velocity text distortion & ripple
- * 4. Ultra-clean responsive mobile typography and zero clutter layout
+ * HeroFluidText — Enterprise responsive hero section:
+ * 1. Halftone teal dot dispersion cloud trailing mouse movements on canvas
+ * 2. 100% optically centered responsive HTML headline & typography on ALL viewports
+ * 3. Mobile touch friendly & zero layout shift on resize
  */
 export default function HeroFluidText({ onNavigate }) {
   const canvasRef = useRef(null);
@@ -23,10 +22,6 @@ export default function HeroFluidText({ onNavigate }) {
     let height = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    // Off-screen canvas for rendering crisp headline text
-    const textCanvas = document.createElement('canvas');
-    const textCtx = textCanvas.getContext('2d');
-
     // Fluid particles / velocity nodes
     const fluidNodes = [];
     const mouse = {
@@ -37,97 +32,6 @@ export default function HeroFluidText({ onNavigate }) {
       vx: 0,
       vy: 0,
       speed: 0,
-    };
-
-    // Draw the static headline text on the offscreen canvas
-    const renderTextToCanvas = () => {
-      textCanvas.width = width * dpr;
-      textCanvas.height = height * dpr;
-      textCtx.scale(dpr, dpr);
-      textCtx.clearRect(0, 0, width, height);
-
-      const isMobile = width < 768;
-
-      if (isMobile) {
-        // --- MOBILE HERO TEXT LAYOUT (Exact optical vertical center between navbar and bottom buttons) ---
-        const mFontSize = Math.min(Math.max(width * 0.088, 30), 40);
-        
-        // Exact vertical center of visible space
-        const centerY = height * 0.48;
-        const line2Y = centerY - mFontSize * 0.35;
-        const line1Y = line2Y - mFontSize * 1.08;
-        const line3Y = line2Y + mFontSize * 1.08;
-        const tagY = line1Y - mFontSize * 1.15;
-
-        // 1. Tag
-        textCtx.font = '500 9.5px "Space Mono", monospace';
-        textCtx.fillStyle = '#787878';
-        textCtx.textAlign = 'center';
-        textCtx.textBaseline = 'middle';
-        textCtx.letterSpacing = '0.06em';
-        textCtx.fillText('WEB APPS  •  MERN  •  AI AUTOMATION', width / 2, tagY);
-
-        // 2. Headline: 3 clean balanced lines
-        textCtx.font = `600 ${mFontSize}px "Space Grotesk", "DM Serif Display", sans-serif`;
-        textCtx.fillStyle = '#2b2b2b';
-        textCtx.textAlign = 'center';
-        textCtx.textBaseline = 'middle';
-        textCtx.letterSpacing = '-0.04em';
-
-        textCtx.fillText('Creative Web Apps', width / 2, line1Y);
-
-        textCtx.font = `italic 400 ${mFontSize}px "DM Serif Display", serif`;
-        textCtx.fillText('That Run Without', width / 2, line2Y);
-        textCtx.fillText('Employees.', width / 2, line3Y);
-
-        // 3. Subtitle
-        const subFontSize = 13;
-        textCtx.font = `300 ${subFontSize}px "DM Sans", sans-serif`;
-        textCtx.fillStyle = '#656565';
-        textCtx.letterSpacing = '0';
-        const subY = line3Y + mFontSize * 0.95;
-        textCtx.fillText('We build creative UI & web applications that run', width / 2, subY);
-        textCtx.fillText('your operations 24/7 without extra staff.', width / 2, subY + subFontSize * 1.45);
-      } else {
-        // --- DESKTOP HERO TEXT LAYOUT ---
-        textCtx.font = '500 11px "Space Mono", monospace';
-        textCtx.fillStyle = '#656565';
-        textCtx.textAlign = 'center';
-        textCtx.textBaseline = 'middle';
-        textCtx.letterSpacing = '0.08em';
-
-        const tagY = height * 0.28;
-        const tagText = 'CREATIVE UI & MOTION   •   FULL-STACK WEB APPS   •   AUTONOMOUS AI SYSTEMS';
-        textCtx.fillText(tagText, width / 2, tagY);
-
-        // Massive display headline text
-        const fontSize = Math.min(Math.max(width * 0.068, 48), 104);
-        textCtx.font = `600 ${fontSize}px "Space Grotesk", "DM Serif Display", sans-serif`;
-        textCtx.fillStyle = '#2b2b2b';
-        textCtx.textAlign = 'center';
-        textCtx.textBaseline = 'middle';
-        textCtx.letterSpacing = '-0.04em';
-
-        const line1Y = height * 0.40;
-        const line2Y = line1Y + fontSize * 0.95;
-
-        textCtx.fillText('Creative Web Apps', width / 2, line1Y);
-
-        // Italic "That Run Without Employees."
-        textCtx.font = `italic 400 ${fontSize}px "DM Serif Display", serif`;
-        textCtx.fillText('That Run Without Employees.', width / 2, line2Y);
-
-        // Subtitle below headline
-        const subFontSize = Math.min(Math.max(width * 0.015, 14), 18);
-        textCtx.font = `300 ${subFontSize}px "DM Sans", sans-serif`;
-        textCtx.fillStyle = '#656565';
-        textCtx.letterSpacing = '0';
-        const subY = line2Y + fontSize * 0.75;
-        const subText1 = 'We build high-converting creative UI, full-stack web applications, and autonomous AI automation';
-        const subText2 = 'that handle sales, follow-ups, and operations 24/7 — scaling your business without extra staff.';
-        textCtx.fillText(subText1, width / 2, subY);
-        textCtx.fillText(subText2, width / 2, subY + subFontSize * 1.5);
-      }
     };
 
     const handleResize = () => {
@@ -141,8 +45,6 @@ export default function HeroFluidText({ onNavigate }) {
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-
-      renderTextToCanvas();
     };
 
     handleResize();
@@ -206,7 +108,7 @@ export default function HeroFluidText({ onNavigate }) {
       ctx.save();
       ctx.scale(dpr, dpr);
 
-      // 1. Draw Halftone Pink Dot Matrix in active mouse fluid areas (subtle, clean, elegant)
+      // Draw Halftone Teal Dot Matrix in active mouse fluid areas
       const dotSpacing = 20;
       for (let i = fluidNodes.length - 1; i >= 0; i--) {
         const node = fluidNodes[i];
@@ -242,22 +144,6 @@ export default function HeroFluidText({ onNavigate }) {
           }
         }
       }
-
-      // 2. Draw Main Dark Headline Text cleanly without blurry duplicate ghost layers
-      ctx.save();
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.drawImage(
-        textCanvas,
-        0,
-        0,
-        width * dpr,
-        height * dpr,
-        0,
-        0,
-        width,
-        height
-      );
-      ctx.restore();
 
       ctx.restore();
 
@@ -335,8 +221,48 @@ export default function HeroFluidText({ onNavigate }) {
       {/* Spacer for navbar */}
       <div className="h-20 md:h-24 pointer-events-none" />
 
+      {/* Centered Hero Headline Content — 100% Optically & Horizontally Centered on ALL Screen Sizes */}
+      <div className="relative z-20 flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-12 pointer-events-none w-full max-w-5xl mx-auto my-auto">
+        {/* Monospace Tag */}
+        <span
+          className="font-mono text-[9.5px] sm:text-[11px] md:text-xs text-[#787878] uppercase tracking-[0.08em] mb-3 sm:mb-4 md:mb-5 block select-none"
+          style={{ fontFamily: 'Space Mono, monospace' }}
+        >
+          WEB APPS • MERN • AI AUTOMATION
+        </span>
+
+        {/* Display Headline */}
+        <h1
+          className="text-[#2b2b2b] tracking-[-0.035em] leading-[0.98] sm:leading-[0.92] mb-3 sm:mb-5 select-none"
+          style={{
+            fontFamily: 'Space Grotesk, DM Serif Display, sans-serif',
+            fontSize: 'clamp(2.1rem, 5.8vw, 5.6rem)',
+            fontWeight: 600,
+          }}
+        >
+          Creative Web Apps <br />
+          <span
+            className="italic font-normal"
+            style={{ fontFamily: 'DM Serif Display, serif' }}
+          >
+            That Run Without Employees.
+          </span>
+        </h1>
+
+        {/* Subtitle */}
+        <p
+          className="text-[#656565] font-light max-w-lg sm:max-w-xl md:max-w-2xl mx-auto leading-relaxed select-none"
+          style={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontSize: 'clamp(0.85rem, 1.35vw, 1.125rem)',
+          }}
+        >
+          We build high-converting creative UI, full-stack web applications, and autonomous AI automation that handle operations 24/7 without extra staff.
+        </p>
+      </div>
+
       {/* Interactive Action Buttons (Centered, touch-friendly & responsive) */}
-      <div className="relative z-30 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-auto mb-10 md:mb-16 px-6 pointer-events-auto w-full max-w-sm sm:max-w-none mx-auto">
+      <div className="relative z-30 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-auto mb-8 sm:mb-10 md:mb-12 px-6 pointer-events-auto w-full max-w-sm sm:max-w-none mx-auto">
         <button
           onClick={() => onNavigate('contact')}
           className="w-full sm:w-auto font-mono text-[0.6875rem] md:text-xs uppercase tracking-wider px-7 py-3.5 md:px-8 md:py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer"

@@ -20,7 +20,6 @@
 
   html {
     background-color: var(--color-bg);
-    cursor: none;
   }
 
   /* Lenis smooth scrolling rules */
@@ -49,19 +48,38 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    cursor: none;
   }
 
-  /* Hide native cursor on all interactive elements */
-  a,
-  button,
-  input,
-  textarea,
-  select,
-  label,
-  [role="button"],
-  [tabindex] {
-    cursor: none !important;
+  /* Custom cursor ONLY on desktop mice (> 1024px, fine pointer, hover) */
+  @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+    html,
+    body,
+    a,
+    button,
+    input,
+    textarea,
+    select,
+    label,
+    [role="button"],
+    [tabindex] {
+      cursor: none !important;
+    }
+  }
+
+  /* On touch / mobile screens, always restore default cursor and never show custom cursor artifacts */
+  @media (max-width: 1024px), (pointer: coarse), (hover: none) {
+    html,
+    body,
+    a,
+    button,
+    input,
+    textarea,
+    select,
+    label,
+    [role="button"],
+    [tabindex] {
+      cursor: auto !important;
+    }
   }
 
   h1,
