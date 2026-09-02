@@ -115,7 +115,7 @@ export default function InteractiveDotGrid({ className = '', spacing = 26, isDar
               size: tileSize,
               alpha: Math.min(0.35, 0.15 + speed * 0.01),
               decay: 0.012 + Math.random() * 0.008,
-              color: Math.random() > 0.5 ? '#fc4778' : '#fd8aa9',
+              color: Math.random() > 0.5 ? '#3F7E7C' : '#68A19F',
             });
           }
         }
@@ -157,7 +157,7 @@ export default function InteractiveDotGrid({ className = '', spacing = 26, isDar
 
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Draw active stepped pink square tiles (aligned with dot grid)
+      // 1. Draw active stepped teal square tiles (aligned with dot grid)
       for (let i = tiles.length - 1; i >= 0; i--) {
         const t = tiles[i];
         t.alpha -= t.decay;
@@ -167,14 +167,14 @@ export default function InteractiveDotGrid({ className = '', spacing = 26, isDar
           continue;
         }
 
-        ctx.fillStyle = t.color === '#fc4778'
-          ? `rgba(252, 71, 120, ${t.alpha})`
-          : `rgba(253, 138, 169, ${t.alpha})`;
+        ctx.fillStyle = t.color === '#3F7E7C'
+          ? `rgba(63, 126, 124, ${t.alpha})`
+          : `rgba(104, 161, 159, ${t.alpha})`;
         
         ctx.fillRect(t.x, t.y, t.size, t.size);
 
         // Subtle crisp border
-        ctx.strokeStyle = `rgba(252, 71, 120, ${t.alpha * 0.6})`;
+        ctx.strokeStyle = `rgba(63, 126, 124, ${t.alpha * 0.6})`;
         ctx.lineWidth = 1;
         ctx.strokeRect(t.x, t.y, t.size, t.size);
       }
@@ -255,15 +255,15 @@ export default function InteractiveDotGrid({ className = '', spacing = 26, isDar
         ctx.arc(d.x, d.y, Math.max(0.5, d.currentRadius), 0, Math.PI * 2);
 
         if (d.pinkAlpha > 0.03) {
-          // Pink illuminated dot with gentle glow
-          ctx.fillStyle = `rgba(252, 71, 120, ${0.18 + d.pinkAlpha * 0.82})`;
+          // Teal illuminated dot with gentle glow
+          ctx.fillStyle = `rgba(63, 126, 124, ${0.18 + d.pinkAlpha * 0.82})`;
           ctx.fill();
 
           if (d.pinkAlpha > 0.35) {
             // Subtle outer glow ring
             ctx.beginPath();
             ctx.arc(d.x, d.y, d.currentRadius * 1.8, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(253, 106, 144, ${d.pinkAlpha * 0.22})`;
+            ctx.fillStyle = `rgba(82, 143, 141, ${d.pinkAlpha * 0.22})`;
             ctx.fill();
           }
         } else {

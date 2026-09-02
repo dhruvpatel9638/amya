@@ -7,8 +7,8 @@ import PinkFlowCanvas from './PinkFlowCanvas';
 function PinkChevronStaircase() {
   const count = 10;
   const colors = [
-    '#fc4778', '#fd5984', '#fd6b90', '#fd7e9c', '#fe90a8',
-    '#fea2b4', '#feb4c0', '#fec7cc', '#fed9d8', '#fef0ef'
+    '#1F4E4E', '#265856', '#2F6765', '#3F7E7C', '#4F8F8D',
+    '#68A19F', '#84B7B5', '#A5CDCB', '#CAE4E3', '#EAF5F4'
   ];
 
   return (
@@ -112,7 +112,7 @@ export default function Footer({ onNavigate }) {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
             <button
               onClick={() => onNavigate('contact')}
-              className="w-full sm:w-auto font-mono text-xs uppercase tracking-wider px-9 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#fc4778] transition-all duration-200 shadow-md flex items-center justify-center cursor-pointer"
+              className="w-full sm:w-auto font-mono text-xs uppercase tracking-wider px-9 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md flex items-center justify-center cursor-pointer"
               style={{ fontFamily: 'Space Mono, monospace' }}
             >
               START A CONVERSATION
@@ -124,7 +124,7 @@ export default function Footer({ onNavigate }) {
               className="w-full sm:w-auto font-mono text-xs uppercase tracking-wider px-8 py-4 rounded-full border border-black/20 bg-white/80 text-[#2b2b2b] hover:bg-[#2b2b2b] hover:text-white transition-all duration-200 shadow-sm inline-flex items-center justify-center gap-2 cursor-pointer"
               style={{ fontFamily: 'Space Mono, monospace' }}
             >
-              <Instagram className="w-4 h-4 text-[#fc4778]" />
+              <Instagram className="w-4 h-4 text-[#3F7E7C]" />
               INSTAGRAM @AMYA.GROWTH
             </a>
           </div>
@@ -145,7 +145,7 @@ export default function Footer({ onNavigate }) {
               </span>
               <a
                 href="mailto:hello@amyagrowth.com"
-                className="hover:text-[#fc4778] transition-colors"
+                className="hover:text-[#3F7E7C] transition-colors"
                 style={{
                   fontFamily: 'Space Grotesk, DM Sans, sans-serif',
                   fontSize: '1.25rem',
@@ -201,7 +201,7 @@ export default function Footer({ onNavigate }) {
               <button
                 key={item.id}
                 onClick={item.id === 'hero' ? scrollToTop : () => onNavigate(item.id)}
-                className="bg-transparent border-none cursor-pointer hover:text-[#fc4778] transition-colors"
+                className="bg-transparent border-none cursor-pointer hover:text-[#3F7E7C] transition-colors"
                 style={{
                   fontFamily: 'Space Mono, monospace',
                   fontSize: '0.75rem',
@@ -216,7 +216,7 @@ export default function Footer({ onNavigate }) {
           {/* Right: Scroll to top */}
           <button
             onClick={scrollToTop}
-            className="bg-transparent border-none cursor-pointer flex items-center gap-2 hover:text-[#fc4778] transition-colors"
+            className="bg-transparent border-none cursor-pointer flex items-center gap-2 hover:text-[#3F7E7C] transition-colors"
             style={{
               fontFamily: 'Space Mono, monospace',
               fontSize: '0.75rem',

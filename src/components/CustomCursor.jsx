@@ -100,7 +100,7 @@ export default function CustomCursor() {
           width: dotSize,
           height: dotSize,
           borderRadius: '50%',
-          backgroundColor: isHovering ? '#fc4778' : '#2b2b2b',
+          backgroundColor: isHovering ? '#3F7E7C' : '#2b2b2b',
           pointerEvents: 'none',
           zIndex: 99999,
           opacity: isHidden ? 0 : 1,
@@ -109,7 +109,7 @@ export default function CustomCursor() {
         animate={{
           width: dotSize,
           height: dotSize,
-          backgroundColor: isHovering ? '#fc4778' : '#2b2b2b',
+          backgroundColor: isHovering ? '#3F7E7C' : '#2b2b2b',
           opacity: isHidden ? 0 : 1,
         }}
         transition={{ duration: 0.12, ease: 'easeOut' }}
@@ -128,8 +128,8 @@ export default function CustomCursor() {
           width: ringSize,
           height: ringSize,
           borderRadius: '50%',
-          border: isHovering ? '1.5px solid #fc4778' : '1.5px solid rgba(43,43,43,0.35)',
-          backgroundColor: isHovering ? 'rgba(252,71,120,0.08)' : 'transparent',
+          border: isHovering ? '1.5px solid #3F7E7C' : '1.5px solid rgba(43,43,43,0.35)',
+          backgroundColor: isHovering ? 'rgba(63,126,124,0.12)' : 'transparent',
           pointerEvents: 'none',
           zIndex: 99998,
           opacity: isHidden ? 0 : 1,
@@ -137,8 +137,8 @@ export default function CustomCursor() {
         animate={{
           width: ringSize,
           height: ringSize,
-          border: isHovering ? '1.5px solid #fc4778' : '1.5px solid rgba(43,43,43,0.35)',
-          backgroundColor: isHovering ? 'rgba(252,71,120,0.08)' : 'transparent',
+          border: isHovering ? '1.5px solid #3F7E7C' : '1.5px solid rgba(43,43,43,0.35)',
+          backgroundColor: isHovering ? 'rgba(63,126,124,0.12)' : 'transparent',
           opacity: isHidden ? 0 : 1,
         }}
         transition={{ duration: 0.18, ease: 'easeOut' }}

@@ -87,7 +87,7 @@ export default function PinkFlowCanvas({ className = '', opacity = 0.85, isDark 
             radius: Math.random() * 45 + 25 + speed * 0.6,
             alpha: 0.55 + Math.random() * 0.25,
             decay: 0.016 + Math.random() * 0.012,
-            hueShift: Math.random() > 0.6 ? '#fd8aa9' : '#fc4778',
+            hueShift: Math.random() > 0.6 ? '#68A19F' : '#3F7E7C',
           });
         }
       } else {
@@ -112,7 +112,7 @@ export default function PinkFlowCanvas({ className = '', opacity = 0.85, isDark 
 
       ctx.clearRect(0, 0, width, height);
 
-      // Render fluid pink particles
+      // Render fluid teal particles
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.x += p.vx;
@@ -128,14 +128,14 @@ export default function PinkFlowCanvas({ className = '', opacity = 0.85, isDark 
         }
 
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-        if (p.hueShift === '#fd8aa9') {
-          grad.addColorStop(0, `rgba(225, 0, 80, ${p.alpha * 0.95})`);
-          grad.addColorStop(0.5, `rgba(210, 0, 70, ${p.alpha * 0.55})`);
-          grad.addColorStop(1, 'rgba(210, 0, 70, 0)');
+        if (p.hueShift === '#68A19F') {
+          grad.addColorStop(0, `rgba(82, 143, 141, ${p.alpha * 0.95})`);
+          grad.addColorStop(0.5, `rgba(63, 126, 124, ${p.alpha * 0.55})`);
+          grad.addColorStop(1, 'rgba(63, 126, 124, 0)');
         } else {
-          grad.addColorStop(0, `rgba(220, 0, 75, ${p.alpha * 1.0})`);
-          grad.addColorStop(0.4, `rgba(200, 0, 65, ${p.alpha * 0.6})`);
-          grad.addColorStop(1, 'rgba(200, 0, 65, 0)');
+          grad.addColorStop(0, `rgba(31, 78, 78, ${p.alpha * 1.0})`);
+          grad.addColorStop(0.4, `rgba(63, 126, 124, ${p.alpha * 0.6})`);
+          grad.addColorStop(1, 'rgba(63, 126, 124, 0)');
         }
 
         ctx.fillStyle = grad;

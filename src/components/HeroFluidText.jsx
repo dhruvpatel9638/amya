@@ -233,7 +233,7 @@ export default function HeroFluidText({ onNavigate }) {
               const intensity = Math.pow(1 - dist / node.radius, 1.4) * node.alpha;
               if (intensity > 0.04) {
                 const dotSize = Math.max(1.5, intensity * 3.6);
-                ctx.fillStyle = `rgba(252, 71, 120, ${Math.min(intensity * 1.1, 0.85)})`;
+                ctx.fillStyle = `rgba(63, 126, 124, ${Math.min(intensity * 1.1, 0.85)})`;
                 ctx.beginPath();
                 ctx.arc(gx, gy, dotSize, 0, Math.PI * 2);
                 ctx.fill();
@@ -293,10 +293,10 @@ export default function HeroFluidText({ onNavigate }) {
         className="absolute inset-0 w-full h-full pointer-events-none z-10"
       />
 
-      {/* Decorative pink stepped squares — visible on both mobile and desktop */}
+      {/* Decorative teal stepped squares matching brand logo — visible on both mobile and desktop */}
       <div className="absolute top-14 md:top-24 left-0 z-20 pointer-events-none select-none scale-[0.65] md:scale-100 origin-top-left">
         <div className="relative" style={{ width: 130, height: 130 }}>
-          {['#fc4778', '#fd6a90', '#fd8aa9', '#feacc1', '#fecdd6'].map((color, i) => (
+          {['#1F4E4E', '#2C6462', '#3F7E7C', '#518D8A', '#7BB3B0'].map((color, i) => (
             <div
               key={i}
               className="absolute"
@@ -315,7 +315,7 @@ export default function HeroFluidText({ onNavigate }) {
 
       <div className="absolute bottom-28 md:bottom-0 right-0 z-20 pointer-events-none select-none scale-[0.65] md:scale-100 origin-bottom-right">
         <div className="relative" style={{ width: 130, height: 130 }}>
-          {['#fc4778', '#fd6a90', '#fd8aa9', '#feacc1', '#fecdd6'].map((color, i) => (
+          {['#1F4E4E', '#2C6462', '#3F7E7C', '#518D8A', '#7BB3B0'].map((color, i) => (
             <div
               key={i}
               className="absolute"
@@ -339,7 +339,7 @@ export default function HeroFluidText({ onNavigate }) {
       <div className="relative z-30 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-auto mb-10 md:mb-16 px-6 pointer-events-auto w-full max-w-sm sm:max-w-none mx-auto">
         <button
           onClick={() => onNavigate('contact')}
-          className="w-full sm:w-auto font-mono text-[0.6875rem] md:text-xs uppercase tracking-wider px-7 py-3.5 md:px-8 md:py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#fc4778] transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full sm:w-auto font-mono text-[0.6875rem] md:text-xs uppercase tracking-wider px-7 py-3.5 md:px-8 md:py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer"
           style={{ fontFamily: 'Space Mono, monospace' }}
         >
           BOOK FREE CONSULTATION

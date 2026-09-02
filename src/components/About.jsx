@@ -119,7 +119,7 @@ export default function About({ onNavigate }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#2b2b2b]/90 via-[#2b2b2b]/40 to-transparent flex items-end justify-between p-8">
             <div>
-              <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.75rem', color: '#fc4778' }}>
+              <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.75rem', color: '#3F7E7C' }}>
                 AGENCY CAPABILITIES
               </span>
               <h3
@@ -164,7 +164,7 @@ export default function About({ onNavigate }) {
                     style={{
                       fontFamily: 'Space Mono, monospace',
                       fontSize: '0.65rem',
-                      color: '#fc4778',
+                      color: '#3F7E7C',
                       letterSpacing: '0.05em',
                     }}
                   >

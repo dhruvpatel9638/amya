@@ -93,7 +93,7 @@ export default function PinkBlob() {
         left: 0,
         width: '320px',
         height: '320px',
-        background: 'radial-gradient(circle, rgba(255, 25, 100, 0.75) 0%, rgba(255, 60, 130, 0.45) 35%, rgba(255, 95, 155, 0.15) 60%, transparent 75%)',
+        background: 'radial-gradient(circle, rgba(31, 78, 78, 0.65) 0%, rgba(63, 126, 124, 0.4) 35%, rgba(104, 161, 159, 0.15) 60%, transparent 75%)',
         filter: 'blur(55px)',
         pointerEvents: 'none',
         zIndex: 9998,

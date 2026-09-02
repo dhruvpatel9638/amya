@@ -11,7 +11,7 @@
     --color-bg: #f1f1f1;
     --color-surface: #fafafa;
     --color-dark: #2b2b2b;
-    --color-accent: #fc4778;
+    --color-accent: #3F7E7C;
     --color-muted: #a2a2a2;
     --color-border: #dedede;
     --mouse-x: 50vw;
@@ -83,14 +83,14 @@
 /* ===== BRAND TEXT SELECTION (Universal) ===== */
 ::selection,
 *::selection {
-  background-color: #fc4778 !important;
+  background-color: #3F7E7C !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
 ::-moz-selection,
 *::-moz-selection {
-  background-color: #fc4778 !important;
+  background-color: #3F7E7C !important;
   color: #ffffff !important;
 }
 

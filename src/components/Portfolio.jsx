@@ -221,7 +221,7 @@ function ProjectPill({ project, onClick }) {
           {weekMap[project.id]}
         </span>
         <ArrowUpRight
-          className="w-4 h-4 text-[#a2a2a2] group-hover:text-[#fc4778] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+          className="w-4 h-4 text-[#a2a2a2] group-hover:text-[#3F7E7C] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
         />
       </div>
     </button>
@@ -257,7 +257,7 @@ function Modal({ project, onClose, onContact }) {
                   fontFamily: 'Space Mono, monospace',
                   fontSize: '0.7rem',
                   textTransform: 'uppercase',
-                  color: '#fc4778',
+                  color: '#3F7E7C',
                   letterSpacing: 0,
                 }}
               >
@@ -332,7 +332,7 @@ function Modal({ project, onClose, onContact }) {
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
                   style={{ background: '#f1f1f1', fontFamily: 'DM Sans, sans-serif', fontSize: '0.8rem', color: '#656565' }}
                 >
-                  <CheckCircle className="w-3 h-3 text-[#fc4778]" />
+                  <CheckCircle className="w-3 h-3 text-[#3F7E7C]" />
                   {d}
                 </span>
               ))}
@@ -437,7 +437,7 @@ export default function Portfolio({ onNavigate }) {
         <div className="w-full max-w-[1360px] mx-auto px-6 md:px-12 mb-6 md:mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <div className="flex items-center gap-2.5 mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#fc4778] animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#3F7E7C] animate-pulse" />
               <span
                 style={{
                   fontFamily: 'Space Mono, monospace',
@@ -466,7 +466,7 @@ export default function Portfolio({ onNavigate }) {
           {/* Interactive Scroll Counter & Visual Progress Track */}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-xs text-[#a2a2a2] font-mono">
-              <span className="text-[#fc4778] font-bold text-sm">
+              <span className="text-[#3F7E7C] font-bold text-sm">
                 {String(Math.min(Math.floor(scrollProgress * realWorks.length) + 1, realWorks.length)).padStart(2, '0')}
               </span>
               <span>/</span>
@@ -475,14 +475,14 @@ export default function Portfolio({ onNavigate }) {
 
             <div className="w-24 sm:w-36 h-1.5 bg-[#dedede] rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#fc4778] rounded-full transition-all duration-75"
+                className="h-full bg-[#3F7E7C] rounded-full transition-all duration-75"
                 style={{ width: `${Math.max(scrollProgress * 100, 12)}%` }}
               />
             </div>
 
             <div className="hidden sm:flex items-center gap-1 font-mono text-[10px] text-[#8e8e8e] uppercase tracking-wider">
               <span>Scroll to navigate</span>
-              <ArrowRight className="w-3 h-3 text-[#fc4778]" />
+              <ArrowRight className="w-3 h-3 text-[#3F7E7C]" />
             </div>
           </div>
         </div>
@@ -517,7 +517,7 @@ export default function Portfolio({ onNavigate }) {
                   >
                     {work.url ? (
                       <span
-                        className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#2b2b2b] group-hover:bg-[#fc4778] group-hover:text-white transition-all shadow-md"
+                        className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#2b2b2b] group-hover:bg-[#3F7E7C] group-hover:text-white transition-all shadow-md"
                         style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.75rem', textTransform: 'uppercase', textDecoration: 'none' }}
                       >
                         VIEW LIVE <ArrowUpRight className="w-4 h-4" />
@@ -542,7 +542,7 @@ export default function Portfolio({ onNavigate }) {
                           fontFamily: 'Space Mono, monospace',
                           fontSize: '0.6875rem',
                           textTransform: 'uppercase',
-                          color: '#fc4778',
+                          color: '#3F7E7C',
                           fontWeight: 600,
                         }}
                       >
@@ -580,7 +580,7 @@ export default function Portfolio({ onNavigate }) {
                   {work.url && (
                     <a
                       href={work.url}
-                      className="flex-shrink-0 w-10 h-10 rounded-full border border-[#dedede] bg-white flex items-center justify-center text-[#a2a2a2] hover:text-white hover:bg-[#fc4778] hover:border-[#fc4778] transition-all shadow-sm"
+                      className="flex-shrink-0 w-10 h-10 rounded-full border border-[#dedede] bg-white flex items-center justify-center text-[#a2a2a2] hover:text-white hover:bg-[#3F7E7C] hover:border-[#3F7E7C] transition-all shadow-sm"
                     >
                       <ArrowUpRight className="w-4 h-4" />
                     </a>
@@ -654,7 +654,7 @@ export default function Portfolio({ onNavigate }) {
                       {p.tag}
                     </span>
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-[#a2a2a2] group-hover:text-[#fc4778] flex-shrink-0 transition-colors" />
+                  <ArrowUpRight className="w-4 h-4 text-[#a2a2a2] group-hover:text-[#3F7E7C] flex-shrink-0 transition-colors" />
                 </button>
               ))}
             </div>

@@ -130,7 +130,7 @@ export default function Contact() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 hover:text-[#fc4778] transition-colors"
+                      className="inline-flex items-center gap-1.5 hover:text-[#3F7E7C] transition-colors"
                       style={{
                         fontFamily: 'Space Grotesk, DM Sans, sans-serif',
                         fontSize: '1rem',
@@ -140,7 +140,7 @@ export default function Contact() {
                       }}
                     >
                       {item.value}
-                      <ArrowUpRight className="w-4 h-4 text-[#fc4778]" />
+                      <ArrowUpRight className="w-4 h-4 text-[#3F7E7C]" />
                     </a>
                   ) : (
                     <div
@@ -175,7 +175,7 @@ export default function Contact() {
               >
                 <div
                   className="w-16 h-16 rounded-full flex items-center justify-center"
-                  style={{ background: '#fff0f4', color: '#fc4778' }}
+                  style={{ background: '#EAF4F3', color: '#3F7E7C' }}
                 >
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
@@ -294,7 +294,7 @@ export default function Contact() {
                 <div>
                   <button
                     type="submit"
-                    className="font-mono text-xs uppercase tracking-wider px-10 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#fc4778] transition-all duration-200 shadow-md"
+                    className="font-mono text-xs uppercase tracking-wider px-10 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md"
                     style={{ fontFamily: 'Space Mono, monospace' }}
                   >
                     BOOK FREE CONSULTATION

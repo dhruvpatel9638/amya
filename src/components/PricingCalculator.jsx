@@ -361,7 +361,7 @@ export default function PricingCalculator({ onNavigate }) {
 
             <button
               onClick={() => onNavigate('contact')}
-              className="w-full md:w-auto font-mono text-xs uppercase tracking-wider px-8 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#fc4778] transition-all duration-200 shadow-md flex items-center justify-center cursor-pointer"
+              className="w-full md:w-auto font-mono text-xs uppercase tracking-wider px-8 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md flex items-center justify-center cursor-pointer"
               style={{ fontFamily: 'Space Mono, monospace' }}
             >
               START A CONVERSATION
