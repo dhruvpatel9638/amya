@@ -332,7 +332,7 @@ export default function PricingCalculator({ onNavigate }) {
               <div
                 style={{
                   fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: '2rem',
+                  fontSize: 'clamp(1.5rem, 4.5vw, 2rem)',
                   fontWeight: 700,
                   color: '#2b2b2b',
                   letterSpacing: '-0.04em',
@@ -349,13 +349,13 @@ export default function PricingCalculator({ onNavigate }) {
               <div
                 style={{
                   fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: '2rem',
+                  fontSize: 'clamp(1.4rem, 4.5vw, 2rem)',
                   fontWeight: 700,
                   color: '#2b2b2b',
                   letterSpacing: '-0.04em',
                 }}
               >
-                {currentPricing.inr} <span className="text-sm font-normal text-[#a2a2a2]">({currentPricing.usd})</span>
+                {currentPricing.inr} <span className="text-xs sm:text-sm font-normal text-[#a2a2a2]">({currentPricing.usd})</span>
               </div>
             </div>
 

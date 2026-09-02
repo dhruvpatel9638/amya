@@ -327,7 +327,7 @@ export default function USPSection({ onNavigate }) {
         </div>
 
         {/* Layer 1: Stacking Cards Deck */}
-        <div className="relative z-10 w-full max-w-[21.5rem] md:max-w-[26rem] h-[400px] md:h-[450px] flex items-center justify-center">
+        <div className="relative z-10 w-full max-w-[92vw] sm:max-w-[22.5rem] md:max-w-[26rem] h-[390px] sm:h-[420px] md:h-[450px] flex items-center justify-center">
           {usps.map((usp, i) => (
             <div
               key={usp.type}

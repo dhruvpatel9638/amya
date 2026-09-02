@@ -48,7 +48,7 @@ export default function Footer({ onNavigate }) {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="relative bg-[#f1f1f1] dot-grid overflow-hidden m-3 md:m-8 rounded-3xl border border-[#dedede]/60">
+    <footer className="relative bg-[#f1f1f1] dot-grid overflow-hidden m-2 sm:m-4 md:m-8 rounded-2xl md:rounded-3xl border border-[#dedede]/60">
       {/* Interactive Pink Flow Canvas */}
       <PinkFlowCanvas opacity={0.75} />
 
@@ -58,7 +58,7 @@ export default function Footer({ onNavigate }) {
       {/* Main CTA area */}
       <div
         className="relative z-10 flex flex-col items-start justify-center"
-        style={{ minHeight: '75vh', padding: '12rem clamp(1.25rem, 5vw, 4rem) 4rem' }}
+        style={{ minHeight: '65vh', padding: 'clamp(6rem, 15vh, 12rem) clamp(1.25rem, 5vw, 4rem) 3.5rem' }}
       >
         <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
 
@@ -70,7 +70,7 @@ export default function Footer({ onNavigate }) {
               color: '#a2a2a2',
               textTransform: 'uppercase',
               display: 'block',
-              marginBottom: '1.5rem',
+              marginBottom: '1.25rem',
               letterSpacing: '0.05em',
             }}
           >
@@ -81,11 +81,11 @@ export default function Footer({ onNavigate }) {
           <h2
             style={{
               fontFamily: 'Space Grotesk, DM Serif Display, serif',
-              fontSize: 'clamp(2.5rem, 7vw, 6.2rem)',
-              lineHeight: 0.92,
-              letterSpacing: '-0.045em',
+              fontSize: 'clamp(2.2rem, 6.5vw, 6.2rem)',
+              lineHeight: 0.95,
+              letterSpacing: '-0.04em',
               color: '#2b2b2b',
-              marginBottom: '1.75rem',
+              marginBottom: '1.5rem',
               maxWidth: '16ch',
               fontWeight: 600,
             }}
@@ -97,15 +97,15 @@ export default function Footer({ onNavigate }) {
           <p
             style={{
               fontFamily: 'DM Sans, sans-serif',
-              fontSize: 'clamp(1rem, 1.5vw, 1.25rem)',
+              fontSize: 'clamp(0.95rem, 1.4vw, 1.25rem)',
               fontWeight: 300,
               color: '#656565',
               maxWidth: '36rem',
               lineHeight: 1.55,
-              marginBottom: '2.5rem',
+              marginBottom: '2.25rem',
             }}
           >
-            Delivering enterprise-grade full-stack web applications and AI business automation at just 10% of traditional agency cost.
+            Delivering enterprise-grade full-stack web applications and autonomous AI business automation engineered to scale your operations without extra staff.
           </p>
 
           {/* CTA Buttons — Full width on mobile matching frame 00:40 */}

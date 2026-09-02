@@ -400,7 +400,7 @@ export default function Portfolio({ onNavigate }) {
       const getScrollDistance = () => {
         const trackWidth = track.scrollWidth;
         const viewportWidth = window.innerWidth;
-        const offset = window.innerWidth < 768 ? 32 : 120;
+        const offset = window.innerWidth < 768 ? 24 : 120;
         return -(trackWidth - viewportWidth + offset);
       };
 
@@ -410,9 +410,11 @@ export default function Portfolio({ onNavigate }) {
         scrollTrigger: {
           trigger: trigger,
           start: 'top top',
-          end: () => `+=${Math.max(track.scrollWidth - window.innerWidth + 800, 2000)}`,
+          end: () => window.innerWidth < 768
+            ? `+=${Math.max(track.scrollWidth - window.innerWidth + 300, 1200)}`
+            : `+=${Math.max(track.scrollWidth - window.innerWidth + 800, 2000)}`,
           pin: true,
-          scrub: 1,
+          scrub: 0.8,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
@@ -435,7 +437,7 @@ export default function Portfolio({ onNavigate }) {
   };
 
   return (
-    <section id="portfolio" className="bg-[#f1f1f1] dot-grid relative">
+    <section id="portfolio" className="bg-[#f1f1f1] dot-grid relative overflow-x-clip">
       {/* Pinned Horizontal Scroll Viewport */}
       <div
         ref={triggerRef}
