@@ -25,7 +25,7 @@ const realWorks = [
     desc: 'High-impact social media & influencer agency web platform with cinematic video hero, bold typography, and conversion funnels.',
     tag: 'VIRAL AGENCY WEB',
     thumb: '/viral-agency-thumbnail.png',
-    url: 'https://agency-nu-ebon.vercel.app/',
+    url: 'https://agency-liart-six.vercel.app/',
     region: 'DE',
     weeks: '3 wks',
   },
