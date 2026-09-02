@@ -5,17 +5,12 @@ export default function CustomCursor() {
   const cursorRef = useRef(null);
   const ringRef = useRef(null);
 
-  // Check if mobile or touch screen — completely disable cursor on mobile view
-  const [isMobile, setIsMobile] = useState(true);
+  // Hide cursor strictly on mobile screen view (< 768px), keep active on PC/desktop
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
-      const mobile =
-        window.innerWidth < 1024 ||
-        window.matchMedia('(pointer: coarse)').matches ||
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0;
-      setIsMobile(mobile);
+      setIsMobile(window.innerWidth < 768);
     };
 
     checkMobile();

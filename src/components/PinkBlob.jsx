@@ -11,13 +11,8 @@ export default function PinkBlob() {
     const blob = blobRef.current;
     if (!blob) return;
 
-    // Check if device is touch or mobile view (< 1024px)
-    const isMobile =
-      window.innerWidth < 1024 ||
-      window.matchMedia('(pointer: coarse)').matches ||
-      'ontouchstart' in window ||
-      navigator.maxTouchPoints > 0;
-    if (isMobile) {
+    // Disable only on mobile view (< 768px)
+    if (window.innerWidth < 768) {
       blob.style.display = 'none';
       return;
     }
