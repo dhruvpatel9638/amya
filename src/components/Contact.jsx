@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, Plus, Minus, Instagram, Globe, Mail, ArrowUpRight } from 'lucide-react';
+import { CheckCircle2, Plus, Minus, Instagram, Globe, Mail, ArrowUpRight, Loader2 } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,21 +12,49 @@ export default function Contact() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        service: 'Custom Web App (Full-Stack / MERN)',
-        budget: '$1k - $10k',
-        message: '',
+    setIsSubmitting(true);
+
+    try {
+      await fetch('https://formsubmit.co/ajax/dhruvp9639@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: `New Free Consultation Inquiry: ${formData.name || 'Client'} (${formData.service})`,
+          _template: 'table',
+          _captcha: 'false',
+          _cc: 'hello@amyagrowth.com',
+          'Client Name': formData.name,
+          'Client Email': formData.email,
+          'Interested Service': formData.service,
+          'Budget Range': formData.budget,
+          'Project Goals': formData.message || 'No additional details provided',
+          'Submitted At': new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+        }),
       });
-    }, 4000);
+    } catch (err) {
+      console.warn('Form submit notice:', err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          service: 'Custom Web App (Full-Stack / MERN)',
+          budget: '$1k - $10k',
+          message: '',
+        });
+      }, 5000);
+    }
   };
 
   const faqs = [
@@ -294,10 +322,18 @@ export default function Contact() {
                 <div>
                   <button
                     type="submit"
-                    className="font-mono text-xs uppercase tracking-wider px-10 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md"
+                    disabled={isSubmitting}
+                    className="font-mono text-xs uppercase tracking-wider px-10 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md inline-flex items-center gap-2 cursor-pointer disabled:opacity-60"
                     style={{ fontFamily: 'Space Mono, monospace' }}
                   >
-                    BOOK FREE CONSULTATION
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        SENDING...
+                      </>
+                    ) : (
+                      'BOOK FREE CONSULTATION'
+                    )}
                   </button>
                 </div>
               </form>
