@@ -686,16 +686,13 @@ export default function PricingCalculator({ onNavigate }) {
                 </div>
 
                 {/* Note text placed with generous distance below the timeline row */}
-                <div className="mt-7 pt-3 border-t border-[#f5f5f5] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="mt-7 pt-3 border-t border-[#f5f5f5]">
                   <p
                     className="text-[10px] text-[#8e8e8e] font-light"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     * Note: Estimated timeline may vary based on custom requirements. Full price quotation is delivered directly to your email.
                   </p>
-                  <span className="text-[10px] font-mono text-[#a2a2a2]">
-                    Submissions delivered directly to agency inbox
-                  </span>
                 </div>
               </div>
             </form>
