@@ -144,7 +144,7 @@ export default function About({ onNavigate }) {
             </div>
             <div className="hidden sm:block text-right">
               <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)' }}>
-                www.amyagrowth.com
+                AMYA GROWTH
               </span>
             </div>
           </div>

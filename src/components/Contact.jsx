@@ -146,7 +146,6 @@ export default function Contact() {
 
             <div className="space-y-6">
               {[
-                { label: 'Agency Website', value: 'www.amyagrowth.com', href: 'https://www.amyagrowth.com' },
                 { label: 'Instagram', value: '@amya.growth', href: 'https://instagram.com/amya.growth' },
                 { label: 'Email Inquiries', value: 'amyagrowth@gmail.com', href: 'mailto:amyagrowth@gmail.com' },
                 { label: 'Target Clients', value: 'Startups • Legacy • Medium Businesses' },
