@@ -27,8 +27,15 @@ export default function Navbar({ activeSection, setActiveSection }) {
             /
           </div>
           <span
-            className="hidden sm:inline-block font-mono text-sm font-semibold tracking-tight text-[#2b2b2b] group-hover:text-[#3F7E7C] transition-colors"
-            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '1rem', letterSpacing: '-0.02em' }}
+            className="inline-block text-[#2b2b2b] group-hover:text-[#3F7E7C] transition-colors select-none"
+            style={{
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontStyle: 'italic',
+              fontSize: 'clamp(1.15rem, 2vw, 1.35rem)',
+              fontWeight: 400,
+              letterSpacing: '-0.01em',
+              lineHeight: 1,
+            }}
           >
             Amya Growth
           </span>
