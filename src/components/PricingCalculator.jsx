@@ -361,12 +361,12 @@ export default function PricingCalculator({ onNavigate }) {
                     color: '#2b2b2b',
                   }}
                 >
-                  Price Details Received!
+                  Estimate Details Received!
                 </h4>
                 <p className="text-[#656565] text-sm font-light leading-relaxed" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  Thank you! Your project specification and calculated estimate of{' '}
-                  <strong className="text-[#2b2b2b] font-medium">{currentPricing?.inr}</strong> have been forwarded to our team.
-                  We will contact <strong className="text-[#3F7E7C]">{userEmail}</strong> within 24 hours with full proposal details.
+                  Thank you! Your project specification and estimated timeline of{' '}
+                  <strong className="text-[#2b2b2b] font-medium">{currentPricing?.weeks} weeks</strong> have been forwarded to our team.
+                  We will contact <strong className="text-[#3F7E7C]">{userEmail}</strong> within 24 hours with full proposal details and custom quotation.
                 </p>
               </div>
 
@@ -641,7 +641,7 @@ export default function PricingCalculator({ onNavigate }) {
 
               {/* Dynamic Estimation Calculation Box & Submit */}
               <div className="pt-4 border-t border-[#dedede]">
-                <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                   <div>
                     <span className="font-mono text-xs text-[#a2a2a2] uppercase block mb-1">
                       Estimated development timeline
@@ -649,7 +649,7 @@ export default function PricingCalculator({ onNavigate }) {
                     <div
                       style={{
                         fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: 'clamp(1.5rem, 4.5vw, 2rem)',
+                        fontSize: 'clamp(1.5rem, 4.5vw, 2.2rem)',
                         fontWeight: 700,
                         color: currentPricing ? '#2b2b2b' : '#a2a2a2',
                         letterSpacing: '-0.04em',
@@ -665,36 +665,10 @@ export default function PricingCalculator({ onNavigate }) {
                     </div>
                   </div>
 
-                  <div>
-                    <span className="font-mono text-xs text-[#a2a2a2] uppercase block mb-1">
-                      Estimated price range
-                    </span>
-                    <div
-                      style={{
-                        fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: 'clamp(1.4rem, 4.5vw, 2rem)',
-                        fontWeight: 700,
-                        color: currentPricing ? '#2b2b2b' : '#a2a2a2',
-                        letterSpacing: '-0.04em',
-                      }}
-                    >
-                      {currentPricing ? (
-                        <>
-                          {currentPricing.inr}{' '}
-                          <span className="text-xs sm:text-sm font-normal text-[#a2a2a2]">
-                            ({currentPricing.usd})
-                          </span>
-                        </>
-                      ) : (
-                        <span className="text-base font-normal text-[#a2a2a2] italic">Select options above</span>
-                      )}
-                    </div>
-                  </div>
-
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full md:w-auto font-mono text-xs uppercase tracking-wider px-8 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] active:scale-[0.99] transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                    className="w-full sm:w-auto font-mono text-xs uppercase tracking-wider px-8 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] active:scale-[0.99] transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                     style={{ fontFamily: 'Space Mono, monospace' }}
                   >
                     {isSubmitting ? (
@@ -711,13 +685,13 @@ export default function PricingCalculator({ onNavigate }) {
                   </button>
                 </div>
 
-                {/* Note text placed with generous distance below the price row */}
+                {/* Note text placed with generous distance below the timeline row */}
                 <div className="mt-7 pt-3 border-t border-[#f5f5f5] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <p
                     className="text-[10px] text-[#8e8e8e] font-light"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    * Note: Estimated range, not final quote. Actual price may vary based on custom requirements and technical specifications.
+                    * Note: Estimated timeline may vary based on custom requirements. Full price quotation is delivered directly to your email.
                   </p>
                   <span className="text-[10px] font-mono text-[#a2a2a2]">
                     Submissions delivered directly to agency inbox
