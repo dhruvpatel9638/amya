@@ -232,7 +232,7 @@ export default function PricingCalculator({ onNavigate }) {
       _subject: `New Project Estimate Request: ${projectTypeName} (${pricing ? pricing.inr : ''})`,
       _template: 'table',
       _captcha: 'false',
-      _cc: 'hello@amyagrowth.com',
+      _cc: 'dhruvp9639@gmail.com',
       'Client Email': userEmail,
       'Client Name or WhatsApp': userName || 'Not provided',
       'Project Type': projectTypeName,
@@ -246,7 +246,7 @@ export default function PricingCalculator({ onNavigate }) {
     };
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/dhruvp9639@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/amyagrowth@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

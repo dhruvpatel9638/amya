@@ -20,7 +20,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      await fetch('https://formsubmit.co/ajax/dhruvp9639@gmail.com', {
+      await fetch('https://formsubmit.co/ajax/amyagrowth@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export default function Contact() {
           _subject: `New Free Consultation Inquiry: ${formData.name || 'Client'} (${formData.service})`,
           _template: 'table',
           _captcha: 'false',
-          _cc: 'hello@amyagrowth.com',
+          _cc: 'dhruvp9639@gmail.com',
           'Client Name': formData.name,
           'Client Email': formData.email,
           'Interested Service': formData.service,
@@ -148,7 +148,7 @@ export default function Contact() {
               {[
                 { label: 'Agency Website', value: 'www.amyagrowth.com', href: 'https://www.amyagrowth.com' },
                 { label: 'Instagram', value: '@amya.growth', href: 'https://instagram.com/amya.growth' },
-                { label: 'Email Inquiries', value: 'hello@amyagrowth.com', href: 'mailto:hello@amyagrowth.com' },
+                { label: 'Email Inquiries', value: 'amyagrowth@gmail.com', href: 'mailto:amyagrowth@gmail.com' },
                 { label: 'Target Clients', value: 'Startups • Legacy • Medium Businesses' },
               ].map((item, i) => (
                 <div key={i} style={{ borderBottom: '1px solid #dedede', paddingBottom: '1.25rem' }}>

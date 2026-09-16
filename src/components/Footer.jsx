@@ -154,7 +154,7 @@ export default function Footer({ onNavigate }) {
                 DIRECT INQUIRIES
               </span>
               <a
-                href="mailto:hello@amyagrowth.com"
+                href="mailto:amyagrowth@gmail.com"
                 className="hover:text-[#3F7E7C] transition-colors"
                 style={{
                   fontFamily: 'Space Grotesk, DM Sans, sans-serif',
@@ -163,7 +163,7 @@ export default function Footer({ onNavigate }) {
                   color: '#2b2b2b',
                 }}
               >
-                hello@amyagrowth.com
+                amyagrowth@gmail.com
               </a>
             </div>
 
