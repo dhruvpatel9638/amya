@@ -21,6 +21,7 @@
   html {
     background-color: var(--color-bg);
     cursor: none;
+    scroll-behavior: auto !important;
   }
 
   /* Lenis smooth scrolling rules */

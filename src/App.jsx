@@ -18,15 +18,12 @@ export default function App() {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    // Initialize Lenis with butter-smooth luxury inertia
+    // Initialize Lenis with gentle, fluid smooth scrolling inertia
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
+      lerp: 0.08,
       smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.8,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.5,
       infinite: false,
     });
 
@@ -42,9 +39,9 @@ export default function App() {
     gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
-    const handleScroll = () => {
+    const handleScroll = (e) => {
       const sections = ['hero', 'about', 'portfolio', 'pricing', 'contact'];
-      const scrollPosition = window.scrollY + 250;
+      const scrollPosition = (e?.scroll ?? window.scrollY) + 250;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -59,10 +56,10 @@ export default function App() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    lenis.on('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      lenis.off('scroll', handleScroll);
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
