@@ -262,7 +262,7 @@ export default function HeroFluidText({ onNavigate }) {
       </div>
 
       {/* Interactive Action Buttons (Centered, touch-friendly & responsive) */}
-      <div className="relative z-30 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-auto mb-8 sm:mb-10 md:mb-12 px-6 pointer-events-auto w-full max-w-sm sm:max-w-none mx-auto">
+      <div className="relative z-30 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-auto mb-4 sm:mb-5 md:mb-6 px-6 pointer-events-auto w-full max-w-sm sm:max-w-none mx-auto">
         <button
           onClick={() => onNavigate('contact')}
           className="w-full sm:w-auto font-mono text-[0.6875rem] md:text-xs uppercase tracking-wider px-7 py-3.5 md:px-8 md:py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer"
@@ -277,6 +277,31 @@ export default function HeroFluidText({ onNavigate }) {
         >
           EXPLORE WORKS
         </button>
+      </div>
+
+      {/* Creative "Scroll To More Detail" Indicator */}
+      <div
+        onClick={() => {
+          window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+        }}
+        className="relative z-30 flex flex-col items-center justify-center gap-2 mb-4 sm:mb-6 md:mb-7 pointer-events-auto cursor-pointer group select-none transition-all duration-300 hover:opacity-100 opacity-80"
+        title="Scroll to more detail"
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#3F7E7C] animate-ping" />
+          <span
+            className="font-mono text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.26em] text-[#6e6e6e] group-hover:text-[#3F7E7C] transition-colors"
+            style={{ fontFamily: 'Space Mono, monospace' }}
+          >
+            scroll to more detail
+          </span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#3F7E7C] animate-ping" />
+        </div>
+
+        {/* Minimalist Animated Mouse Scroll Pill */}
+        <div className="w-4 sm:w-5 h-7 sm:h-8 rounded-full border border-black/25 group-hover:border-[#3F7E7C] p-1 flex justify-center items-start transition-colors shadow-sm bg-white/50 backdrop-blur-[2px]">
+          <div className="w-1 h-2 rounded-full bg-[#3F7E7C] animate-bounce" />
+        </div>
       </div>
 
       {/* Bottom Bar — Desktop ticker */}
