@@ -91,7 +91,7 @@ export default function About({ onNavigate }) {
                 marginBottom: '2rem',
               }}
             >
-              Amya Growth is an IT Agency delivering high-impact Web Development and autonomous AI Automation. We build creative, enterprise-grade web applications that run your operations around the clock — helping startups, legacy businesses, and medium enterprises grow 100x without needing extra staff.
+              Amya Growth is a premier web application development agency in Ahmedabad, Gujarat, delivering high-impact full-stack software and autonomous AI Automation. We build creative, enterprise-grade web applications that run your operations around the clock — helping startups, legacy businesses, and medium enterprises grow 100x without needing extra staff.
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <button
