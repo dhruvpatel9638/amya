@@ -1,6 +1,6 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowUpRight, CheckCircle, ArrowRight } from 'lucide-react';
+import { X, ArrowUpRight, CheckCircle, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PinkFlowCanvas from './PinkFlowCanvas';
@@ -364,21 +364,28 @@ function Modal({ project, onClose, onContact }) {
 export default function Portfolio({ onNavigate }) {
   const [selectedProject, setSelectedProject] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isDraggingTrack, setIsDraggingTrack] = useState(false);
+  const [preventClick, setPreventClick] = useState(false);
+
   const triggerRef = useRef(null);
   const trackRef = useRef(null);
+  const sliderContainerRef = useRef(null);
+  const stRef = useRef(null);
+
+  const getScrollDistance = () => {
+    const track = trackRef.current;
+    if (!track) return 0;
+    const trackWidth = track.scrollWidth;
+    const viewportWidth = window.innerWidth;
+    const offset = window.innerWidth < 768 ? 24 : 120;
+    return -(trackWidth - viewportWidth + offset);
+  };
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const track = trackRef.current;
       const trigger = triggerRef.current;
       if (!track || !trigger) return;
-
-      const getScrollDistance = () => {
-        const trackWidth = track.scrollWidth;
-        const viewportWidth = window.innerWidth;
-        const offset = window.innerWidth < 768 ? 24 : 120;
-        return -(trackWidth - viewportWidth + offset);
-      };
 
       const scrollTween = gsap.to(track, {
         x: getScrollDistance,
@@ -399,6 +406,8 @@ export default function Portfolio({ onNavigate }) {
         },
       });
 
+      stRef.current = scrollTween.scrollTrigger;
+
       return () => {
         scrollTween.kill();
       };
@@ -406,6 +415,277 @@ export default function Portfolio({ onNavigate }) {
 
     return () => ctx.revert();
   }, []);
+
+  // Compute exact scroll position for a specific slide index
+  const getCardScrollPosition = (index) => {
+    const st = stRef.current;
+    const track = trackRef.current;
+    if (!st || !track) return 0;
+
+    const clampedIndex = Math.max(0, Math.min(index, realWorks.length - 1));
+    const totalTravel = Math.abs(getScrollDistance());
+    if (totalTravel === 0) return st.start;
+
+    let targetProgress = 0;
+    if (clampedIndex === 0) {
+      targetProgress = 0;
+    } else if (clampedIndex === realWorks.length - 1) {
+      targetProgress = 1;
+    } else if (track.children && track.children[clampedIndex] && track.children[0]) {
+      const cardOffset = track.children[clampedIndex].offsetLeft - track.children[0].offsetLeft;
+      targetProgress = Math.min(1, Math.max(0, cardOffset / totalTravel));
+    } else {
+      targetProgress = clampedIndex / (realWorks.length - 1);
+    }
+
+    return st.start + targetProgress * (st.end - st.start);
+  };
+
+  // Programmatically slide smoothly to target index using Lenis or native scroll
+  const goToSlide = (index, duration = 0.8) => {
+    const st = stRef.current;
+    if (!st) return;
+
+    const targetScroll = getCardScrollPosition(index);
+
+    if (window.lenis) {
+      window.lenis.scrollTo(targetScroll, {
+        duration,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const currentSlideIndex = Math.min(
+    Math.max(Math.round(scrollProgress * (realWorks.length - 1)), 0),
+    realWorks.length - 1
+  );
+
+  // Mobile horizontal swipe & drag handler (with non-blocking vertical scroll)
+  useEffect(() => {
+    const container = sliderContainerRef.current;
+    if (!container) return;
+
+    let startX = 0;
+    let startY = 0;
+    let lastX = 0;
+    let startTime = 0;
+    let isHorizontal = null;
+    let isDragging = false;
+
+    const onTouchStart = (e) => {
+      if (e.touches.length > 1) return;
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      lastX = touch.clientX;
+      startTime = Date.now();
+      isHorizontal = null;
+      isDragging = false;
+    };
+
+    const onTouchMove = (e) => {
+      if (!e.touches || e.touches.length === 0) return;
+      const touch = e.touches[0];
+      const totalDx = touch.clientX - startX;
+      const totalDy = touch.clientY - startY;
+
+      // Determine user intent: horizontal swipe vs vertical scroll
+      if (isHorizontal === null) {
+        if (Math.abs(totalDx) > 8 || Math.abs(totalDy) > 8) {
+          isHorizontal = Math.abs(totalDx) > Math.abs(totalDy);
+          if (isHorizontal) {
+            isDragging = true;
+            setIsDraggingTrack(true);
+          }
+        }
+      }
+
+      // If user is intentionally sliding horizontally
+      if (isHorizontal) {
+        if (e.cancelable) e.preventDefault();
+
+        const diffX = touch.clientX - lastX;
+        lastX = touch.clientX;
+
+        const st = stRef.current;
+        const track = trackRef.current;
+        if (st && track) {
+          const trackDistance = Math.abs(getScrollDistance());
+          if (trackDistance > 0) {
+            const pinDistance = st.end - st.start;
+            const ratio = pinDistance / trackDistance;
+            // Moving finger left (diffX < 0) advances scroll down
+            const scrollDelta = -diffX * ratio;
+            const currentScroll = st.scroll();
+            const nextScroll = Math.max(st.start, Math.min(st.end, currentScroll + scrollDelta));
+
+            if (window.lenis) {
+              window.lenis.scrollTo(nextScroll, { immediate: true });
+            } else {
+              window.scrollTo({ top: nextScroll, behavior: 'instant' });
+            }
+            st.scroll(nextScroll);
+            st.update();
+          }
+        }
+      }
+      // If isHorizontal === false, vertical scroll continues completely natively!
+    };
+
+    const onTouchEnd = () => {
+      setIsDraggingTrack(false);
+
+      if (isDragging) {
+        setPreventClick(true);
+        setTimeout(() => setPreventClick(false), 300);
+      }
+
+      if (isHorizontal) {
+        const totalDx = lastX - startX;
+        const duration = Date.now() - startTime;
+        const velocity = totalDx / Math.max(duration, 1);
+
+        const st = stRef.current;
+        if (st) {
+          const currentProg = st.progress;
+          const currentCard = Math.min(
+            Math.max(Math.round(currentProg * (realWorks.length - 1)), 0),
+            realWorks.length - 1
+          );
+
+          // Fast flick or drag > 45px
+          if (velocity < -0.25 || totalDx < -45) {
+            // Swiped LEFT => go to next card
+            if (currentCard < realWorks.length - 1) {
+              goToSlide(currentCard + 1);
+            } else {
+              // At last card, continue past pin
+              if (window.lenis) {
+                window.lenis.scrollTo(st.end + 120, { duration: 0.8 });
+              } else {
+                window.scrollTo({ top: st.end + 120, behavior: 'smooth' });
+              }
+            }
+          } else if (velocity > 0.25 || totalDx > 45) {
+            // Swiped RIGHT => go to previous card
+            if (currentCard > 0) {
+              goToSlide(currentCard - 1);
+            } else {
+              // At first card, scroll before pin
+              if (window.lenis) {
+                window.lenis.scrollTo(st.start - 120, { duration: 0.8 });
+              } else {
+                window.scrollTo({ top: st.start - 120, behavior: 'smooth' });
+              }
+            }
+          } else {
+            // Small move: snap back to current card
+            goToSlide(currentCard);
+          }
+        }
+      }
+
+      isHorizontal = null;
+      isDragging = false;
+    };
+
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchmove', onTouchMove, { passive: false });
+    container.addEventListener('touchend', onTouchEnd, { passive: true });
+    container.addEventListener('touchcancel', onTouchEnd, { passive: true });
+
+    return () => {
+      container.removeEventListener('touchstart', onTouchStart);
+      container.removeEventListener('touchmove', onTouchMove);
+      container.removeEventListener('touchend', onTouchEnd);
+      container.removeEventListener('touchcancel', onTouchEnd);
+    };
+  }, []);
+
+  // Desktop mouse drag support
+  const mouseDragRef = useRef({ isDown: false, startX: 0, lastX: 0, startTime: 0, dragged: false });
+
+  const handleMouseDown = (e) => {
+    if (e.button !== 0) return;
+    mouseDragRef.current = {
+      isDown: true,
+      startX: e.clientX,
+      lastX: e.clientX,
+      startTime: Date.now(),
+      dragged: false,
+    };
+  };
+
+  const handleMouseMove = (e) => {
+    if (!mouseDragRef.current.isDown) return;
+    const totalDx = e.clientX - mouseDragRef.current.startX;
+    if (Math.abs(totalDx) > 6) {
+      mouseDragRef.current.dragged = true;
+      setIsDraggingTrack(true);
+      setPreventClick(true);
+    }
+    if (mouseDragRef.current.dragged) {
+      const diffX = e.clientX - mouseDragRef.current.lastX;
+      mouseDragRef.current.lastX = e.clientX;
+
+      const st = stRef.current;
+      const track = trackRef.current;
+      if (st && track) {
+        const trackDistance = Math.abs(getScrollDistance());
+        if (trackDistance > 0) {
+          const pinDistance = st.end - st.start;
+          const ratio = pinDistance / trackDistance;
+          const scrollDelta = -diffX * ratio;
+          const currentScroll = st.scroll();
+          const nextScroll = Math.max(st.start, Math.min(st.end, currentScroll + scrollDelta));
+
+          if (window.lenis) {
+            window.lenis.scrollTo(nextScroll, { immediate: true });
+          } else {
+            window.scrollTo({ top: nextScroll, behavior: 'instant' });
+          }
+          st.scroll(nextScroll);
+          st.update();
+        }
+      }
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!mouseDragRef.current.isDown) return;
+    mouseDragRef.current.isDown = false;
+    setIsDraggingTrack(false);
+
+    if (mouseDragRef.current.dragged) {
+      const totalDx = mouseDragRef.current.lastX - mouseDragRef.current.startX;
+      const duration = Date.now() - mouseDragRef.current.startTime;
+      const velocity = totalDx / Math.max(duration, 1);
+
+      const st = stRef.current;
+      if (st) {
+        const currentProg = st.progress;
+        const currentCard = Math.min(
+          Math.max(Math.round(currentProg * (realWorks.length - 1)), 0),
+          realWorks.length - 1
+        );
+
+        if (velocity < -0.2 || totalDx < -45) {
+          if (currentCard < realWorks.length - 1) goToSlide(currentCard + 1);
+        } else if (velocity > 0.2 || totalDx > 45) {
+          if (currentCard > 0) goToSlide(currentCard - 1);
+        } else {
+          goToSlide(currentCard);
+        }
+      }
+      setTimeout(() => setPreventClick(false), 250);
+    }
+  };
 
   const handleContact = () => {
     setSelectedProject(null);
@@ -433,7 +713,7 @@ export default function Portfolio({ onNavigate }) {
                   letterSpacing: '0.04em',
                 }}
               >
-                Selected Works · {String(realWorks.length).padStart(2, '0')} Live Platforms
+                Selected Works · Live Platforms
               </span>
             </div>
             <h2
@@ -449,32 +729,99 @@ export default function Portfolio({ onNavigate }) {
             </h2>
           </div>
 
-          {/* Interactive Scroll Counter & Visual Progress Track */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 text-xs text-[#a2a2a2] font-mono">
-              <span className="text-[#3F7E7C] font-bold text-sm">
-                {String(Math.min(Math.floor(scrollProgress * realWorks.length) + 1, realWorks.length)).padStart(2, '0')}
-              </span>
-              <span>/</span>
-              <span>{String(realWorks.length).padStart(2, '0')}</span>
-            </div>
+          {/* Creative Interactive Slidebar & Navigation Controls */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            {/* Creative Slidebar Track with Glowing Progress & Scrub Thumb */}
+            <div
+              onClick={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+                const progress = clickX / rect.width;
+                const st = stRef.current;
+                if (st) {
+                  const targetScroll = st.start + progress * (st.end - st.start);
+                  if (window.lenis) {
+                    window.lenis.scrollTo(targetScroll, { duration: 0.7 });
+                  } else {
+                    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                  }
+                }
+              }}
+              title="Click or drag to slide"
+              className="relative w-44 sm:w-56 md:w-64 h-9 rounded-full bg-white/95 backdrop-blur-md border border-[#dedede] hover:border-[#3F7E7C]/60 p-1 flex items-center cursor-pointer shadow-xs transition-colors group select-none"
+            >
+              {/* Soft Segment Markers (indicating project positions without numbers) */}
+              <div className="absolute inset-x-3 inset-y-0 flex items-center justify-between pointer-events-none z-0">
+                {realWorks.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                      currentSlideIndex === i ? 'bg-[#3F7E7C] scale-125' : 'bg-[#dedede]'
+                    }`}
+                  />
+                ))}
+              </div>
 
-            <div className="w-24 sm:w-36 h-1.5 bg-[#dedede] rounded-full overflow-hidden">
+              {/* Glowing Active Track Fill */}
               <div
-                className="h-full bg-[#3F7E7C] rounded-full transition-all duration-75"
-                style={{ width: `${Math.max(scrollProgress * 100, 12)}%` }}
+                className="absolute left-1 top-1 bottom-1 rounded-full bg-gradient-to-r from-[#3F7E7C]/20 to-[#3F7E7C]/40 transition-all duration-75 pointer-events-none"
+                style={{ width: `${Math.max(scrollProgress * 100, 18)}%` }}
               />
+
+              {/* Creative Floating Scrub Thumb */}
+              <div
+                className="relative z-10 h-7 px-3.5 rounded-full bg-[#2b2b2b] group-hover:bg-[#3F7E7C] text-white flex items-center justify-center gap-1.5 shadow-sm transition-all duration-100 will-change-transform"
+                style={{
+                  transform: `translateX(${Math.max(0, scrollProgress * (window.innerWidth < 640 ? 120 : 180))}px)`,
+                }}
+              >
+                {/* 3 Minimal Tactile Grip Bars */}
+                <div className="flex items-center gap-0.5">
+                  <span className="w-0.5 h-2.5 rounded-full bg-white/70" />
+                  <span className="w-0.5 h-2.5 rounded-full bg-white" />
+                  <span className="w-0.5 h-2.5 rounded-full bg-white/70" />
+                </div>
+              </div>
             </div>
 
-            <div className="hidden sm:flex items-center gap-1 font-mono text-[10px] text-[#8e8e8e] uppercase tracking-wider">
-              <span>Scroll to navigate</span>
-              <ArrowRight className="w-3 h-3 text-[#3F7E7C]" />
+            {/* Prev / Next Slide Arrow Buttons */}
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => goToSlide(currentSlideIndex - 1)}
+                disabled={currentSlideIndex === 0}
+                aria-label="Previous work slide"
+                className="w-9 h-9 rounded-full border border-[#dedede] bg-white flex items-center justify-center text-[#2b2b2b] hover:border-[#3F7E7C] hover:bg-[#3F7E7C] hover:text-white disabled:opacity-25 disabled:pointer-events-none transition-all shadow-xs cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => goToSlide(currentSlideIndex + 1)}
+                disabled={currentSlideIndex === realWorks.length - 1}
+                aria-label="Next work slide"
+                className="w-9 h-9 rounded-full border border-[#dedede] bg-white flex items-center justify-center text-[#2b2b2b] hover:border-[#3F7E7C] hover:bg-[#3F7E7C] hover:text-white disabled:opacity-25 disabled:pointer-events-none transition-all shadow-xs cursor-pointer"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Micro Instruction Tag */}
+            <div className="hidden sm:flex items-center gap-1.5 font-mono text-[9px] text-[#8e8e8e] uppercase tracking-wider pl-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#3F7E7C] animate-pulse" />
+              <span>SLIDE OR SCROLL</span>
             </div>
           </div>
         </div>
 
-        {/* Horizontal Card Track (Slides smoothly horizontally on scroll down/up) */}
-        <div className="w-full overflow-visible">
+        {/* Horizontal Card Track (Slides smoothly horizontally via swipe, drag, or vertical scroll) */}
+        <div
+          ref={sliderContainerRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          className={`w-full overflow-visible select-none ${isDraggingTrack ? 'cursor-grabbing' : 'cursor-grab'}`}
+          style={{ touchAction: 'pan-y' }}
+        >
           <div
             ref={trackRef}
             className="flex items-stretch gap-6 md:gap-10 pl-6 md:pl-12 pr-12 md:pr-24 will-change-transform"
@@ -488,13 +835,20 @@ export default function Portfolio({ onNavigate }) {
                 {/* Thumbnail card (clickable in current tab) */}
                 <a
                   href={work.url || '#'}
+                  onClick={(e) => {
+                    if (preventClick) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }
+                  }}
                   className="relative block overflow-hidden mb-4 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
                   style={{ borderRadius: '1.5rem', aspectRatio: '16/10', background: '#dedede' }}
                 >
                   <img
                     src={work.thumb}
                     alt={work.title}
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    draggable={false}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 pointer-events-none"
                   />
                   {/* Overlay on hover */}
                   <div
@@ -565,6 +919,12 @@ export default function Portfolio({ onNavigate }) {
                   {work.url && (
                     <a
                       href={work.url}
+                      onClick={(e) => {
+                        if (preventClick) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }
+                      }}
                       className="flex-shrink-0 w-10 h-10 rounded-full border border-[#dedede] bg-white flex items-center justify-center text-[#a2a2a2] hover:text-white hover:bg-[#3F7E7C] hover:border-[#3F7E7C] transition-all shadow-sm"
                     >
                       <ArrowUpRight className="w-4 h-4" />

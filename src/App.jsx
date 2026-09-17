@@ -10,6 +10,7 @@ import PricingCalculator from './components/PricingCalculator';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
+import CreativeScrollbar from './components/CreativeScrollbar';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,14 +21,15 @@ export default function App() {
   useEffect(() => {
     // Initialize Lenis with gentle, fluid smooth scrolling inertia
     const lenis = new Lenis({
-      lerp: 0.08,
+      lerp: 0.09,
       smoothWheel: true,
-      wheelMultiplier: 0.9,
+      wheelMultiplier: 1.15,
       touchMultiplier: 1.5,
       infinite: false,
     });
 
     lenisRef.current = lenis;
+    window.lenis = lenis;
 
     // Sync Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
@@ -59,6 +61,7 @@ export default function App() {
     lenis.on('scroll', handleScroll);
 
     return () => {
+      window.lenis = null;
       lenis.off('scroll', handleScroll);
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
@@ -83,6 +86,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#f1f1f1] text-[#2b2b2b] font-sans overflow-x-hidden">
       <CustomCursor />
+      <CreativeScrollbar activeSection={activeSection} onNavigate={handleNavigate} />
       <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
 
       <main>

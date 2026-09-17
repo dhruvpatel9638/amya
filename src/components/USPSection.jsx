@@ -221,9 +221,9 @@ export default function USPSection({ onNavigate }) {
         scrollTrigger: {
           trigger: triggerRef.current,
           start: 'top top',
-          end: '+=3400',
+          end: () => window.innerWidth < 768 ? '+=1100' : '+=1600',
           pin: true,
-          scrub: 0.8,
+          scrub: 0.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -236,64 +236,64 @@ export default function USPSection({ onNavigate }) {
         scale: 1,
       });
 
-      // 1. Hero Shutter smoothly pulls UP, revealing the 2nd page directly underneath!
+      // 1. Hero Shutter smoothly pulls UP on minimal mouse wheel rotation!
       tl.to(heroShutter, {
         yPercent: -105,
         scale: 0.98,
         borderRadius: '0 0 3rem 3rem',
         boxShadow: '0 30px 70px rgba(0, 0, 0, 0.25)',
-        duration: 1.2,
+        duration: 0.75,
         ease: 'power2.inOut',
       });
 
-      // 2. Card 0 reveals into center
+      // 2. Card 0 reveals into center swiftly as shutter completes
       tl.to(cards[0], {
         yPercent: 0,
         opacity: 1,
-        duration: 1,
+        duration: 0.65,
         ease: 'power2.out',
-      }, '+=0.2');
+      }, '-=0.15');
 
       // 3. Card 1 slides UP directly ON TOP of Card 0
       tl.to(cards[0], {
         scale: 0.94,
-        duration: 0.8,
+        duration: 0.5,
         ease: 'power1.inOut',
       }, 'card1');
       tl.to(cards[1], {
         yPercent: 0,
         opacity: 1,
-        duration: 1,
+        duration: 0.65,
         ease: 'power2.out',
       }, 'card1');
 
       // 4. Card 2 slides UP directly ON TOP of Card 1
       tl.to(cards[1], {
         scale: 0.94,
-        duration: 0.8,
+        duration: 0.5,
         ease: 'power1.inOut',
       }, 'card2');
       tl.to(cards[2], {
         yPercent: 0,
         opacity: 1,
-        duration: 1,
+        duration: 0.65,
         ease: 'power2.out',
       }, 'card2');
 
       // 5. Card 3 slides UP directly ON TOP of Card 2
       tl.to(cards[2], {
         scale: 0.94,
-        duration: 0.8,
+        duration: 0.5,
         ease: 'power1.inOut',
       }, 'card3');
       tl.to(cards[3], {
         yPercent: 0,
         opacity: 1,
-        duration: 1,
+        duration: 0.65,
         ease: 'power2.out',
       }, 'card3');
 
-      tl.to({}, { duration: 0.4 });
+      tl.to({}, { duration: 0.2 });
     }, sectionRef);
 
     return () => ctx.revert();

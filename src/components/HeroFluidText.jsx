@@ -282,7 +282,11 @@ export default function HeroFluidText({ onNavigate }) {
       {/* Creative "Scroll To More Detail" Indicator */}
       <div
         onClick={() => {
-          window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+          if (window.lenis) {
+            window.lenis.scrollTo(window.innerHeight * 0.95, { duration: 1.0 });
+          } else {
+            window.scrollBy({ top: window.innerHeight * 0.95, behavior: 'smooth' });
+          }
         }}
         className="relative z-30 flex flex-col items-center justify-center gap-2 mb-4 sm:mb-6 md:mb-7 pointer-events-auto cursor-pointer group select-none transition-all duration-300 hover:opacity-100 opacity-80"
         title="Scroll to more detail"
