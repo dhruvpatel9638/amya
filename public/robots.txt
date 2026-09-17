@@ -13,4 +13,4 @@ User-agent: Bingbot
 Allow: /
 
 # Sitemap URL
-Sitemap: https://amyagrowth.com/sitemap.xml
+Sitemap: https://amya-two.vercel.app/sitemap.xml
