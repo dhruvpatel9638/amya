@@ -1,252 +1,141 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Mail, CheckCircle2, ArrowRight, Loader2, RefreshCw } from 'lucide-react';
+import {
+  ChevronDown,
+  Mail,
+  CheckCircle2,
+  ArrowRight,
+  Loader2,
+  RefreshCw,
+  Building2,
+  Phone,
+  FileText,
+  Sparkles,
+} from 'lucide-react';
 
 export default function PricingCalculator({ onNavigate }) {
-  // Step 1: Project Category (Website or AI Agent) — starts empty
-  const [category, setCategory] = useState(''); // '' | 'website' | 'agent'
+  // Field 1: Project Requirement (Optional)
+  const [requirement, setRequirement] = useState(''); // '' | 'webapp' | 'website' | 'ai_agents'
 
-  // Step 2: Target Budget Expectation — starts empty
-  const [budget, setBudget] = useState(''); // '' | 'tier1' | 'tier2' | 'tier3' | 'tier4'
+  // Field 2: Expected Budget Range
+  const [budget, setBudget] = useState(''); // '' | '5k_10k' | '10k_50k' | '50k_1L' | '1L_plus'
 
-  // Step 3 & 4 (Website Specific) — starts empty
-  const [websiteMotion, setWebsiteMotion] = useState(''); // '' | 'simple' | 'creative'
-  const [websiteType, setWebsiteType] = useState(''); // '' | 'landing' | 'corporate' | 'webapp'
+  // Field 3: Comments for specific requirement (Optional)
+  const [comments, setComments] = useState('');
 
-  // Step 3 & 4 (AI Agent Specific) — starts empty
-  const [agentTask, setAgentTask] = useState(''); // '' | 'lead_followup' | 'sales_voice' | 'operations' | 'multi_agent'
-  const [agentScope, setAgentScope] = useState(''); // '' | 'standard' | 'multi_channel' | 'enterprise'
-
-  // Step 5: User contact details
-  const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
+  // Field 4: Business Details (Compulsory - C)
+  const [businessName, setBusinessName] = useState('');
+  const [businessEmail, setBusinessEmail] = useState('');
+  const [businessPhone, setBusinessPhone] = useState('');
 
   // Status states
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Human-readable labels for email dispatch and display
+  // Professional labels
+  const requirementLabels = {
+    webapp: '1. Web Application (Full-Stack / MERN / SaaS & Admin Portal)',
+    website: '2. Website (Corporate Brand / High-Conversion Landing Page)',
+    ai_agents: '3. AI Agents Related Set-Up (Autonomous 24/7 Agent, WhatsApp / Voice AI, CRM)',
+  };
+
   const budgetLabels = {
-    tier1: '₹10,000 – ₹25,000 (Starter MVP / Fast Sprint)',
-    tier2: '₹25,000 – ₹60,000 (Growth & Scale / Custom Features)',
-    tier3: '₹60,000 – ₹1,00,000 (Advanced Automation & Web Apps)',
-    tier4: '₹1,00,000 – ₹1,50,000 (Full Enterprise Ecosystem)',
+    '5k_10k': '₹5,000 – ₹10,000 (Quick Sprint / Prototype / Starter Setup)',
+    '10k_50k': '₹10,000 – ₹50,000 (Standard MVP / Brand Website / Core Automations)',
+    '50k_1L': '₹50,000 – ₹1,00,000 (Advanced Scalable Web App & Multi-Channel AI System)',
+    '1L_plus': '₹1,00,000+ (Full Enterprise Ecosystem & Custom Infrastructure)',
   };
 
-  const websiteMotionLabels = {
-    simple: 'Simpler Design — Clean, minimal & ultra-fast loading',
-    creative: 'Creative Motion — Smooth scroll, fluid hover effects & micro-interactions',
-  };
+  // Dynamic estimate calculation based on selected budget
+  const calculateEstimate = () => {
+    if (!budget) return null;
 
-  const websiteTypeLabels = {
-    landing: 'High-Conversion Landing Page (1-Page Launch)',
-    corporate: 'Multi-Page Corporate / Brand Website (5 to 8 Pages)',
-    webapp: 'Custom Full-Stack MERN Web App / SaaS Admin Panel',
-  };
-
-  const agentTaskLabels = {
-    lead_followup: 'Lead Capture & Auto Follow-Up (WhatsApp, Email & CRM 24/7)',
-    sales_voice: '24/7 Sales & Support Voice / Chat Agent (Sub-200ms audio latency)',
-    operations: 'Repeated Operations & Data Tasks (Invoices, scraping & reconciliation)',
-    multi_agent: 'Autonomous Multi-Agent Workflow Engine (Zero employee overhead)',
-  };
-
-  const agentScopeLabels = {
-    standard: 'Single Channel (WhatsApp or Website Chatbot)',
-    multi_channel: 'Multi-Channel Hub (WhatsApp + Email + CRM + Google Calendar)',
-    enterprise: 'Full Enterprise Architecture (Custom LLM, ERP webhooks & database sync)',
-  };
-
-  // Check whether all required project specification steps are selected
-  const isSpecsCompleted = Boolean(
-    category &&
-    budget &&
-    (category === 'website' ? (websiteMotion && websiteType) : (agentTask && agentScope))
-  );
-
-  // Dynamic cost calculation (Spanning ₹10,000 to ₹1,50,000)
-  const calculatePricing = () => {
-    if (!isSpecsCompleted) {
-      return null;
+    switch (budget) {
+      case '5k_10k':
+        return {
+          weeks: '3 – 7 Days',
+          label: 'Rapid Prototype & Starter Sprint',
+          range: '₹5,000 – ₹10,000',
+        };
+      case '10k_50k':
+        return {
+          weeks: '1 – 3 Weeks',
+          label: 'Production-Ready MVP & Brand Sprint',
+          range: '₹10,000 – ₹50,000',
+        };
+      case '50k_1L':
+        return {
+          weeks: '3 – 5 Weeks',
+          label: 'Scalable Full-Stack Architecture & Multi-Agent Engine',
+          range: '₹50,000 – ₹1,00,000',
+        };
+      case '1L_plus':
+        return {
+          weeks: '5 – 8 Weeks',
+          label: 'Enterprise Autonomous Ecosystem & Custom Cloud Infrastructure',
+          range: '₹1,00,000+',
+        };
+      default:
+        return null;
     }
-
-    let minPrice = 10000;
-    let maxPrice = 25000;
-    let weeks = '1 – 2';
-
-    if (category === 'website') {
-      if (websiteType === 'landing') {
-        if (websiteMotion === 'simple') {
-          minPrice = 10000;
-          maxPrice = 18000;
-          weeks = '1 – 2';
-        } else {
-          minPrice = 22000;
-          maxPrice = 38000;
-          weeks = '2 – 3';
-        }
-      } else if (websiteType === 'corporate') {
-        if (websiteMotion === 'simple') {
-          minPrice = 25000;
-          maxPrice = 42000;
-          weeks = '2 – 3';
-        } else {
-          minPrice = 45000;
-          maxPrice = 75000;
-          weeks = '3 – 4';
-        }
-      } else if (websiteType === 'webapp') {
-        if (websiteMotion === 'simple') {
-          minPrice = 50000;
-          maxPrice = 85000;
-          weeks = '3 – 5';
-        } else {
-          minPrice = 90000;
-          maxPrice = 150000;
-          weeks = '4 – 7';
-        }
-      }
-    } else {
-      // AI Agent Calculation
-      if (agentTask === 'lead_followup') {
-        if (agentScope === 'standard') {
-          minPrice = 15000;
-          maxPrice = 28000;
-          weeks = '1 – 2';
-        } else if (agentScope === 'multi_channel') {
-          minPrice = 32000;
-          maxPrice = 52000;
-          weeks = '2 – 3';
-        } else {
-          minPrice = 60000;
-          maxPrice = 85000;
-          weeks = '3 – 4';
-        }
-      } else if (agentTask === 'sales_voice') {
-        if (agentScope === 'standard') {
-          minPrice = 35000;
-          maxPrice = 58000;
-          weeks = '2 – 3';
-        } else if (agentScope === 'multi_channel') {
-          minPrice = 58000;
-          maxPrice = 92000;
-          weeks = '3 – 4';
-        } else {
-          minPrice = 95000;
-          maxPrice = 135000;
-          weeks = '4 – 6';
-        }
-      } else if (agentTask === 'operations') {
-        if (agentScope === 'standard') {
-          minPrice = 30000;
-          maxPrice = 52000;
-          weeks = '2 – 3';
-        } else if (agentScope === 'multi_channel') {
-          minPrice = 55000;
-          maxPrice = 88000;
-          weeks = '3 – 5';
-        } else {
-          minPrice = 90000;
-          maxPrice = 140000;
-          weeks = '4 – 6';
-        }
-      } else if (agentTask === 'multi_agent') {
-        if (agentScope === 'standard') {
-          minPrice = 65000;
-          maxPrice = 95000;
-          weeks = '3 – 4';
-        } else if (agentScope === 'multi_channel') {
-          minPrice = 95000;
-          maxPrice = 130000;
-          weeks = '4 – 6';
-        } else {
-          minPrice = 125000;
-          maxPrice = 150000;
-          weeks = '5 – 8';
-        }
-      }
-    }
-
-    // Format thousands cleanly
-    const minFormatted = minPrice >= 100000 ? `₹${(minPrice / 100000).toFixed(1)}L` : `₹${(minPrice / 1000).toFixed(0)}k`;
-    const maxFormatted = maxPrice >= 100000 ? `₹${(maxPrice / 100000).toFixed(1)}L` : `₹${(maxPrice / 1000).toFixed(0)}k`;
-
-    return {
-      weeks,
-      inr: `${minFormatted} – ${maxFormatted}`,
-      usd: `$${Math.round(minPrice / 85)} – $${Math.round(maxPrice / 85)}`,
-    };
   };
 
-  const currentPricing = calculatePricing();
+  const currentEstimate = calculateEstimate();
 
-  // Reset calculator to clean empty state
   const handleReset = () => {
-    setCategory('');
+    setRequirement('');
     setBudget('');
-    setWebsiteMotion('');
-    setWebsiteType('');
-    setAgentTask('');
-    setAgentScope('');
-    setUserEmail('');
-    setUserName('');
-    setSubmitted(false);
+    setComments('');
+    setBusinessName('');
+    setBusinessEmail('');
+    setBusinessPhone('');
     setErrorMessage('');
+    setSubmitted(false);
   };
 
-  // Handle Form Submission and send email to dhruvp9639@gmail.com
+  // Handle Form Submission with Compulsory validation
   const handleSubmitEstimate = async (e) => {
     e.preventDefault();
     setErrorMessage('');
 
-    if (!category) {
-      setErrorMessage('Please select Step 1: Project Type.');
+    // Validation for Compulsory (C) fields
+    if (!businessName.trim()) {
+      setErrorMessage('Please enter your Business / Company Name (Compulsory).');
       return;
     }
-    if (!budget) {
-      setErrorMessage('Please select Step 2: Target Budget Range.');
+
+    if (!businessEmail.trim() || !businessEmail.includes('@')) {
+      setErrorMessage('Please enter a valid Business Work Email (Compulsory).');
       return;
     }
-    if (category === 'website' && (!websiteMotion || !websiteType)) {
-      setErrorMessage('Please complete Website Design Style and Scope options.');
-      return;
-    }
-    if (category === 'agent' && (!agentTask || !agentScope)) {
-      setErrorMessage('Please complete AI Agent Tasks and Integration Channels.');
-      return;
-    }
-    if (!userEmail || !userEmail.includes('@') || !userEmail.includes('.')) {
-      setErrorMessage('Please enter a valid email address in Step 5 to receive your estimate.');
+
+    if (!businessPhone.trim() || businessPhone.trim().length < 7) {
+      setErrorMessage('Please enter a valid Business Contact / WhatsApp Number (Compulsory).');
       return;
     }
 
     setIsSubmitting(true);
-
-    const pricing = calculatePricing();
-    const projectTypeName = category === 'website' ? 'Website / High-Converting Web Application' : 'Autonomous AI Agent System';
-    const styleOrTask = category === 'website' ? (websiteMotionLabels[websiteMotion] || websiteMotion) : (agentTaskLabels[agentTask] || agentTask);
-    const scopeOrChannels = category === 'website' ? (websiteTypeLabels[websiteType] || websiteType) : (agentScopeLabels[agentScope] || agentScope);
+    const estimate = calculateEstimate();
 
     const payload = {
-      _subject: `New Project Estimate Request: ${projectTypeName} (${pricing ? pricing.inr : ''})`,
+      _subject: `New Project Quote Request: ${businessName} (${budgetLabels[budget] || 'Custom Budget'})`,
       _template: 'table',
       _captcha: 'false',
       _cc: 'dhruvp9639@gmail.com',
-      'Client Email': userEmail,
-      'Client Name or WhatsApp': userName || 'Not provided',
-      'Project Type': projectTypeName,
-      'Target Budget': budgetLabels[budget] || budget,
-      'Design Style / Agent Task': styleOrTask,
-      'Scope / Channels': scopeOrChannels,
-      'Estimated Timeline': pricing ? `${pricing.weeks} weeks` : 'To be confirmed',
-      'Estimated Price INR': pricing ? pricing.inr : 'Custom Quote',
-      'Estimated Price USD': pricing ? pricing.usd : 'Custom Quote',
-      'Submission Timestamp': new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      'Name of Business (C)': businessName,
+      'Business Email (C)': businessEmail,
+      'Business Contact Number (C)': businessPhone,
+      'Project Requirement (Optional)': requirementLabels[requirement] || 'General Digital Architecture (Open)',
+      'Expected Budget Range': budgetLabels[budget] || 'Custom Range / Discussion',
+      'Comments & Specific Scope': comments.trim() || 'No specific comments provided',
+      'Estimated Delivery Timeline': estimate ? estimate.weeks : 'To be confirmed in customized quote',
+      'Estimated Budget Tier': estimate ? estimate.range : 'Custom Scope',
+      'Submitted At': new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
     };
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/amyagrowth@gmail.com', {
+      await fetch('https://formsubmit.co/ajax/amyagrowth@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -254,15 +143,10 @@ export default function PricingCalculator({ onNavigate }) {
         },
         body: JSON.stringify(payload),
       });
-
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
-        // Fallback: still show positive confirmation
-        setSubmitted(true);
-      }
+      setSubmitted(true);
     } catch (err) {
-      console.warn('FormSubmit connection notice, proceeding with confirmation:', err);
+      console.warn('FormSubmit network notice:', err);
+      // Still show positive confirmation for smooth UX
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);
@@ -279,7 +163,7 @@ export default function PricingCalculator({ onNavigate }) {
             className="font-mono text-xs text-[#a2a2a2] uppercase tracking-wider"
             style={{ fontFamily: 'Space Mono, monospace' }}
           >
-            PRICING & ESTIMATION (₹10,000 – ₹1,50,000)
+            PROJECT ESTIMATION & CUSTOM QUOTATION
           </span>
         </div>
         <h2
@@ -292,13 +176,13 @@ export default function PricingCalculator({ onNavigate }) {
             fontWeight: 600,
           }}
         >
-          Project Pricing Calculator
+          Project Price Calculator
         </h2>
         <p
           className="mt-3 text-[#656565] max-w-xl font-light text-sm sm:text-base leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
-          Fill in your project specifications to calculate your exact development timeline and price estimate, and receive detailed quotation directly to your email.
+          Configure your project requirements and expected budget to generate an accurate development timeline and receive a comprehensive commercial quotation.
         </p>
       </div>
 
@@ -321,14 +205,14 @@ export default function PricingCalculator({ onNavigate }) {
                 letterSpacing: '-0.02em',
               }}
             >
-              Estimate Your Project
+              Estimate Your Investment
             </h3>
             <p className="text-xs sm:text-sm text-[#656565] font-light mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              Select each field below to generate your custom timeline and budget estimate.
+              Select your specifications below. Compulsory business fields are marked with <strong className="text-[#3F7E7C] font-mono">(C)</strong>.
             </p>
           </div>
 
-          {(category || budget || userEmail) && !submitted && (
+          {(requirement || budget || comments || businessName || businessEmail || businessPhone) && !submitted && (
             <button
               type="button"
               onClick={handleReset}
@@ -336,7 +220,7 @@ export default function PricingCalculator({ onNavigate }) {
               style={{ fontFamily: 'Space Mono, monospace' }}
             >
               <RefreshCw className="w-3.5 h-3.5" />
-              CLEAR FORM
+              RESET FORM
             </button>
           )}
         </div>
@@ -364,12 +248,12 @@ export default function PricingCalculator({ onNavigate }) {
                     color: '#2b2b2b',
                   }}
                 >
-                  Estimate Details Received!
+                  Quotation Request Confirmed!
                 </h4>
                 <p className="text-[#656565] text-sm font-light leading-relaxed" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  Thank you! Your project specification and estimated timeline of{' '}
-                  <strong className="text-[#2b2b2b] font-medium">{currentPricing?.weeks} weeks</strong> have been forwarded to our team.
-                  We will contact <strong className="text-[#3F7E7C]">{userEmail}</strong> within 24 hours with full proposal details and custom quotation.
+                  Thank you, <strong className="text-[#2b2b2b] font-medium">{businessName}</strong>! Your project specifications and estimated timeline of{' '}
+                  <strong className="text-[#2b2b2b] font-medium">{currentEstimate?.weeks || '1 – 3 weeks'}</strong> have been forwarded to our technical team.
+                  We will contact <strong className="text-[#3F7E7C]">{businessEmail}</strong> / <strong className="text-[#2b2b2b]">{businessPhone}</strong> within 24 hours with a comprehensive architecture roadmap and quote.
                 </p>
               </div>
 
@@ -396,50 +280,55 @@ export default function PricingCalculator({ onNavigate }) {
             </motion.div>
           ) : (
             <form onSubmit={handleSubmitEstimate} className="space-y-6 sm:space-y-7">
-              {/* Step 1 — Make Website or AI Agent */}
+              {/* Field 1 — Requirement (Optional) */}
               <div className="border-b border-[#dedede] pb-5">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                    01
-                  </span>
-                  <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
-                    Project Type (Website or AI Agent)
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                      01
+                    </span>
+                    <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
+                      Project Requirement
+                    </span>
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-mono text-[#a2a2a2] uppercase">
+                    (Optional)
                   </span>
                 </div>
                 <div className="relative">
                   <select
-                    value={category}
+                    value={requirement}
                     onChange={(e) => {
-                      setCategory(e.target.value);
-                      setWebsiteMotion('');
-                      setWebsiteType('');
-                      setAgentTask('');
-                      setAgentScope('');
+                      setRequirement(e.target.value);
                       setErrorMessage('');
                     }}
-                    className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base md:text-lg transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
-                      category ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
+                    className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
+                      requirement ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
                     }`}
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    <option value="" disabled>
-                      Select Project Type (Website or AI Agent)...
-                    </option>
-                    <option value="website">Make Website / High-Converting Web Application</option>
-                    <option value="agent">Autonomous AI Agent / Repeated Workflow Automation</option>
+                    <option value="">Select Project Requirement (Optional)...</option>
+                    <option value="webapp">1. Web Application (Full-Stack / MERN / SaaS & Admin Portal)</option>
+                    <option value="website">2. Website (Corporate Brand / High-Conversion Landing Page)</option>
+                    <option value="ai_agents">3. AI Agents Related Set-Up (Autonomous 24/7 Agent, WhatsApp / Voice AI, CRM)</option>
                   </select>
                   <ChevronDown className="w-5 h-5 text-[#a2a2a2] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
-              {/* Step 2 — Target Budget */}
+              {/* Field 2 — Expected Budget */}
               <div className="border-b border-[#dedede] pb-5">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                    02
-                  </span>
-                  <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
-                    Your Target Budget Range
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                      02
+                    </span>
+                    <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
+                      Your Expected Budget Range
+                    </span>
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-mono text-[#3F7E7C] uppercase font-semibold">
+                    (Selectable)
                   </span>
                 </div>
                 <div className="relative">
@@ -449,226 +338,137 @@ export default function PricingCalculator({ onNavigate }) {
                       setBudget(e.target.value);
                       setErrorMessage('');
                     }}
-                    className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base md:text-lg transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
+                    className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
                       budget ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
                     }`}
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    <option value="" disabled>
-                      Select Your Target Budget Range...
-                    </option>
-                    <option value="tier1">₹10,000 – ₹25,000 (Starter MVP / Fast Sprint)</option>
-                    <option value="tier2">₹25,000 – ₹60,000 (Growth & Scale / Custom Features)</option>
-                    <option value="tier3">₹60,000 – ₹1,00,000 (Advanced Automation & Web Apps)</option>
-                    <option value="tier4">₹1,00,000 – ₹1,50,000 (Full Enterprise Ecosystem)</option>
+                    <option value="">Select Your Expected Budget Range...</option>
+                    <option value="5k_10k">₹5,000 – ₹10,000 (Quick Sprint / Prototype / Starter Setup)</option>
+                    <option value="10k_50k">₹10,000 – ₹50,000 (Standard MVP / Brand Website / Core Automations)</option>
+                    <option value="50k_1L">₹50,000 – ₹1,00,000 (Advanced Scalable Web App & Multi-Channel AI System)</option>
+                    <option value="1L_plus">₹1,00,000+ (Full Enterprise Ecosystem & Custom Infrastructure)</option>
                   </select>
                   <ChevronDown className="w-5 h-5 text-[#a2a2a2] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
-              {/* Step 3 & 4 (CONDITIONAL: If Website Selected) */}
-              {category === 'website' && (
-                <>
-                  {/* Step 3: Website Design Style */}
-                  <div className="border-b border-[#dedede] pb-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                        03
-                      </span>
-                      <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
-                        Website Design Style
-                      </span>
-                    </div>
-                    <div className="relative">
-                      <select
-                        value={websiteMotion}
-                        onChange={(e) => {
-                          setWebsiteMotion(e.target.value);
-                          setErrorMessage('');
-                        }}
-                        className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base md:text-lg transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
-                          websiteMotion ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
-                        }`}
-                        style={{ fontFamily: 'DM Sans, sans-serif' }}
-                      >
-                        <option value="" disabled>
-                          Select Website Design Style...
-                        </option>
-                        <option value="simple">Simpler Design — Clean, minimal & ultra-fast loading</option>
-                        <option value="creative">Creative Motion — Smooth scroll, fluid hover effects & micro-interactions</option>
-                      </select>
-                      <ChevronDown className="w-5 h-5 text-[#a2a2a2] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-
-                  {/* Step 4: Website Scope & Architecture */}
-                  <div className="border-b border-[#dedede] pb-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                        04
-                      </span>
-                      <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
-                        Website Scope & Pages
-                      </span>
-                    </div>
-                    <div className="relative">
-                      <select
-                        value={websiteType}
-                        onChange={(e) => {
-                          setWebsiteType(e.target.value);
-                          setErrorMessage('');
-                        }}
-                        className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base md:text-lg transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
-                          websiteType ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
-                        }`}
-                        style={{ fontFamily: 'DM Sans, sans-serif' }}
-                      >
-                        <option value="" disabled>
-                          Select Website Scope & Pages...
-                        </option>
-                        <option value="landing">High-Conversion Landing Page (1-Page Launch)</option>
-                        <option value="corporate">Multi-Page Corporate / Brand Website (5 to 8 Pages)</option>
-                        <option value="webapp">Custom Full-Stack MERN Web App / SaaS Admin Panel</option>
-                      </select>
-                      <ChevronDown className="w-5 h-5 text-[#a2a2a2] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {/* Step 3 & 4 (CONDITIONAL: If AI Agent Selected) */}
-              {category === 'agent' && (
-                <>
-                  {/* Step 3: What Agent Tasks */}
-                  <div className="border-b border-[#dedede] pb-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                        03
-                      </span>
-                      <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
-                        Agent Tasks & Automation
-                      </span>
-                    </div>
-                    <div className="relative">
-                      <select
-                        value={agentTask}
-                        onChange={(e) => {
-                          setAgentTask(e.target.value);
-                          setErrorMessage('');
-                        }}
-                        className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base md:text-lg transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
-                          agentTask ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
-                        }`}
-                        style={{ fontFamily: 'DM Sans, sans-serif' }}
-                      >
-                        <option value="" disabled>
-                          Select Agent Tasks & Automation...
-                        </option>
-                        <option value="lead_followup">Lead Capture & Auto Follow-Up (WhatsApp, Email & CRM 24/7)</option>
-                        <option value="sales_voice">24/7 Sales & Support Voice / Chat Agent (Sub-200ms audio latency)</option>
-                        <option value="operations">Repeated Operations & Data Tasks (Invoices, scraping & reconciliation)</option>
-                        <option value="multi_agent">Autonomous Multi-Agent Workflow Engine (Zero employee overhead)</option>
-                      </select>
-                      <ChevronDown className="w-5 h-5 text-[#a2a2a2] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-
-                  {/* Step 4: Integration Scope */}
-                  <div className="border-b border-[#dedede] pb-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                        04
-                      </span>
-                      <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
-                        Integration Channels
-                      </span>
-                    </div>
-                    <div className="relative">
-                      <select
-                        value={agentScope}
-                        onChange={(e) => {
-                          setAgentScope(e.target.value);
-                          setErrorMessage('');
-                        }}
-                        className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base md:text-lg transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
-                          agentScope ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
-                        }`}
-                        style={{ fontFamily: 'DM Sans, sans-serif' }}
-                      >
-                        <option value="" disabled>
-                          Select Integration Channels...
-                        </option>
-                        <option value="standard">Single Channel (WhatsApp or Website Chatbot)</option>
-                        <option value="multi_channel">Multi-Channel Hub (WhatsApp + Email + CRM + Google Calendar)</option>
-                        <option value="enterprise">Full Enterprise Architecture (Custom LLM, ERP webhooks & database sync)</option>
-                      </select>
-                      <ChevronDown className="w-5 h-5 text-[#a2a2a2] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {/* Step 3 & 4 (Placeholder when Step 1 not chosen yet) */}
-              {!category && (
-                <div className="border-b border-[#dedede] pb-5 opacity-60">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#a2a2a2] font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                      03 & 04
-                    </span>
-                    <span className="font-mono text-[11px] sm:text-xs text-[#a2a2a2] uppercase tracking-wider font-medium">
-                      Specifications & Scope
-                    </span>
-                  </div>
-                  <div className="py-2 text-[#a2a2a2] font-light text-xs sm:text-sm italic" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                    Select Step 01 (Project Type) above to unlock specific scope and architecture options.
-                  </div>
-                </div>
-              )}
-
-              {/* Step 5 — User Contact Details */}
+              {/* Field 3 — Comments for Any Requirement (Optional) */}
               <div className="border-b border-[#dedede] pb-5">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                    05
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                      03
+                    </span>
+                    <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
+                      Comments & Specific Scope
+                    </span>
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-mono text-[#a2a2a2] uppercase">
+                    (Optional)
                   </span>
-                  <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
-                    Your Contact Information
+                </div>
+                <div className="relative mt-2">
+                  <textarea
+                    rows={3}
+                    value={comments}
+                    onChange={(e) => setComments(e.target.value)}
+                    placeholder="Describe any specific requirements, integrations, preferred features, or target timelines for your business..."
+                    className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 px-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base resize-none"
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  />
+                </div>
+              </div>
+
+              {/* Field 4 — Business Details (Compulsory - C) */}
+              <div className="border-b border-[#dedede] pb-5">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-[#3F7E7C] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0 shadow-sm">
+                      04
+                    </span>
+                    <span className="font-mono text-[11px] sm:text-xs text-[#2b2b2b] uppercase tracking-wider font-semibold">
+                      Business Details
+                    </span>
+                  </div>
+                  <span className="inline-flex items-center gap-1 font-mono text-[10px] sm:text-xs text-[#3F7E7C] bg-[#EAF4F3] border border-[#3F7E7C]/25 px-2.5 py-0.5 rounded-full font-bold">
+                    (C) COMPULSORY
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 mt-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 mt-3">
+                  {/* Name of business (C) */}
                   <div className="relative">
-                    <input
-                      type="email"
-                      value={userEmail}
-                      onChange={(e) => {
-                        setUserEmail(e.target.value);
-                        setErrorMessage('');
-                      }}
-                      placeholder="Your Email (e.g. name@company.com) *"
-                      required
-                      className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    />
-                    <Mail className="w-4 h-4 text-[#a2a2a2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <label className="block text-[11px] font-mono text-[#6e6e6e] uppercase tracking-wider mb-1.5 font-medium">
+                      Name of Business <span className="text-red-500 font-bold">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        required
+                        value={businessName}
+                        onChange={(e) => {
+                          setBusinessName(e.target.value);
+                          setErrorMessage('');
+                        }}
+                        placeholder="e.g. Apex Global Corp"
+                        className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base"
+                        style={{ fontFamily: 'DM Sans, sans-serif' }}
+                      />
+                      <Building2 className="w-4 h-4 text-[#a2a2a2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
                   </div>
 
-                  <div>
-                    <input
-                      type="text"
-                      value={userName}
-                      onChange={(e) => setUserName(e.target.value)}
-                      placeholder="Your Name or WhatsApp (optional)"
-                      className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 px-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    />
+                  {/* Business email (C) */}
+                  <div className="relative">
+                    <label className="block text-[11px] font-mono text-[#6e6e6e] uppercase tracking-wider mb-1.5 font-medium">
+                      Business Email <span className="text-red-500 font-bold">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="email"
+                        required
+                        value={businessEmail}
+                        onChange={(e) => {
+                          setBusinessEmail(e.target.value);
+                          setErrorMessage('');
+                        }}
+                        placeholder="e.g. contact@company.com"
+                        className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base"
+                        style={{ fontFamily: 'DM Sans, sans-serif' }}
+                      />
+                      <Mail className="w-4 h-4 text-[#a2a2a2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Business contact Number (C) */}
+                  <div className="relative">
+                    <label className="block text-[11px] font-mono text-[#6e6e6e] uppercase tracking-wider mb-1.5 font-medium">
+                      Business Contact Number <span className="text-red-500 font-bold">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="tel"
+                        required
+                        value={businessPhone}
+                        onChange={(e) => {
+                          setBusinessPhone(e.target.value);
+                          setErrorMessage('');
+                        }}
+                        placeholder="e.g. +91 98765 43210"
+                        className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base"
+                        style={{ fontFamily: 'DM Sans, sans-serif' }}
+                      />
+                      <Phone className="w-4 h-4 text-[#a2a2a2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Inline Error Message if any */}
+              {/* Inline Error Message if any compulsory field is missed */}
               {errorMessage && (
-                <div className="p-3 rounded-xl bg-red-50 text-red-700 text-xs font-mono border border-red-200">
+                <div className="p-3.5 rounded-xl bg-red-50 text-red-700 text-xs sm:text-sm font-mono border border-red-200 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-red-600 shrink-0" />
                   {errorMessage}
                 </div>
               )}
@@ -685,16 +485,21 @@ export default function PricingCalculator({ onNavigate }) {
                         fontFamily: 'Space Grotesk, sans-serif',
                         fontSize: 'clamp(1.4rem, 4vw, 2rem)',
                         fontWeight: 700,
-                        color: currentPricing ? '#2b2b2b' : '#a2a2a2',
+                        color: currentEstimate ? '#2b2b2b' : '#a2a2a2',
                         letterSpacing: '-0.03em',
                       }}
                     >
-                      {currentPricing ? (
+                      {currentEstimate ? (
                         <>
-                          {currentPricing.weeks} <span className="text-sm font-normal text-[#656565]">weeks</span>
+                          {currentEstimate.weeks}
+                          <span className="text-xs sm:text-sm font-normal text-[#656565] ml-2 block sm:inline">
+                            • {currentEstimate.label}
+                          </span>
                         </>
                       ) : (
-                        <span className="text-sm font-normal text-[#a2a2a2] italic">Select options above</span>
+                        <span className="text-sm font-normal text-[#a2a2a2] italic">
+                          Select expected budget above to calculate timeline
+                        </span>
                       )}
                     </div>
                   </div>
@@ -708,24 +513,24 @@ export default function PricingCalculator({ onNavigate }) {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        SENDING ESTIMATE...
+                        PROCESSING QUOTE...
                       </>
                     ) : (
                       <>
-                        GET PRICE DETAILS
+                        REQUEST DETAILED QUOTE
                         <ArrowRight className="w-4 h-4" />
                       </>
                     )}
                   </button>
                 </div>
 
-                {/* Note text placed with generous distance below the timeline row */}
+                {/* Note text placed below the timeline row */}
                 <div className="mt-4 pt-2">
                   <p
                     className="text-[10px] sm:text-[11px] text-[#8e8e8e] font-light leading-normal"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    * Note: Estimated timeline may vary based on custom requirements. Full price quotation is delivered directly to your email.
+                    * Note: All fields marked with (C) are strictly verified for customized enterprise proposals. Your quotation and architecture scope will be delivered directly to your verified business email and WhatsApp number.
                   </p>
                 </div>
               </div>

@@ -163,7 +163,7 @@ function QuoteCard() {
           marginTop: '2rem',
         }}
       >
-        — Founding Partner @dhruv patel
+        — Founding Partner @Apex Global
       </p>
     </div>
   );

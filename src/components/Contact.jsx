@@ -234,7 +234,7 @@ export default function Contact() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Dhruv Patel"
+                    placeholder="Alexander Wright"
                     style={inputStyle}
                     onFocus={e => (e.target.style.borderBottomColor = '#2b2b2b')}
                     onBlur={e => (e.target.style.borderBottomColor = '#dedede')}
@@ -252,7 +252,7 @@ export default function Contact() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="dhruv@company.com"
+                    placeholder="alexander@xyzenterprises.com"
                     style={inputStyle}
                     onFocus={e => (e.target.style.borderBottomColor = '#2b2b2b')}
                     onBlur={e => (e.target.style.borderBottomColor = '#dedede')}
@@ -310,7 +310,7 @@ export default function Contact() {
                     rows={3}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us what web application or AI automation you want to build..."
+                    placeholder="e.g. Acme Corp needs a custom full-stack web application with automated CRM & WhatsApp integration..."
                     style={{ ...inputStyle, resize: 'none' }}
                     onFocus={e => (e.target.style.borderBottomColor = '#2b2b2b')}
                     onBlur={e => (e.target.style.borderBottomColor = '#dedede')}
