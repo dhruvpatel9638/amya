@@ -93,7 +93,7 @@ export default function App() {
         <USPSection onNavigate={handleNavigate} />
         <Portfolio onNavigate={handleNavigate} />
         <About onNavigate={handleNavigate} />
-        <div id="pricing">
+        <div id="pricing" className="scroll-mt-24">
           <PricingCalculator onNavigate={handleNavigate} />
         </div>
         <Contact />
