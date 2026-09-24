@@ -61,7 +61,7 @@ export default function CreativeScrollbar({ activeSection, onNavigate }) {
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
       scrollTimeoutRef.current = setTimeout(() => {
         setIsScrolling(false);
-      }, 3500);
+      }, 1500);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -146,23 +146,6 @@ export default function CreativeScrollbar({ activeSection, onNavigate }) {
         className="fixed top-0 left-0 right-0 h-[3px] z-[100] pointer-events-none bg-gradient-to-r from-[#3F7E7C] via-[#5fa2a0] to-[#2b2b2b] origin-left transition-transform duration-75"
         style={{ transform: `scaleX(${scrollProgress})` }}
       />
-
-      {/* Dedicated Mobile Floating Scroll Indicator Pill (Always crystal clear on Mobile) */}
-      <div
-        onClick={handleNextSectionJump}
-        className="sm:hidden fixed bottom-5 right-4 z-50 flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#2b2b2b] text-white shadow-2xl backdrop-blur-md border border-white/20 pointer-events-auto cursor-pointer active:scale-95 transition-all duration-150"
-        style={{ fontFamily: 'Space Mono, monospace' }}
-        title="Tap to jump to next section"
-      >
-        <span className="w-2 h-2 rounded-full bg-[#3F7E7C] animate-pulse" />
-        <span className="text-[10px] font-bold text-[#3F7E7C] uppercase tracking-wider">
-          {activeSection ? activeSection.toUpperCase() : 'HERO'}
-        </span>
-        <span className="text-white/30 text-[9px]">/</span>
-        <span className="text-[10px] text-white/90 font-medium min-w-[28px] text-right">
-          {percentage}%
-        </span>
-      </div>
 
       {/* Main Vertical Scrollbar Rail */}
       <div

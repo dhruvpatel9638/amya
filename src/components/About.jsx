@@ -61,16 +61,16 @@ export default function About({ onNavigate }) {
             </span>
             <h2
               style={{
-                fontFamily: 'Space Grotesk, DM Serif Display, sans-serif',
+                fontFamily: 'DM Serif Display, Georgia, serif',
                 fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)',
                 lineHeight: 0.9,
-                letterSpacing: '-0.04em',
+                letterSpacing: '-0.02em',
                 color: '#2b2b2b',
-                fontWeight: 600,
+                fontWeight: 400,
               }}
             >
               This is Amya Growth,{' '}
-              <em style={{ fontStyle: 'italic', fontFamily: 'DM Serif Display, serif', fontWeight: 400 }}>welcome.</em>
+              <em style={{ fontStyle: 'italic', fontWeight: 400 }}>welcome.</em>
             </h2>
           </motion.div>
 

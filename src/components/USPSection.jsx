@@ -312,10 +312,10 @@ export default function USPSection({ onNavigate }) {
         >
           <h2
             style={{
-              fontFamily: 'Space Grotesk, DM Serif Display, sans-serif',
+              fontFamily: 'DM Serif Display, Georgia, serif',
               fontSize: 'clamp(2.75rem, 8.5vw, 7.5rem)',
               lineHeight: 0.9,
-              letterSpacing: '-0.05em',
+              letterSpacing: '-0.03em',
               color: '#2b2b2b',
               maxWidth: '9em',
               margin: '0 auto',

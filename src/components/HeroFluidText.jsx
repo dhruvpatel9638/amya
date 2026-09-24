@@ -233,18 +233,15 @@ export default function HeroFluidText({ onNavigate }) {
 
         {/* Display Headline */}
         <h1
-          className="text-[#2b2b2b] tracking-[-0.035em] leading-[0.98] sm:leading-[0.92] mb-3 sm:mb-5 select-none"
+          className="text-[#2b2b2b] tracking-[-0.03em] leading-[0.98] sm:leading-[0.92] mb-3 sm:mb-5 select-none"
           style={{
-            fontFamily: 'Space Grotesk, DM Serif Display, sans-serif',
+            fontFamily: 'DM Serif Display, Georgia, serif',
             fontSize: 'clamp(2.1rem, 5.8vw, 5.6rem)',
-            fontWeight: 600,
+            fontWeight: 400,
           }}
         >
           Creative Web Apps <br />
-          <span
-            className="italic font-normal"
-            style={{ fontFamily: 'DM Serif Display, serif' }}
-          >
+          <span className="italic font-normal">
             That Run Without Employees.
           </span>
         </h1>

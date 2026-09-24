@@ -91,18 +91,18 @@ export default function Footer({ onNavigate }) {
           {/* Big CTA headline matching frame 00:41 */}
           <h2
             style={{
-              fontFamily: 'Space Grotesk, DM Serif Display, serif',
+              fontFamily: 'DM Serif Display, Georgia, serif',
               fontSize: 'clamp(2.2rem, 6.5vw, 6.2rem)',
               lineHeight: 0.95,
-              letterSpacing: '-0.04em',
+              letterSpacing: '-0.02em',
               color: '#2b2b2b',
               marginBottom: '1.5rem',
               maxWidth: '16ch',
-              fontWeight: 600,
+              fontWeight: 400,
             }}
           >
             Build your next<br />
-            project with <em style={{ fontStyle: 'italic', fontFamily: 'DM Serif Display, serif', fontWeight: 400 }}>us.</em>
+            project with <em style={{ fontStyle: 'italic', fontWeight: 400 }}>us.</em>
           </h2>
 
           <p

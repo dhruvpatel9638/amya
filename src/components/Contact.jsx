@@ -108,17 +108,17 @@ export default function Contact() {
           <span style={labelStyle}>BOOK FREE CONSULTATION</span>
           <h2
             style={{
-              fontFamily: 'Space Grotesk, DM Serif Display, serif',
+              fontFamily: 'DM Serif Display, Georgia, serif',
               fontSize: 'clamp(2.5rem, 5vw, 4.8rem)',
               lineHeight: 0.95,
-              letterSpacing: '-0.04em',
+              letterSpacing: '-0.02em',
               color: '#2b2b2b',
               marginTop: '1.25rem',
-              fontWeight: 600,
+              fontWeight: 400,
               maxWidth: '18ch',
             }}
           >
-            Grow 100x your<br /><em style={{ fontStyle: 'italic', fontFamily: 'DM Serif Display, serif', fontWeight: 400 }}>current business.</em>
+            Grow 100x your<br /><em style={{ fontStyle: 'italic', fontWeight: 400 }}>current business.</em>
           </h2>
         </div>
 
@@ -192,7 +192,7 @@ export default function Contact() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-8"
+            className="lg:col-span-8 bg-[#1a1a1a] p-8 sm:p-10 md:p-12 rounded-3xl shadow-2xl border border-[#333]"
           >
             {submitted ? (
               <motion.div
@@ -202,22 +202,22 @@ export default function Contact() {
               >
                 <div
                   className="w-16 h-16 rounded-full flex items-center justify-center"
-                  style={{ background: '#EAF4F3', color: '#3F7E7C' }}
+                  style={{ background: 'rgba(63, 126, 124, 0.2)', color: '#3F7E7C' }}
                 >
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <h3
                   style={{
-                    fontFamily: 'Space Grotesk, DM Serif Display, serif',
+                    fontFamily: 'DM Serif Display, Georgia, serif',
                     fontSize: '2rem',
-                    letterSpacing: '-0.03em',
-                    color: '#2b2b2b',
-                    fontWeight: 600,
+                    letterSpacing: '-0.02em',
+                    color: '#ffffff',
+                    fontWeight: 400,
                   }}
                 >
                   Consultation Request Sent!
                 </h3>
-                <p style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 300, color: '#656565', maxWidth: '28rem' }}>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 300, color: '#a2a2a2', maxWidth: '28rem' }}>
                   Thank you! The Amya Growth team will review your business details and schedule your free 100x growth consultation promptly.
                 </p>
               </motion.div>
@@ -226,7 +226,7 @@ export default function Contact() {
                 {/* Field 1 — Name */}
                 <div>
                   <div className="flex items-center justify-between" style={{ marginBottom: '0.5rem' }}>
-                    <span style={{ ...labelStyle, color: '#2b2b2b' }}>1</span>
+                    <span style={{ ...labelStyle, color: '#ffffff' }}>1</span>
                     <span style={labelStyle}>YOUR NAME</span>
                   </div>
                   <input
@@ -235,16 +235,17 @@ export default function Contact() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Alexander Wright"
-                    style={inputStyle}
-                    onFocus={e => (e.target.style.borderBottomColor = '#2b2b2b')}
-                    onBlur={e => (e.target.style.borderBottomColor = '#dedede')}
+                    style={{ ...inputStyle, color: '#ffffff', borderBottomColor: '#444' }}
+                    onFocus={e => (e.target.style.borderBottomColor = '#ffffff')}
+                    onBlur={e => (e.target.style.borderBottomColor = '#444')}
+                    className="placeholder:text-[#656565]"
                   />
                 </div>
 
                 {/* Field 2 — Email */}
                 <div>
                   <div className="flex items-center justify-between" style={{ marginBottom: '0.5rem' }}>
-                    <span style={{ ...labelStyle, color: '#2b2b2b' }}>2</span>
+                    <span style={{ ...labelStyle, color: '#ffffff' }}>2</span>
                     <span style={labelStyle}>WORK EMAIL</span>
                   </div>
                   <input
@@ -253,57 +254,58 @@ export default function Contact() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="alexander@xyzenterprises.com"
-                    style={inputStyle}
-                    onFocus={e => (e.target.style.borderBottomColor = '#2b2b2b')}
-                    onBlur={e => (e.target.style.borderBottomColor = '#dedede')}
+                    style={{ ...inputStyle, color: '#ffffff', borderBottomColor: '#444' }}
+                    onFocus={e => (e.target.style.borderBottomColor = '#ffffff')}
+                    onBlur={e => (e.target.style.borderBottomColor = '#444')}
+                    className="placeholder:text-[#656565]"
                   />
                 </div>
 
                 {/* Field 3 — Service */}
                 <div>
                   <div className="flex items-center justify-between" style={{ marginBottom: '0.5rem' }}>
-                    <span style={{ ...labelStyle, color: '#2b2b2b' }}>3</span>
+                    <span style={{ ...labelStyle, color: '#ffffff' }}>3</span>
                     <span style={labelStyle}>REQUIRED SERVICE</span>
                   </div>
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    style={{ ...inputStyle, cursor: 'pointer', appearance: 'none' }}
-                    onFocus={e => (e.target.style.borderBottomColor = '#2b2b2b')}
-                    onBlur={e => (e.target.style.borderBottomColor = '#dedede')}
+                    style={{ ...inputStyle, color: '#ffffff', borderBottomColor: '#444', cursor: 'pointer', appearance: 'none' }}
+                    onFocus={e => (e.target.style.borderBottomColor = '#ffffff')}
+                    onBlur={e => (e.target.style.borderBottomColor = '#444')}
                   >
-                    <option>Custom Web App (Full-Stack / MERN)</option>
-                    <option>AI Business Automation (WhatsApp / Email)</option>
-                    <option>Auto Follow-Up & CRM Systems</option>
-                    <option>Admin Panel & SaaS Platform</option>
-                    <option>AI Integration & Cloud Deployment</option>
+                    <option className="bg-[#1a1a1a] text-white">Custom Web App (Full-Stack / MERN)</option>
+                    <option className="bg-[#1a1a1a] text-white">AI Business Automation (WhatsApp / Email)</option>
+                    <option className="bg-[#1a1a1a] text-white">Auto Follow-Up & CRM Systems</option>
+                    <option className="bg-[#1a1a1a] text-white">Admin Panel & SaaS Platform</option>
+                    <option className="bg-[#1a1a1a] text-white">AI Integration & Cloud Deployment</option>
                   </select>
                 </div>
 
                 {/* Field 4 — Budget */}
                 <div>
                   <div className="flex items-center justify-between" style={{ marginBottom: '0.5rem' }}>
-                    <span style={{ ...labelStyle, color: '#2b2b2b' }}>4</span>
+                    <span style={{ ...labelStyle, color: '#ffffff' }}>4</span>
                     <span style={labelStyle}>ESTIMATED BUDGET (₹ / $)</span>
                   </div>
                   <select
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    style={{ ...inputStyle, cursor: 'pointer', appearance: 'none' }}
-                    onFocus={e => (e.target.style.borderBottomColor = '#2b2b2b')}
-                    onBlur={e => (e.target.style.borderBottomColor = '#dedede')}
+                    style={{ ...inputStyle, color: '#ffffff', borderBottomColor: '#444', cursor: 'pointer', appearance: 'none' }}
+                    onFocus={e => (e.target.style.borderBottomColor = '#ffffff')}
+                    onBlur={e => (e.target.style.borderBottomColor = '#444')}
                   >
-                    <option>$1k - $10k (Custom Starter Web App / Automation)</option>
-                    <option>$10k - $25k (Full-Stack Platform & Auto Workflows)</option>
-                    <option>$25k - $50k (Enterprise AI Architecture)</option>
-                    <option>$50k+ (Complete Digital Transformation)</option>
+                    <option className="bg-[#1a1a1a] text-white">₹10,000 – ₹25,000 (Quick Sprint / Prototype / Starter Setup)</option>
+                    <option className="bg-[#1a1a1a] text-white">₹25,000 – ₹50,000 (Standard MVP / Brand Website / Core Automations)</option>
+                    <option className="bg-[#1a1a1a] text-white">₹50,000 – ₹1,00,000 (Advanced Scalable Web App & Multi-Channel AI System)</option>
+                    <option className="bg-[#1a1a1a] text-white">₹1,00,000+ (Full Enterprise Ecosystem & Custom Infrastructure)</option>
                   </select>
                 </div>
 
                 {/* Field 5 — Message */}
                 <div>
                   <div className="flex items-center justify-between" style={{ marginBottom: '0.5rem' }}>
-                    <span style={{ ...labelStyle, color: '#2b2b2b' }}>5</span>
+                    <span style={{ ...labelStyle, color: '#ffffff' }}>5</span>
                     <span style={labelStyle}>TELL US ABOUT YOUR BUSINESS GOALS</span>
                   </div>
                   <textarea
@@ -311,18 +313,19 @@ export default function Contact() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="e.g. Acme Corp needs a custom full-stack web application with automated CRM & WhatsApp integration..."
-                    style={{ ...inputStyle, resize: 'none' }}
-                    onFocus={e => (e.target.style.borderBottomColor = '#2b2b2b')}
-                    onBlur={e => (e.target.style.borderBottomColor = '#dedede')}
+                    style={{ ...inputStyle, color: '#ffffff', borderBottomColor: '#444', resize: 'none' }}
+                    onFocus={e => (e.target.style.borderBottomColor = '#ffffff')}
+                    onBlur={e => (e.target.style.borderBottomColor = '#444')}
+                    className="placeholder:text-[#656565]"
                   />
                 </div>
 
-                {/* Submit button */}
-                <div>
+                {/* Submit button & Note */}
+                <div className="pt-2">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="font-mono text-xs uppercase tracking-wider px-10 py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-all duration-200 shadow-md inline-flex items-center gap-2 cursor-pointer disabled:opacity-60"
+                    className="font-mono w-full sm:w-auto text-xs uppercase tracking-wider px-10 py-4 rounded-full bg-[#3F7E7C] text-white hover:bg-[#ffffff] hover:text-[#1a1a1a] transition-all duration-300 shadow-lg inline-flex justify-center items-center gap-2 cursor-pointer disabled:opacity-60 font-bold mb-4"
                     style={{ fontFamily: 'Space Mono, monospace' }}
                   >
                     {isSubmitting ? (
@@ -334,6 +337,12 @@ export default function Contact() {
                       'BOOK FREE CONSULTATION'
                     )}
                   </button>
+                  <p
+                    className="text-[10px] sm:text-[11px] text-[#656565] font-light leading-normal"
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  >
+                    * Your data is strictly confidential and used solely to communicate regarding your project requirements.
+                  </p>
                 </div>
               </form>
             )}
@@ -346,12 +355,12 @@ export default function Contact() {
             <span style={labelStyle}>FREQUENTLY ASKED QUESTIONS</span>
             <h3
               style={{
-                fontFamily: 'Space Grotesk, DM Serif Display, serif',
+                fontFamily: 'DM Serif Display, Georgia, serif',
                 fontSize: 'clamp(2rem, 3.5vw, 3rem)',
-                letterSpacing: '-0.03em',
+                letterSpacing: '-0.02em',
                 color: '#2b2b2b',
                 marginTop: '0.75rem',
-                fontWeight: 600,
+                fontWeight: 400,
               }}
             >
               Everything you need to know.

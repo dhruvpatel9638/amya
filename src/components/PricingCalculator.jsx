@@ -168,12 +168,12 @@ export default function PricingCalculator({ onNavigate }) {
         </div>
         <h2
           style={{
-            fontFamily: 'Space Grotesk, DM Serif Display, sans-serif',
+            fontFamily: 'DM Serif Display, Georgia, serif',
             fontSize: 'clamp(1.9rem, 4.5vw, 3.4rem)',
             lineHeight: 1.05,
-            letterSpacing: '-0.03em',
+            letterSpacing: '-0.02em',
             color: '#2b2b2b',
-            fontWeight: 600,
+            fontWeight: 400,
           }}
         >
           Project Price Calculator
@@ -192,23 +192,23 @@ export default function PricingCalculator({ onNavigate }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.3 }}
-        className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-10 border border-[#dedede] shadow-sm relative overflow-hidden"
+        className="bg-[#1a1a1a] rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-10 border border-[#333] shadow-2xl relative overflow-hidden"
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 sm:mb-8 pb-5 border-b border-[#f0f0f0]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 sm:mb-8 pb-5 border-b border-[#333]">
           <div>
             <h3
               style={{
                 fontFamily: 'Space Grotesk, sans-serif',
                 fontSize: 'clamp(1.35rem, 3vw, 1.75rem)',
                 fontWeight: 600,
-                color: '#2b2b2b',
+                color: '#ffffff',
                 letterSpacing: '-0.02em',
               }}
             >
               Estimate Your Investment
             </h3>
-            <p className="text-xs sm:text-sm text-[#656565] font-light mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              Select your specifications below. Compulsory business fields are marked with <strong className="text-[#3F7E7C] font-mono">(C)</strong>.
+            <p className="text-xs sm:text-sm text-[#a2a2a2] font-light mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+              Select your specifications below.
             </p>
           </div>
 
@@ -216,7 +216,7 @@ export default function PricingCalculator({ onNavigate }) {
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 text-xs text-[#8e8e8e] hover:text-[#3F7E7C] transition-colors self-start sm:self-auto py-1.5 px-3 rounded-lg border border-[#e5e5e5] hover:border-[#3F7E7C] bg-white cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs text-[#a2a2a2] hover:text-[#3F7E7C] transition-colors self-start sm:self-auto py-1.5 px-3 rounded-lg border border-[#444] hover:border-[#3F7E7C] bg-[#2b2b2b] cursor-pointer"
               style={{ fontFamily: 'Space Mono, monospace' }}
             >
               <RefreshCw className="w-3.5 h-3.5" />
@@ -233,9 +233,9 @@ export default function PricingCalculator({ onNavigate }) {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
-              className="py-12 px-4 md:px-8 text-center flex flex-col items-center justify-center space-y-5 rounded-2xl bg-[#f8fbfb] border border-[#d2ebe9]"
+              className="py-12 px-4 md:px-8 text-center flex flex-col items-center justify-center space-y-5 rounded-2xl bg-[#1a1a1a] border border-[#333]"
             >
-              <div className="w-16 h-16 rounded-full bg-[#EAF4F3] text-[#3F7E7C] flex items-center justify-center shadow-inner">
+              <div className="w-16 h-16 rounded-full bg-[rgba(63,126,124,0.2)] text-[#3F7E7C] flex items-center justify-center shadow-inner">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
 
@@ -245,15 +245,15 @@ export default function PricingCalculator({ onNavigate }) {
                     fontFamily: 'Space Grotesk, sans-serif',
                     fontSize: '1.5rem',
                     fontWeight: 700,
-                    color: '#2b2b2b',
+                    color: '#ffffff',
                   }}
                 >
                   Quotation Request Confirmed!
                 </h4>
-                <p className="text-[#656565] text-sm font-light leading-relaxed" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  Thank you, <strong className="text-[#2b2b2b] font-medium">{businessName}</strong>! Your project specifications and estimated timeline of{' '}
-                  <strong className="text-[#2b2b2b] font-medium">{currentEstimate?.weeks || '1 – 3 weeks'}</strong> have been forwarded to our technical team.
-                  We will contact <strong className="text-[#3F7E7C]">{businessEmail}</strong> / <strong className="text-[#2b2b2b]">{businessPhone}</strong> within 24 hours with a comprehensive architecture roadmap and quote.
+                <p className="text-[#a2a2a2] text-sm font-light leading-relaxed" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                  Thank you, <strong className="text-[#ffffff] font-medium">{businessName}</strong>! Your project specifications and estimated timeline of{' '}
+                  <strong className="text-[#ffffff] font-medium">{currentEstimate?.weeks || '1 – 3 weeks'}</strong> have been forwarded to our technical team.
+                  We will contact <strong className="text-[#3F7E7C]">{businessEmail}</strong> / <strong className="text-[#ffffff]">{businessPhone}</strong> within 24 hours with a comprehensive architecture roadmap and quote.
                 </p>
               </div>
 
@@ -261,7 +261,7 @@ export default function PricingCalculator({ onNavigate }) {
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="font-mono text-xs uppercase tracking-wider px-6 py-3 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] transition-colors shadow-sm cursor-pointer"
+                  className="font-mono text-xs uppercase tracking-wider px-6 py-3 rounded-full bg-[#3F7E7C] text-white hover:bg-white hover:text-[#1a1a1a] transition-colors shadow-sm cursor-pointer"
                   style={{ fontFamily: 'Space Mono, monospace' }}
                 >
                   Calculate Another Project
@@ -270,7 +270,7 @@ export default function PricingCalculator({ onNavigate }) {
                   <button
                     type="button"
                     onClick={() => onNavigate('contact')}
-                    className="font-mono text-xs uppercase tracking-wider px-6 py-3 rounded-full border border-[#dedede] text-[#2b2b2b] hover:border-[#3F7E7C] hover:text-[#3F7E7C] transition-colors cursor-pointer"
+                    className="font-mono text-xs uppercase tracking-wider px-6 py-3 rounded-full border border-[#444] text-[#ffffff] hover:border-[#3F7E7C] hover:text-[#3F7E7C] transition-colors cursor-pointer"
                     style={{ fontFamily: 'Space Mono, monospace' }}
                   >
                     Direct Consultation
@@ -281,19 +281,16 @@ export default function PricingCalculator({ onNavigate }) {
           ) : (
             <form onSubmit={handleSubmitEstimate} className="space-y-6 sm:space-y-7">
               {/* Field 1 — Requirement (Optional) */}
-              <div className="border-b border-[#dedede] pb-5">
+              <div className="border-b border-[#333] pb-5">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                    <span className="w-6 h-6 rounded-full bg-[#2b2b2b] border border-[#444] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
                       01
                     </span>
-                    <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
+                    <span className="font-mono text-[11px] sm:text-xs text-[#a2a2a2] uppercase tracking-wider font-medium">
                       Project Requirement
                     </span>
                   </div>
-                  <span className="text-[10px] sm:text-xs font-mono text-[#a2a2a2] uppercase">
-                    (Optional)
-                  </span>
                 </div>
                 <div className="relative">
                   <select
@@ -302,34 +299,31 @@ export default function PricingCalculator({ onNavigate }) {
                       setRequirement(e.target.value);
                       setErrorMessage('');
                     }}
-                    className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
-                      requirement ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
+                    className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base transition-colors border-b border-[#444] focus:border-[#3F7E7C] ${
+                      requirement ? 'text-[#ffffff]' : 'text-[#a2a2a2]'
                     }`}
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    <option value="">Select Project Requirement (Optional)...</option>
-                    <option value="webapp">1. Web Application (Full-Stack / MERN / SaaS & Admin Portal)</option>
-                    <option value="website">2. Website (Corporate Brand / High-Conversion Landing Page)</option>
-                    <option value="ai_agents">3. AI Agents Related Set-Up (Autonomous 24/7 Agent, WhatsApp / Voice AI, CRM)</option>
+                    <option value="" className="bg-[#1a1a1a] text-[#a2a2a2]">Select Project Requirement...</option>
+                    <option value="webapp" className="bg-[#1a1a1a] text-white">1. Web Application (Full-Stack / MERN / SaaS & Admin Portal)</option>
+                    <option value="website" className="bg-[#1a1a1a] text-white">2. Website (Corporate Brand / High-Conversion Landing Page)</option>
+                    <option value="ai_agents" className="bg-[#1a1a1a] text-white">3. AI Agents Related Set-Up (Autonomous 24/7 Agent, WhatsApp / Voice AI, CRM)</option>
                   </select>
-                  <ChevronDown className="w-5 h-5 text-[#a2a2a2] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <ChevronDown className="w-5 h-5 text-[#6e6e6e] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
               {/* Field 2 — Expected Budget */}
-              <div className="border-b border-[#dedede] pb-5">
+              <div className="border-b border-[#333] pb-5">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                    <span className="w-6 h-6 rounded-full bg-[#2b2b2b] border border-[#444] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
                       02
                     </span>
-                    <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
+                    <span className="font-mono text-[11px] sm:text-xs text-[#a2a2a2] uppercase tracking-wider font-medium">
                       Your Expected Budget Range
                     </span>
                   </div>
-                  <span className="text-[10px] sm:text-xs font-mono text-[#3F7E7C] uppercase font-semibold">
-                    (Selectable)
-                  </span>
                 </div>
                 <div className="relative">
                   <select
@@ -338,35 +332,32 @@ export default function PricingCalculator({ onNavigate }) {
                       setBudget(e.target.value);
                       setErrorMessage('');
                     }}
-                    className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base transition-colors border-b border-[#e5e5e5] focus:border-[#3F7E7C] ${
-                      budget ? 'text-[#2b2b2b]' : 'text-[#8e8e8e]'
+                    className={`w-full bg-transparent font-medium py-2.5 sm:py-3 pr-8 outline-none appearance-none cursor-pointer text-sm sm:text-base transition-colors border-b border-[#444] focus:border-[#3F7E7C] ${
+                      budget ? 'text-[#ffffff]' : 'text-[#a2a2a2]'
                     }`}
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    <option value="">Select Your Expected Budget Range...</option>
-                    <option value="5k_10k">₹5,000 – ₹10,000 (Quick Sprint / Prototype / Starter Setup)</option>
-                    <option value="10k_50k">₹10,000 – ₹50,000 (Standard MVP / Brand Website / Core Automations)</option>
-                    <option value="50k_1L">₹50,000 – ₹1,00,000 (Advanced Scalable Web App & Multi-Channel AI System)</option>
-                    <option value="1L_plus">₹1,00,000+ (Full Enterprise Ecosystem & Custom Infrastructure)</option>
+                    <option value="" className="bg-[#1a1a1a] text-[#a2a2a2]">Select Your Expected Budget Range...</option>
+                    <option value="5k_10k" className="bg-[#1a1a1a] text-white">₹5,000 – ₹10,000 (Quick Sprint / Prototype / Starter Setup)</option>
+                    <option value="10k_50k" className="bg-[#1a1a1a] text-white">₹10,000 – ₹50,000 (Standard MVP / Brand Website / Core Automations)</option>
+                    <option value="50k_1L" className="bg-[#1a1a1a] text-white">₹50,000 – ₹1,00,000 (Advanced Scalable Web App & Multi-Channel AI System)</option>
+                    <option value="1L_plus" className="bg-[#1a1a1a] text-white">₹1,00,000+ (Full Enterprise Ecosystem & Custom Infrastructure)</option>
                   </select>
-                  <ChevronDown className="w-5 h-5 text-[#a2a2a2] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <ChevronDown className="w-5 h-5 text-[#6e6e6e] absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
               {/* Field 3 — Comments for Any Requirement (Optional) */}
-              <div className="border-b border-[#dedede] pb-5">
+              <div className="border-b border-[#333] pb-5">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-[#f1f1f1] border border-[#dedede] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                    <span className="w-6 h-6 rounded-full bg-[#2b2b2b] border border-[#444] text-[#3F7E7C] font-mono text-xs font-bold flex items-center justify-center shrink-0">
                       03
                     </span>
-                    <span className="font-mono text-[11px] sm:text-xs text-[#6e6e6e] uppercase tracking-wider font-medium">
+                    <span className="font-mono text-[11px] sm:text-xs text-[#a2a2a2] uppercase tracking-wider font-medium">
                       Comments & Specific Scope
                     </span>
                   </div>
-                  <span className="text-[10px] sm:text-xs font-mono text-[#a2a2a2] uppercase">
-                    (Optional)
-                  </span>
                 </div>
                 <div className="relative mt-2">
                   <textarea
@@ -374,33 +365,30 @@ export default function PricingCalculator({ onNavigate }) {
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
                     placeholder="Describe any specific requirements, integrations, preferred features, or target timelines for your business..."
-                    className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 px-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base resize-none"
+                    className="w-full bg-[#2b2b2b] text-[#ffffff] placeholder-[#6e6e6e] font-light py-3 px-3.5 outline-none rounded-xl border border-[#444] focus:border-[#3F7E7C] focus:bg-[#333] transition-all text-sm sm:text-base resize-none"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
               </div>
 
               {/* Field 4 — Business Details (Compulsory - C) */}
-              <div className="border-b border-[#dedede] pb-5">
+              <div className="border-b border-[#333] pb-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-[#3F7E7C] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0 shadow-sm">
                       04
                     </span>
-                    <span className="font-mono text-[11px] sm:text-xs text-[#2b2b2b] uppercase tracking-wider font-semibold">
+                    <span className="font-mono text-[11px] sm:text-xs text-[#ffffff] uppercase tracking-wider font-semibold">
                       Business Details
                     </span>
                   </div>
-                  <span className="inline-flex items-center gap-1 font-mono text-[10px] sm:text-xs text-[#3F7E7C] bg-[#EAF4F3] border border-[#3F7E7C]/25 px-2.5 py-0.5 rounded-full font-bold">
-                    (C) COMPULSORY
-                  </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 mt-3">
                   {/* Name of business (C) */}
                   <div className="relative">
-                    <label className="block text-[11px] font-mono text-[#6e6e6e] uppercase tracking-wider mb-1.5 font-medium">
-                      Name of Business <span className="text-red-500 font-bold">*</span>
+                    <label className="block text-[11px] font-mono text-[#a2a2a2] uppercase tracking-wider mb-1.5 font-medium">
+                      Name of Business <span className="text-red-400 font-bold">*</span>
                     </label>
                     <div className="relative">
                       <input
@@ -412,17 +400,17 @@ export default function PricingCalculator({ onNavigate }) {
                           setErrorMessage('');
                         }}
                         placeholder="e.g. Apex Global Corp"
-                        className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base"
+                        className="w-full bg-[#2b2b2b] text-[#ffffff] placeholder-[#6e6e6e] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#444] focus:border-[#3F7E7C] focus:bg-[#333] transition-all text-sm sm:text-base"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                       />
-                      <Building2 className="w-4 h-4 text-[#a2a2a2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <Building2 className="w-4 h-4 text-[#6e6e6e] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
                   </div>
 
                   {/* Business email (C) */}
                   <div className="relative">
-                    <label className="block text-[11px] font-mono text-[#6e6e6e] uppercase tracking-wider mb-1.5 font-medium">
-                      Business Email <span className="text-red-500 font-bold">*</span>
+                    <label className="block text-[11px] font-mono text-[#a2a2a2] uppercase tracking-wider mb-1.5 font-medium">
+                      Business Email <span className="text-red-400 font-bold">*</span>
                     </label>
                     <div className="relative">
                       <input
@@ -434,17 +422,17 @@ export default function PricingCalculator({ onNavigate }) {
                           setErrorMessage('');
                         }}
                         placeholder="e.g. contact@company.com"
-                        className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base"
+                        className="w-full bg-[#2b2b2b] text-[#ffffff] placeholder-[#6e6e6e] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#444] focus:border-[#3F7E7C] focus:bg-[#333] transition-all text-sm sm:text-base"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                       />
-                      <Mail className="w-4 h-4 text-[#a2a2a2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <Mail className="w-4 h-4 text-[#6e6e6e] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
                   </div>
 
                   {/* Business contact Number (C) */}
                   <div className="relative">
-                    <label className="block text-[11px] font-mono text-[#6e6e6e] uppercase tracking-wider mb-1.5 font-medium">
-                      Business Contact Number <span className="text-red-500 font-bold">*</span>
+                    <label className="block text-[11px] font-mono text-[#a2a2a2] uppercase tracking-wider mb-1.5 font-medium">
+                      Business Contact Number <span className="text-red-400 font-bold">*</span>
                     </label>
                     <div className="relative">
                       <input
@@ -456,10 +444,10 @@ export default function PricingCalculator({ onNavigate }) {
                           setErrorMessage('');
                         }}
                         placeholder="e.g. +91 98765 43210"
-                        className="w-full bg-[#f9f9f9] text-[#2b2b2b] placeholder-[#a2a2a2] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#e5e5e5] focus:border-[#3F7E7C] focus:bg-white transition-all text-sm sm:text-base"
+                        className="w-full bg-[#2b2b2b] text-[#ffffff] placeholder-[#6e6e6e] font-light py-3 pl-10 pr-3.5 outline-none rounded-xl border border-[#444] focus:border-[#3F7E7C] focus:bg-[#333] transition-all text-sm sm:text-base"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                       />
-                      <Phone className="w-4 h-4 text-[#a2a2a2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <Phone className="w-4 h-4 text-[#6e6e6e] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
                   </div>
                 </div>
@@ -475,7 +463,7 @@ export default function PricingCalculator({ onNavigate }) {
 
               {/* Dynamic Estimation Calculation Box & Submit */}
               <div className="pt-2 sm:pt-4">
-                <div className="p-4 sm:p-6 rounded-2xl bg-[#f8fbfb] border border-[#d2ebe9] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sm:gap-6">
+                <div className="p-4 sm:p-6 rounded-2xl bg-[#2b2b2b] border border-[#444] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sm:gap-6">
                   <div>
                     <span className="font-mono text-[11px] text-[#3F7E7C] uppercase font-semibold tracking-wider block mb-1">
                       Estimated Development Timeline
@@ -485,19 +473,19 @@ export default function PricingCalculator({ onNavigate }) {
                         fontFamily: 'Space Grotesk, sans-serif',
                         fontSize: 'clamp(1.4rem, 4vw, 2rem)',
                         fontWeight: 700,
-                        color: currentEstimate ? '#2b2b2b' : '#a2a2a2',
+                        color: currentEstimate ? '#ffffff' : '#6e6e6e',
                         letterSpacing: '-0.03em',
                       }}
                     >
                       {currentEstimate ? (
                         <>
                           {currentEstimate.weeks}
-                          <span className="text-xs sm:text-sm font-normal text-[#656565] ml-2 block sm:inline">
+                          <span className="text-xs sm:text-sm font-normal text-[#a2a2a2] ml-2 block sm:inline">
                             • {currentEstimate.label}
                           </span>
                         </>
                       ) : (
-                        <span className="text-sm font-normal text-[#a2a2a2] italic">
+                        <span className="text-sm font-normal text-[#6e6e6e] italic">
                           Select expected budget above to calculate timeline
                         </span>
                       )}
@@ -507,7 +495,7 @@ export default function PricingCalculator({ onNavigate }) {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto font-mono text-xs uppercase tracking-wider px-7 py-3.5 sm:px-8 sm:py-4 rounded-full bg-[#2b2b2b] text-white hover:bg-[#3F7E7C] active:scale-[0.99] transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 shrink-0"
+                    className="w-full sm:w-auto font-mono text-xs uppercase tracking-wider px-7 py-3.5 sm:px-8 sm:py-4 rounded-full bg-[#3F7E7C] text-white hover:bg-[#ffffff] hover:text-[#1a1a1a] active:scale-[0.99] transition-all duration-300 shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 shrink-0 font-bold"
                     style={{ fontFamily: 'Space Mono, monospace' }}
                   >
                     {isSubmitting ? (
@@ -530,7 +518,7 @@ export default function PricingCalculator({ onNavigate }) {
                     className="text-[10px] sm:text-[11px] text-[#8e8e8e] font-light leading-normal"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    * Note: All fields marked with (C) are strictly verified for customized enterprise proposals. Your quotation and architecture scope will be delivered directly to your verified business email and WhatsApp number.
+                    * Your data is strictly confidential and used solely to communicate regarding your project requirements.
                   </p>
                 </div>
               </div>
