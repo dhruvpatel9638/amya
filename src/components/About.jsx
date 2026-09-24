@@ -122,7 +122,8 @@ export default function About({ onNavigate }) {
         >
           <img
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
-            alt="Amya Growth Core Team"
+            alt="Amya Growth web application development and AI automation team in Ahmedabad collaborating on MERN stack projects"
+            loading="lazy"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#2b2b2b]/90 via-[#2b2b2b]/40 to-transparent flex items-end justify-between p-8">
