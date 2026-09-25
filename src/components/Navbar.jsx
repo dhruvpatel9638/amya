@@ -18,7 +18,7 @@ export default function Navbar({ activeSection, setActiveSection }) {
         <button
           onClick={() => handleNavClick('hero')}
           className="flex items-center gap-2.5 bg-transparent border-none cursor-pointer p-0 group"
-          aria-label="Amya Growth Home"
+          aria-label="Amyaa Growth Home"
         >
           <div
             className="w-9 h-9 md:w-10 md:h-10 bg-[#2b2b2b] text-white flex items-center justify-center rounded-lg font-bold text-sm tracking-tighter group-hover:bg-[#3F7E7C] transition-colors"
@@ -37,7 +37,7 @@ export default function Navbar({ activeSection, setActiveSection }) {
               lineHeight: 1,
             }}
           >
-            Amya Growth
+            Amyaa Growth
           </span>
         </button>
 

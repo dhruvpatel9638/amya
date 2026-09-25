@@ -229,7 +229,7 @@ export default function CreativeScrollbar({ activeSection, onNavigate }) {
                   style={{ fontFamily: 'Space Mono, monospace' }}
                   className="text-[9px] font-bold text-[#3F7E7C] uppercase tracking-wider"
                 >
-                  {activeSection ? activeSection.toUpperCase() : 'AMYA'}
+                  {activeSection ? activeSection.toUpperCase() : 'AMYAA'}
                 </span>
                 <span className="text-white/30 text-[8px] font-mono">/</span>
                 <span style={{ fontFamily: 'Space Mono, monospace' }} className="text-[9px] text-white/90">

@@ -846,7 +846,7 @@ export default function Portfolio({ onNavigate }) {
                 >
                   <img
                     src={work.thumb}
-                    alt={`${work.title} — Web application and AI automation project by Amya Growth Agency Ahmedabad`}
+                    alt={`${work.title} — Web application and AI automation project by Amyaa Growth Agency Ahmedabad`}
                     draggable={false}
                     loading="lazy"
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 pointer-events-none"

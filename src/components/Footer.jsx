@@ -67,7 +67,7 @@ export default function Footer({ onNavigate }) {
           <div className="mb-6 sm:mb-8">
             <img
               src={amyaLogo}
-              alt="Amya Growth — Web Application Development and AI Automation Agency in Ahmedabad, Gujarat"
+              alt="Amyaa Growth — Web Application Development and AI Automation Agency in Ahmedabad, Gujarat"
               loading="lazy"
               className="h-11 sm:h-13 md:h-16 w-auto object-contain select-none"
             />
@@ -85,7 +85,7 @@ export default function Footer({ onNavigate }) {
               letterSpacing: '0.05em',
             }}
           >
-            LET'S WORK TOGETHER • AMYA GROWTH
+            LET'S WORK TOGETHER • AMYAA GROWTH
           </span>
 
           {/* Big CTA headline matching frame 00:41 */}
@@ -171,7 +171,7 @@ export default function Footer({ onNavigate }) {
             <div className="hidden sm:block">
               <img
                 src={amyaLogo}
-                alt="Amya Growth Agency Logo — Custom web apps and AI automation, Ahmedabad"
+                alt="Amyaa Growth Agency Logo — Custom web apps and AI automation, Ahmedabad"
                 loading="lazy"
                 className="h-8 md:h-9 w-auto object-contain opacity-85 hover:opacity-100 transition-opacity"
               />
@@ -205,7 +205,7 @@ export default function Footer({ onNavigate }) {
               color: '#a2a2a2',
             }}
           >
-            © {new Date().getFullYear()} AMYA GROWTH — IT AGENCY. ALL RIGHTS RESERVED.
+            © {new Date().getFullYear()} AMYAA GROWTH — IT AGENCY. ALL RIGHTS RESERVED.
           </span>
 
           {/* Center: Quick links */}

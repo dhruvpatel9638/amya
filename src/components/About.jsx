@@ -57,7 +57,7 @@ export default function About({ onNavigate }) {
                 marginBottom: '1.5rem',
               }}
             >
-              About Amya Growth
+              About Amyaa Growth
             </span>
             <h2
               style={{
@@ -69,7 +69,7 @@ export default function About({ onNavigate }) {
                 fontWeight: 400,
               }}
             >
-              This is Amya Growth,{' '}
+              This is Amyaa Growth,{' '}
               <em style={{ fontStyle: 'italic', fontWeight: 400 }}>welcome.</em>
             </h2>
           </motion.div>
@@ -91,7 +91,7 @@ export default function About({ onNavigate }) {
                 marginBottom: '2rem',
               }}
             >
-              Amya Growth is a premier web application development agency in Ahmedabad, Gujarat, delivering high-impact full-stack software and autonomous AI Automation. We build creative, enterprise-grade web applications that run your operations around the clock — helping startups, legacy businesses, and medium enterprises grow 100x without needing extra staff.
+              Amyaa Growth is a premier web application development agency in Ahmedabad, Gujarat, delivering high-impact full-stack software and autonomous AI Automation. We build creative, enterprise-grade web applications that run your operations around the clock — helping startups, legacy businesses, and medium enterprises grow 100x without needing extra staff.
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <button
@@ -122,7 +122,7 @@ export default function About({ onNavigate }) {
         >
           <img
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
-            alt="Amya Growth web application development and AI automation team in Ahmedabad collaborating on MERN stack projects"
+            alt="Amyaa Growth web application development and AI automation team in Ahmedabad collaborating on MERN stack projects"
             loading="lazy"
             className="w-full h-full object-cover"
           />
@@ -145,7 +145,7 @@ export default function About({ onNavigate }) {
             </div>
             <div className="hidden sm:block text-right">
               <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)' }}>
-                AMYA GROWTH
+                AMYAA GROWTH
               </span>
             </div>
           </div>

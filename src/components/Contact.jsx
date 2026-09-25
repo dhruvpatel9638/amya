@@ -59,15 +59,15 @@ export default function Contact() {
 
   const faqs = [
     {
-      q: 'What is Amya Growth?',
-      a: 'Amya Growth is an IT Agency delivering high-impact Web Development (Full-Stack / MERN) and AI Automation Services (WhatsApp, Email, Lead Management, and Auto Follow-up systems).',
+      q: 'What is Amyaa Growth?',
+      a: 'Amyaa Growth is an IT Agency delivering high-impact Web Development (Full-Stack / MERN) and AI Automation Services (WhatsApp, Email, Lead Management, and Auto Follow-up systems).',
     },
     {
-      q: 'How does Amya Growth automate operations without extra staff?',
+      q: 'How does Amyaa Growth automate operations without extra staff?',
       a: 'By developing custom MERN web applications connected to autonomous WhatsApp AI agents, automated email funnels, and CRM pipelines, we eliminate repetitive manual work so your business runs 24/7 autonomously.',
     },
     {
-      q: 'Is Amya Growth suitable for my business?',
+      q: 'Is Amyaa Growth suitable for my business?',
       a: 'Yes. We cater specifically to fast-growing startups, legacy businesses modernizing their manual workflows, and medium-scale enterprises looking to scale 100x.',
     },
     {
@@ -218,7 +218,7 @@ export default function Contact() {
                   Consultation Request Sent!
                 </h3>
                 <p style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 300, color: '#a2a2a2', maxWidth: '28rem' }}>
-                  Thank you! The Amya Growth team will review your business details and schedule your free 100x growth consultation promptly.
+                  Thank you! The Amyaa Growth team will review your business details and schedule your free 100x growth consultation promptly.
                 </p>
               </motion.div>
             ) : (
