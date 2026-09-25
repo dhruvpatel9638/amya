@@ -30,7 +30,7 @@ User-agent: YandexBot
 Allow: /
 
 # Sitemap URL
-Sitemap: https://amya-two.vercel.app/sitemap.xml
+Sitemap: https://amyaa.vercel.app/sitemap.xml
 
 # Host
-Host: https://amya-two.vercel.app
+Host: https://amyaa.vercel.app

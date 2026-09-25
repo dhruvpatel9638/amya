@@ -20,7 +20,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      await fetch('https://formsubmit.co/ajax/amyagrowth@gmail.com', {
+      await fetch('https://formsubmit.co/ajax/amyaagrowth@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ export default function Contact() {
             <div className="space-y-6">
               {[
                 { label: 'Instagram', value: '@amya.growth', href: 'https://instagram.com/amya.growth' },
-                { label: 'Email Inquiries', value: 'amyagrowth@gmail.com', href: 'mailto:amyagrowth@gmail.com' },
+                { label: 'Email Inquiries', value: 'amyaagrowth@gmail.com', href: 'mailto:amyaagrowth@gmail.com' },
                 { label: 'Target Clients', value: 'Startups • Legacy • Medium Businesses' },
               ].map((item, i) => (
                 <div key={i} style={{ borderBottom: '1px solid #dedede', paddingBottom: '1.25rem' }}>

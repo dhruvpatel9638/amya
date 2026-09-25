@@ -135,7 +135,7 @@ export default function PricingCalculator({ onNavigate }) {
     };
 
     try {
-      await fetch('https://formsubmit.co/ajax/amyagrowth@gmail.com', {
+      await fetch('https://formsubmit.co/ajax/amyaagrowth@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

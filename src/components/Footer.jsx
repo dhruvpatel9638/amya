@@ -66,10 +66,10 @@ export default function Footer({ onNavigate }) {
           {/* Brand Logo (Placed in Footer only) */}
           <div className="mb-6 sm:mb-8">
             <img
-              src={amyaLogo}
+              src="/Amya%20LOGO%20png.png"
               alt="Amyaa Growth — Web Application Development and AI Automation Agency in Ahmedabad, Gujarat"
               loading="lazy"
-              className="h-11 sm:h-13 md:h-16 w-auto object-contain select-none"
+              className="h-16 sm:h-20 md:h-24 w-auto object-contain select-none"
             />
           </div>
 
@@ -155,7 +155,7 @@ export default function Footer({ onNavigate }) {
                 DIRECT INQUIRIES
               </span>
               <a
-                href="mailto:amyagrowth@gmail.com"
+                href="mailto:amyaagrowth@gmail.com"
                 className="hover:text-[#3F7E7C] transition-colors"
                 style={{
                   fontFamily: 'Space Grotesk, DM Sans, sans-serif',
@@ -164,16 +164,16 @@ export default function Footer({ onNavigate }) {
                   color: '#2b2b2b',
                 }}
               >
-                amyagrowth@gmail.com
+                amyaagrowth@gmail.com
               </a>
             </div>
 
             <div className="hidden sm:block">
               <img
-                src={amyaLogo}
+                src="/Amya%20LOGO%20png.png"
                 alt="Amyaa Growth Agency Logo — Custom web apps and AI automation, Ahmedabad"
                 loading="lazy"
-                className="h-8 md:h-9 w-auto object-contain opacity-85 hover:opacity-100 transition-opacity"
+                className="h-8 md:h-10 w-auto object-contain select-none opacity-85 hover:opacity-100 transition-opacity"
               />
             </div>
           </div>
