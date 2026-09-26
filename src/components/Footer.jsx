@@ -64,12 +64,12 @@ export default function Footer({ onNavigate }) {
         <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
 
           {/* Brand Logo (Placed in Footer only) */}
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-4 sm:mb-6">
             <img
               src="/Amya%20LOGO%20png.png"
               alt="Amyaa Growth — Web Application Development and AI Automation Agency in Ahmedabad, Gujarat"
               loading="lazy"
-              className="h-16 sm:h-20 md:h-24 w-auto object-contain select-none"
+              className="h-24 sm:h-32 md:h-40 w-auto object-contain select-none -ml-2 sm:-ml-3"
             />
           </div>
 
@@ -168,14 +168,7 @@ export default function Footer({ onNavigate }) {
               </a>
             </div>
 
-            <div className="hidden sm:block">
-              <img
-                src="/Amya%20LOGO%20png.png"
-                alt="Amyaa Growth Agency Logo — Custom web apps and AI automation, Ahmedabad"
-                loading="lazy"
-                className="h-8 md:h-10 w-auto object-contain select-none opacity-85 hover:opacity-100 transition-opacity"
-              />
-            </div>
+
           </div>
 
         </div>
